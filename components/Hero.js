@@ -1,6 +1,6 @@
 import Image from "next/image";
 import TestimonialRating from "./TestimonialRating";
-import heroImage from "/public/hero-image.jpg"
+import heroImage from "/public/landing/hero-image.jpg"
 
 const Hero = () => {
     return (

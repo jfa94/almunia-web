@@ -14,7 +14,7 @@ const features = [
             <span className="font-bold">From:</span> Almunia Ltd
           </p>
           <p className="font-medium uppercase tracking-wide text-base-content/60 text-sm mb-1">
-            <span className="font-bold">To:</span> John Appleseed
+            <span className="font-bold">To:</span> Jane Appleseed
           </p>
           <p className="font-medium uppercase tracking-wide text-base-content/60 text-sm mb-1">
             <span className="font-bold">Subject: </span> Daily Feedback
