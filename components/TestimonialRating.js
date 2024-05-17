@@ -1,4 +1,4 @@
-const TestimonialRating = () => {
+const TestimonialRating = ({ userCount = "1000+" }) => {
   return (
     <div className="flex -gap-1 items-center mt-auto">
       <svg
@@ -23,7 +23,7 @@ const TestimonialRating = () => {
       </svg>
       <div>
         <p className="text-base-content/80 text-sm text-center">
-          1000+ happy users
+          {userCount} happy users
         </p>
         <div className="flex flex-row justify-center gap-0 pt-1">
           {[...Array(5)].map((e, i) => (
