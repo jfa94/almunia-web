@@ -5,6 +5,7 @@ import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import About from "@/components/About";
 import FeaturesGrid from "@/components/FeaturesGrid";
+import Waitlist from "@/components/Waitlist";
 
 export default function Page() {
     return (
@@ -15,7 +16,9 @@ export default function Page() {
                 {/*<Problem></Problem>*/}
                 <About></About>
                 <FeaturesGrid></FeaturesGrid>
-                <Pricing></Pricing>
+                {/*Comment out waitlist before adding pricing*/}
+                {/*<Pricing></Pricing>*/}
+                <Waitlist></Waitlist>
                 <FAQ></FAQ>
             </main>
             <Footer></Footer>

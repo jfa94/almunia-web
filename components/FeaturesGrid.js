@@ -3,19 +3,13 @@ import React from "react";
 
 const features = [
   {
-    title: "Start measuring your culture",
+    title: "Define your culture",
     description:
-      "Get insight into how your team feels",
+      "Use our tools to understand and implement a values-led culture",
     styles: "bg-primary text-primary-content text-white",
     demo: (
       <div className="overflow-hidden h-full flex items-stretch">
         <div className="w-full translate-x-12 bg-base-200 rounded-t-box h-full p-6">
-          <p className="font-medium uppercase tracking-wide text-base-content/60 text-sm mb-1">
-            <span className="font-bold">From:</span> Almunia Ltd
-          </p>
-          <p className="font-medium uppercase tracking-wide text-base-content/60 text-sm mb-1">
-            <span className="font-bold">To:</span> Jane Appleseed
-          </p>
           <p className="font-medium uppercase tracking-wide text-base-content/60 text-sm mb-1">
             <span className="font-bold">Subject: </span> Daily Feedback
           </p>
