@@ -70,7 +70,7 @@ module.exports = {
                     primary: "#b45309",
                 }
             },
-            "dark"
+            // "dark"
         ],
     },
 };
