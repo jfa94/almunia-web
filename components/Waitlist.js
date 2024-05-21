@@ -1,22 +1,32 @@
-import config from "@/config";
 import ButtonWaitlist from "@/components/ButtonWaitlist";
 import {revalidatePath} from "next/cache";
 
 const Waitlist = () => {
-
     async function submitForm(formData) {
         'use server';
-        console.log('Running...')
+        const object = {}
+        formData.forEach(function (value, key) {
+            if (value !== '') object[key] = value
+        })
 
-        function delay(t) {
-            return new Promise(resolve => setTimeout(resolve, t));
+        console.log('Form submitted: ', JSON.stringify(object))
+
+        try {
+            const response = await fetch('https://tktpruza72.execute-api.eu-west-1.amazonaws.com/items', {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(object),
+            })
+
+            const result = response.json()
+            console.log('Success: ', result)
+
+            revalidatePath('/?success=true')
+        } catch (e) {
+            console.log('Error: ', e)
         }
-
-        await delay(5000)
-
-        console.log(formData.get('email'))
-
-        revalidatePath('/')
     }
 
 
