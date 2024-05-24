@@ -38,8 +38,8 @@ const Waitlist = () => {
                     <h2 className="font-bold text-3xl lg:text-5xl tracking-tight text-left mb-1">Reach out to learn
                         more</h2>
                     {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    <p className="font-medium text-primary text-left my-2">Almunia isn't available publicly just
-                        yet, please reach out if you are interested in joining our waitlist</p>
+                    <p className="font-medium text-primary text-left my-2">Almunia isn't available to everyone just
+                        yet.<br/> Please reach out if you are interested in joining our waitlist</p>
                 </div>
 
                 <form className="bg-white lg:p-12 p-6 rounded-xl flex-[2] w-full max-w-2xl m-auto"

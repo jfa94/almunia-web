@@ -25,10 +25,10 @@ const Hero = () => {
                     {/*</a>*/}
 
                     <h1 className="font-extrabold text-4xl lg:text-6xl tracking-tight md:-mb-4">
-                        Craft your corporate culture
+                        Cultivate your company culture
                     </h1>
                     <p className="text-lg opacity-80 leading-relaxed max-w-6xl">
-                        Start using data to define and implement the company culture you are looking for.
+                        Start using data to define and nurture the working environment you want to create.
                         Almunia helps you capture employee feedback, identify trends, and make policy changes that will
                         ensure your company is always a great place to work.
                     </p>
