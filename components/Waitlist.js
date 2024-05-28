@@ -1,5 +1,6 @@
 import ButtonWaitlist from "@/components/ButtonWaitlist";
 import {revalidatePath} from "next/cache";
+import {Suspense} from "react";
 
 const Waitlist = () => {
     async function submitForm(formData) {
@@ -111,9 +112,11 @@ const Waitlist = () => {
                             />
                         </div>
 
-                        <ButtonWaitlist>
-                            Join Waitlist
-                        </ButtonWaitlist>
+                        <Suspense fallback={<div className="btn btn-primary"><p>...</p></div>}>
+                            <ButtonWaitlist>
+                                Join Waitlist
+                            </ButtonWaitlist>
+                        </Suspense>
                     </label>
                 </form>
 

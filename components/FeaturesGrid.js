@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react"
 import Image from "next/image"
-import userImage from "/public/landing/user-image.png"
 import reportingMockup from "/public/landing/reporting-mockup.png"
 
 const features = [
