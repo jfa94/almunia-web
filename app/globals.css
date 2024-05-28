@@ -21,6 +21,18 @@ progress::-webkit-progress-value {
         @apply !capitalize !text-white;
     }
 
+    .heading {
+        @apply text-2xl md:text-3xl lg:text-4xl font-extrabold pb-4 md:pb-6
+    }
+
+    .subheading {
+        @apply text-xl md:text-2xl font-bold py-2
+    }
+
+    .paragraph {
+        @apply pb-2 md:pb-4
+    }
+
     .form-field {
     }
 

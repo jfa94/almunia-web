@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react"
 import Image from "next/image"
+import userImage from "/public/landing/user-image.png"
 import reportingMockup from "/public/landing/reporting-mockup.png"
 
 const features = [
@@ -214,14 +215,13 @@ const features = [
                         id: 1,
                         name: "Olivia",
                         text: " delivered an amazing training on growth strategy this week!",
-                        userImg:
-                            "https://pbs.twimg.com/profile_images/1514863683574599681/9k7PqDTA_400x400.jpg",
-                        userName: "Marc Lou",
+                        userImg: "/landing/user-image.png",
+                        userName: "Javier A.",
                         createdAt: "2024-09-01T00:00:00Z",
                     },
                     {
                         id: 2,
-                        name: "Jeff",
+                        name: "Geoff",
                         text: " for being a great mentor.",
                         userImg:
                             "https://pbs.twimg.com/profile_images/1778434561556320256/knBJT1OR_400x400.jpg",
@@ -242,7 +242,7 @@ const features = [
                         <div className="text-neutral/80 flex items-center gap-2 text-sm">
                             <div className="flex items-center gap-2">
                                 <div className="avatar">
-                                    <div className="w-7 rounded-full">
+                                    <div className="w-7 rounded-full bg-orange-200">
                                         <img src={reply.userImg} alt={reply.userName}/>
                                     </div>
                                 </div>
@@ -265,12 +265,13 @@ const features = [
         ),
     },
 ];
+
 const FeaturesGrid = () => {
     return (
         <section className="flex justify-center items-center w-full bg-base-200/50 text-base-content py-20 lg:py-32">
             <div className="flex flex-col max-w-[82rem] gap-16 md:gap-20 px-4">
                 <h2 className="max-w-3xl font-black text-4xl md:text-5xl tracking-[-0.01em]">
-                    Get serious about <br/>your{" "}
+                    Features to help you create<br/>the best{' '}
                     <span className="underline decoration-dashed underline-offset-8 decoration-base-300">
                 team environment
                 </span>
