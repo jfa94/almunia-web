@@ -8,9 +8,8 @@ const About = () => {
                     About <span className="text-amber-600">Almunia</span>
                 </h1>
                 <div className="md:basis-3/5 text-lg opacity-80 leading-relaxed text-left">
-                    <p className='mb-4'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid aspernatur atque doloribus fugit id ipsa ipsam magni nisi nulla quaerat quas, quasi qui quo quos saepe tenetur. Ducimus, quidem.</p>
-                    <p className='mb-4'>Atque blanditiis consectetur dolorem earum eligendi expedita iste, officia recusandae vero voluptates? Aliquam aperiam eos esse eum expedita fugiat laboriosam magnam modi molestiae nostrum nulla numquam obcaecati, quas sapiente similique!</p>
-                    <p className='mb-4'>Fugit hic minus provident quo tempora! A at corporis dignissimos, eos exercitationem explicabo iste libero, minima optio quam rerum sequi sunt? A accusantium assumenda beatae doloribus et mollitia, recusandae unde.</p>
+                    <p className='mb-4'>At Almunia, we want to help organizations create and sustain great workplaces by fostering positive, values-led cultures. We help companies create an environment for their team to thrive, reducing turnover rates and increasing job satisfaction.</p>
+                    <p className='mb-4'>Guided by research, our tools are designed to help you make frequent adjustments that will have a significant impact in the long term. By leveraging a data-driven methodology, we help companies define their ideal culture, gather employee feedback, and implement best practices to drive meaningful change.</p>
                 </div>
             </div>
         </section>
