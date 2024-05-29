@@ -21,7 +21,7 @@ const Waitlist = () => {
                 body: JSON.stringify(object),
             })
 
-            const result = response.json()
+            const result = await response.json()
             console.log('Success: ', result)
 
             revalidatePath('/?success=true')
