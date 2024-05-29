@@ -1,5 +1,5 @@
 import ButtonWaitlist from "@/components/ButtonWaitlist";
-import {revalidatePath} from "next/cache";
+import {redirect} from "next/navigation";
 import {Suspense} from "react";
 
 const Waitlist = () => {
@@ -24,7 +24,7 @@ const Waitlist = () => {
             const result = await response.json()
             console.log('Success: ', result)
 
-            revalidatePath('/?success=true')
+            redirect('/?success=true')
         } catch (e) {
             console.log('Error: ', e)
         }
