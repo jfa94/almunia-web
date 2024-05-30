@@ -23,7 +23,10 @@ export default function RootLayout({ children }) {
     <html lang="en" data-theme={config.colors.theme} className={font.className}>
       {config.domainName && (
         <head>
-          <PlausibleProvider domain={config.domainName} selfHosted={true}/>
+          <PlausibleProvider domain={config.domainName}
+                             customDomain={ `https://analytics.${config.domainName}` }
+                             selfHosted={true}
+          />
         </head>
       )}
       <body>
