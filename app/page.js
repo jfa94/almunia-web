@@ -11,7 +11,7 @@ import {Suspense} from "react";
 export default function Page() {
     return (
         <>
-            <Suspense>
+            <Suspense fallback={<header className="bg-amber-50"></header>}>
                 <Header></Header>
             </Suspense>
             <main>
