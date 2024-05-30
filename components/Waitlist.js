@@ -1,6 +1,6 @@
-import ButtonWaitlist from "@/components/ButtonWaitlist";
 import {redirect} from "next/navigation";
 import {Suspense} from "react";
+import ButtonWaitlist from "@/components/ButtonWaitlist";
 
 const Waitlist = () => {
     async function submitForm(formData) {
@@ -23,11 +23,11 @@ const Waitlist = () => {
 
             const result = await response.json()
             console.log('Success: ', result)
-
-            redirect('/?success=true')
         } catch (e) {
             console.log('Error: ', e)
         }
+
+        redirect('/?success=true')
     }
 
 
