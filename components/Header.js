@@ -28,7 +28,7 @@ const cta = <a href='/#pricing'><div className='btn btn-primary'>Get Started</di
 
 // A header with a logo on the left, links in the center (like Pricing, etc...), and a CTA (like Get Started or Login) on the right.
 // The header is responsive, and on mobile, the links are hidden behind a burger button.
-const Header = () => {
+const Header = ({ bgClass = "bg-white" }) => {
     const searchParams = useSearchParams();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -38,7 +38,7 @@ const Header = () => {
     }, [searchParams]);
 
     return (
-        <header className="bg-amber-50">
+        <header className={`${bgClass} ...`}>
             <nav
                 className="container flex items-center justify-between px-8 py-4 mx-auto"
                 aria-label="Global"

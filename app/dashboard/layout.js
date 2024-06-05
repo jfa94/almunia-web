@@ -10,7 +10,7 @@ export default async function LayoutPrivate({ children }) {
 
   if (!session) {
 
-    await signIn()
+    await signIn('Cognito')
   }
 
   return <>{children}</>;
