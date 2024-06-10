@@ -9,7 +9,7 @@ const font = Inter({ subsets: ["latin"] });
 
 export const viewport = {
   // Will use the primary color of your theme to show a nice theme color in the URL bar of supported browsers
-  themeColor: config.colors.main,
+  themeColor: "#fffbeb",
   width: "device-width",
   initialScale: 1,
 };
