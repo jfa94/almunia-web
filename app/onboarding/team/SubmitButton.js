@@ -1,7 +1,7 @@
 import React from 'react';
 import {useFormStatus} from "react-dom";
 
-const SubmitButton = () => {
+export const SubmitButton = () => {
     let status = useFormStatus()
 
     return (
@@ -10,5 +10,3 @@ const SubmitButton = () => {
         </button>
     );
 };
-
-export default SubmitButton;

@@ -1,12 +1,14 @@
 import {useState} from "react";
-import {submitTeamInformationForm} from "@/app/onboarding/team/submitTeamInformationForm";
 import {InputTeamInformation} from "@/app/onboarding/team/InputTeamInformation";
-import SubmitButton from "@/app/onboarding/team/SubmitButton";
+import { SubmitButton } from "@/app/onboarding/team/SubmitButton";
+import {submitForm} from "@/app/onboarding/submitForm";
 
 const TeamInformationForm = ({hidden}) => {
     let [inputArray, setInputArray] = useState([
         <InputTeamInformation key="0" id="0"/>
     ])
+
+    const submitTeamInformationForm = submitForm.bind(null, 'team')
 
     let addInputToArray = (e) => {
         e.preventDefault()

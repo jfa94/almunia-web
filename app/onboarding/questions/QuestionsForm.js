@@ -1,12 +1,14 @@
 'use client';
 import {useState} from "react";
-import {submitQuestionsForm} from "@/app/onboarding/questions/submitQuestionsForm";
 import {QuestionInput} from "@/app/onboarding/questions/QuestionInput";
+import {submitForm} from "@/app/onboarding/submitForm";
 
 function QuestionsForm({incrementPage, hidden}) {
     let [inputArray, setInputArray] = useState([
         <QuestionInput key="0" id="0"/>
     ])
+
+    const submitQuestionsForm = submitForm.bind(null, 'questions')
 
     let addInputToArray = (e) => {
         e.preventDefault()

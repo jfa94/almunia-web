@@ -1,13 +1,15 @@
 'use client';
 
-import {submitValuesForm} from "@/app/onboarding/values/submitValuesForm";
 import {InputValueField} from "@/app/onboarding/values/InputValueField";
+import {submitForm} from "@/app/onboarding/submitForm";
 import {useState} from "react"
 
-const ValuesForm = ({ incrementPage, hidden }) => {
+const ValuesForm = ({incrementPage, hidden}) => {
     let [inputArray, setInputArray] = useState([
         <InputValueField key="0" id="0"/>
     ])
+
+    const submitValuesForm = submitForm.bind(null, 'values')
 
     let addInputToArray = (e) => {
         e.preventDefault()
@@ -29,11 +31,23 @@ const ValuesForm = ({ incrementPage, hidden }) => {
 
     return (
         <div hidden={hidden}>
-            <div className="flex flex-row justify-between mb-2">
+            <div className="flex flex-col mb-2">
                 <h2 className="subheading">Values</h2>
+                <p>
+                    Let's define your company values. Useful values are genuinely reflective of a company's ideals,
+                    without being idealistic. Avoid generic statements that are not specific to the culture you
+                    want to create (for example, "excellence"). Keep in mind that you should integrate these values in
+                    every aspect of your organisation, from hiring and performance reviews to strategic decision-making.
+                </p>
+                <p className="my-2">
+                    You can learn more about defining meaningful values{" "}
+                    <a href="https://hbr.org/2002/07/make-your-values-mean-something" className="underline">
+                        here (link to Harvard Business Review)
+                    </a>.
+                </p>
             </div>
 
-            <form action={submitValuesForm} className="flex flex-col">
+            <form action={submitValuesForm} className="flex flex-col mt-4">
 
                 {inputArray}
 
@@ -48,7 +62,6 @@ const ValuesForm = ({ incrementPage, hidden }) => {
                     <button type="submit" onClick={() => incrementPage()} className="btn btn-primary min-w-36">
                         Save
                     </button>
-
                 </div>
 
             </form>
