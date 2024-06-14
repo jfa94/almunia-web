@@ -2,14 +2,15 @@
 
 import {submitValuesForm} from "@/app/onboarding/values/submitValuesForm";
 import {InputValueField} from "@/app/onboarding/values/InputValueField";
-import {useState} from "react";
+import {useState} from "react"
 
 const ValuesForm = ({ incrementPage, hidden }) => {
     let [inputArray, setInputArray] = useState([
         <InputValueField key="0" id="0"/>
     ])
 
-    let addInputToArray = () => {
+    let addInputToArray = (e) => {
+        e.preventDefault()
         const maxInputArrKey = inputArray[inputArray.length - 1].key
         const newKey = Number(maxInputArrKey) + 1
         setInputArray((prevState) => [
@@ -31,7 +32,9 @@ const ValuesForm = ({ incrementPage, hidden }) => {
             <div className="flex flex-row justify-between mb-2">
                 <h2 className="subheading">Values</h2>
             </div>
+
             <form action={submitValuesForm} className="flex flex-col">
+
                 {inputArray}
 
                 <div className="flex flex-col md:flex-row gap-4 md:justify-end md:mr-16">

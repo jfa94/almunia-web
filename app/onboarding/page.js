@@ -2,7 +2,7 @@
 
 import ValuesForm from "@/app/onboarding/values/ValuesForm"
 import {useRef, useState} from "react"
-import Welcome from "@/app/onboarding/Welcome";
+import Welcome from "@/app/onboarding/welcome/Welcome";
 import TeamInformationForm from "@/app/onboarding/team/TeamInformationForm";
 import QuestionsForm from "@/app/onboarding/questions/QuestionsForm";
 
@@ -17,7 +17,7 @@ const Onboarding = () => {
 
     return (
         <>
-            <main className="border-2 border-blue-600 min-h-svh max-w-7xl m-auto p-2">
+            <main className="min-h-[65svh] max-w-7xl m-auto p-2">
                 <div className="text-sm breadcrumbs">
                     <ul>
                         <li className="hover:cursor-pointer" onClick={() => setActivePage(0)}>Welcome</li>

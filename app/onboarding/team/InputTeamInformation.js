@@ -44,7 +44,7 @@ export function InputTeamInformation({id, removeInput = alertIsOriginal}) {
             />
 
             <div onClick={() => removeInput(id)}
-                 className={`${id === '0' && '!border-t !border-t-red-700/50'} w-full md:w-10 h-8 md:h-full my-4 md:m-0 md:row-span-1 md:col-start-5 inline-flex items-center justify-center bg-red-300/10 border border-red-700/50 md:border-t-0 rounded-md md:rounded-none text-primary hover:cursor-pointer`}>
+                 className={`${id === '0' && 'rounded-tr-md !border-t-2 !border-t-red-700/50'} w-full md:w-10 h-8 md:h-full my-4 md:m-0 md:row-span-1 md:col-start-5 inline-flex items-center justify-center bg-red-300/10 border-2 border-red-700/50 md:border-t-0 rounded-md md:rounded-none text-primary hover:cursor-pointer`}>
                 <p className="md:hidden text-sm font-semibold text-red-700/60 px-2">Remove</p>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                      className="w-4 md:w-5 h-4 md:h-5 duration-200 fill-red-700/60">
