@@ -31,8 +31,8 @@ function QuestionsForm({incrementPage, hidden}) {
 
     return <div hidden={hidden}>
         <form action={submitQuestionsForm}>
-            <div className="subheading pb-1">Questions</div>
-            <p className="text-sm mb-4">
+            <div className="subheading">Questions</div>
+            <p className="mb-4">
                 Write any questions below that you would like your team to answer anonymously.
                 Please keep in mind that possible answers will be on a scale from 5 (Strongly Agree)
                 to 1 (Strongly Disagree). Questions should be written in a way that accommodates these responses.
