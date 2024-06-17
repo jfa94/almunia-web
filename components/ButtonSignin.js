@@ -19,7 +19,7 @@ const ButtonSignin = ({text = "Sign in", extraStyle}) => {
         if (status === "authenticated") {
             router.push(config.auth.callbackUrl);
         } else {
-            setButtonText('Signing in...')
+            setButtonText(<div className="min-w-11"><span className="loading loading-dots loading-sm"></span></div>)
             signIn('cognito', {callbackUrl: config.auth.callbackUrl})
         }
     };
@@ -40,11 +40,11 @@ const ButtonSignin = ({text = "Sign in", extraStyle}) => {
                         height={24}
                     />
                 ) : (
-                    <span className="w-6 h-6 bg-base-300 flex justify-center items-center rounded-full shrink-0">
-            {session.user?.name?.charAt(0) || session.user?.email?.charAt(0)}
-          </span>
+                    <span className="w-6 h-6 bg-amber-50 text-zinc-400 flex justify-center items-center rounded-full shrink-0">
+                        {session.user?.name?.charAt(0) || session.user?.email?.charAt(0)}
+                    </span>
                 )}
-                {session.user?.name || session.user?.email || "Account"}
+                Account
             </Link>
         );
     }

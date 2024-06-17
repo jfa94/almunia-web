@@ -56,22 +56,22 @@ const ButtonAccount = () => {
                             />
                         ) : (
                             <span
-                                className="w-6 h-6 bg-base-300 flex justify-center items-center rounded-full shrink-0">
-                {session?.user?.name?.charAt(0) ||
-                    session?.user?.email?.charAt(0)}
-              </span>
+                                className="w-6 h-6 bg-zinc-500 flex justify-center items-center rounded-full shrink-0">
+                                {session?.user?.name?.charAt(0) || session?.user?.email?.charAt(0)}
+                            </span>
                         )}
 
-                        {session?.user?.name || "Account"}
+                        <span className="text-zinc-500 font-bold">
+                            {session?.user?.name || "Account"}
+                        </span>
 
                         {isLoading ? (
-                            <span className="loading loading-spinner loading-xs"></span>
+                            <span className="loading loading-dots loading-xs"></span>
                         ) : (
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
-                                fill="currentColor"
-                                className={`w-5 h-5 duration-200 opacity-50 ${
+                                className={`w-5 h-5 fill-zinc-500 stroke-1 stroke-zinc-700 duration-200 opacity-50 ${
                                     open ? "transform rotate-180 " : ""
                                 }`}
                             >
