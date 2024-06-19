@@ -7,4 +7,61 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
             authorization: {params: {scope: "openid aws.cognito.signin.user.admin"}},
         })
     ],
+    callbacks: {
+        async jwt({token, account}) {
+            // if (Date.now() > token?.expires) {
+            //     const refreshedToken = await refreshAccessToken(token)
+            //     token.access_token = refreshedToken.access_token
+            //     token.bearer_token = refreshedToken.bearer_token
+            //     token.refresh_token = refreshedToken.refresh_token
+            //     token.expires = refreshedToken.bearer_token_expires
+            // } else {
+                token.access_token = account?.access_token ?? token.access_token
+                token.bearer_token = account?.id_token ?? token.bearer_token
+                token.refresh_token = account?.refresh_token ?? token.refresh_token
+                token.expires = account?.expires_at ?? token.expires
+            // }
+            return token
+        },
+        session({session, token}) {
+            session.user.id = token.sub
+            session.user.bearer_token = token.bearer_token
+            return session
+        },
+    }
 })
+
+async function refreshAccessToken(token) {
+    try {
+        const url = `https://${process.env.COGNITO_USER_POOL_ID}.auth.${process.env.CLOUD_REGION}.amazoncognito.com/oauth2/token?` +
+            new URLSearchParams({
+                grant_type: "refresh_token",
+                client_id: process.env.AUTH_COGNITO_ID,
+                client_secret: process.env.AUTH_COGNITO_SECRET,
+                refresh_token: token.refresh_token,
+            })
+
+        const headerString = process.env.AUTH_COGNITO_ID + ':' + process.env.AUTH_COGNITO_SECRET
+        const buff = Buffer.from(headerString, 'utf-8')
+        const authHeader = buff.toString('base64')
+
+        const refreshedTokensResponse = await fetch(url, {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Basic " + authHeader
+            },
+            method: "POST",
+        })
+
+        const refreshedTokens = await refreshedTokensResponse.json()
+
+        return {
+            bearer_token: refreshedTokens.id_token,
+            access_token: refreshedTokens.access_token,
+            bearer_token_expires: Date.now() + refreshedTokens.expires_in * 1000,
+            refresh_token: refreshedTokens.refresh_token ?? token.refresh_token,
+        }
+    } catch (error) {
+        return error
+    }
+}
