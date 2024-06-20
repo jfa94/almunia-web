@@ -9,18 +9,18 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
     ],
     callbacks: {
         async jwt({token, account}) {
-            // if (Date.now() > token?.expires) {
-            //     const refreshedToken = await refreshAccessToken(token)
-            //     token.access_token = refreshedToken.access_token
-            //     token.bearer_token = refreshedToken.bearer_token
-            //     token.refresh_token = refreshedToken.refresh_token
-            //     token.expires = refreshedToken.bearer_token_expires
-            // } else {
-                token.access_token = account?.access_token ?? token.access_token
-                token.bearer_token = account?.id_token ?? token.bearer_token
-                token.refresh_token = account?.refresh_token ?? token.refresh_token
-                token.expires = account?.expires_at ?? token.expires
-            // }
+            if (account) {
+                token.access_token = account.access_token ?? token.access_token
+                token.bearer_token = account.id_token ?? token.bearer_token
+                token.refresh_token = account.refresh_token ?? token.refresh_token
+                token.exp = account.expires_at ?? token.exp
+            } else if (Date.now() > token.exp * 1000) {
+                const refreshedToken = await refreshAccessToken(token)
+                token.access_token = refreshedToken.access_token
+                token.bearer_token = refreshedToken.bearer_token
+                token.refresh_token = refreshedToken.refresh_token
+                token.exp = refreshedToken.bearer_token_expires
+            }
             return token
         },
         session({session, token}) {
@@ -33,7 +33,7 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
 
 async function refreshAccessToken(token) {
     try {
-        const url = `https://${process.env.COGNITO_USER_POOL_ID}.auth.${process.env.CLOUD_REGION}.amazoncognito.com/oauth2/token?` +
+        const url = `https://almunia.auth.${process.env.CLOUD_REGION}.amazoncognito.com/oauth2/token?` +
             new URLSearchParams({
                 grant_type: "refresh_token",
                 client_id: process.env.AUTH_COGNITO_ID,
@@ -48,7 +48,7 @@ async function refreshAccessToken(token) {
         const refreshedTokensResponse = await fetch(url, {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": "Basic " + authHeader
+                "Authorization": "Basic " + authHeader,
             },
             method: "POST",
         })
