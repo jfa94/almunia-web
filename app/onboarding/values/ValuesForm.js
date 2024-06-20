@@ -34,10 +34,11 @@ const ValuesForm = ({incrementPage, hidden}) => {
             <div className="flex flex-col mb-2">
                 <h2 className="subheading">Values</h2>
                 <p>
-                    Let's define your company values. Useful values are genuinely reflective of a company's ideals,
-                    without being idealistic. Avoid generic statements that are not specific to the culture you
-                    want to create (for example, "excellence"). Keep in mind that you should integrate these values in
-                    every aspect of your organisation, from hiring and performance reviews to strategic decision-making.
+                    Let&apos;s define your company values. Useful values are genuinely reflective of a company&apos;s
+                    ideals, without being idealistic. Avoid generic statements that are not specific to the culture you
+                    want to create (for example, &quot;excellence&quot;). Keep in mind that you should integrate these
+                    values in every aspect of your organisation, from hiring and performance reviews to strategic
+                    decision-making.
                 </p>
                 <p className="my-2">
                     You can learn more about defining meaningful values{" "}

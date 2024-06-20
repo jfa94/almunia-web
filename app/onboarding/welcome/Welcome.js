@@ -5,14 +5,14 @@ function Welcome({incrementPage, hidden}) {
 
     return <div hidden={hidden}>
         <h2 className="subheading">Welcome to Almunia!</h2>
-        <p>Let's start with the basics.</p>
+        <p>Let&apos;s start with the basics.</p>
 
         <form action={submitWelcomeForm} className="mt-4">
             <div className="flex flex-col">
                 <label htmlFor="companyName"
                        className="font-bold text-lg"
                 >
-                    What is your company's name?
+                    What is your company&apos;s name?
                 </label>
                 <input type="text"
                        id="companyName"

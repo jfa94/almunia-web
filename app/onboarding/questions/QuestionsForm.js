@@ -36,7 +36,7 @@ function QuestionsForm({incrementPage, hidden}) {
                 Write any questions below that you would like your team to answer anonymously.
                 Please keep in mind that possible answers will be on a scale from 5 (Strongly Agree)
                 to 1 (Strongly Disagree). Questions should be written in a way that accommodates these responses.
-                We will also send general questions (for example, 'I feel satisfied with my job').
+                We will also send general questions (for example, &apos;I feel satisfied with my job&apos;).
             </p>
 
             {inputArray}
