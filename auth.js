@@ -15,10 +15,12 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
                 token.refresh_token = account.refresh_token ?? token.refresh_token
                 token.exp = account.expires_at ?? token.exp
             } else if (Date.now() > token.exp * 1000) {
+                console.log('Refreshing token...')
                 const refreshedToken = await refreshAccessToken(token)
                 token.access_token = refreshedToken.access_token
                 token.bearer_token = refreshedToken.bearer_token
                 token.refresh_token = refreshedToken.refresh_token
+                token.refresh_token_expires = refreshedToken.refresh_token_expires
                 token.exp = refreshedToken.bearer_token_expires
             }
             return token
@@ -32,6 +34,7 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
 })
 
 async function refreshAccessToken(token) {
+    console.log('Refreshing token...')
     try {
         const url = `https://almunia.auth.${process.env.CLOUD_REGION}.amazoncognito.com/oauth2/token?` +
             new URLSearchParams({
@@ -58,7 +61,8 @@ async function refreshAccessToken(token) {
         return {
             bearer_token: refreshedTokens.id_token,
             access_token: refreshedTokens.access_token,
-            bearer_token_expires: Date.now() + refreshedTokens.expires_in * 1000,
+            refresh_token_expires: Date.now()/1000 + refreshedTokens.expires_in,
+            bearer_token_expires: Date.now()/1000 + 3600,
             refresh_token: refreshedTokens.refresh_token ?? token.refresh_token,
         }
     } catch (error) {
