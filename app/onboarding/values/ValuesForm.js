@@ -1,15 +1,15 @@
 'use client';
 
 import {InputValueField} from "@/app/onboarding/values/InputValueField";
-import {submitForm} from "@/app/onboarding/submitForm";
+import {submitForm} from "@/app/onboarding/actions";
 import {useState} from "react"
 
-const ValuesForm = ({incrementPage, hidden}) => {
+const ValuesForm = ({formState, incrementPage, hidden}) => {
     let [inputArray, setInputArray] = useState([
         <InputValueField key="0" id="0"/>
     ])
 
-    const submitValuesForm = submitForm.bind(null, 'values')
+    const submitValuesForm = submitForm.bind(null, {'companyId': formState.companyId, page: 'values' })
 
     let addInputToArray = (e) => {
         e.preventDefault()

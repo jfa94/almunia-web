@@ -15,7 +15,6 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
                 token.refresh_token = account.refresh_token ?? token.refresh_token
                 token.exp = account.expires_at ?? token.exp
             } else if (Date.now() > token.exp * 1000) {
-                console.log('Refreshing token...')
                 const refreshedToken = await refreshAccessToken(token)
                 token.access_token = refreshedToken.access_token
                 token.bearer_token = refreshedToken.bearer_token

@@ -1,17 +1,11 @@
 'use server';
 import {auth} from "@/auth"
 import {DynamoDBClient} from "@aws-sdk/client-dynamodb"
-import { PutCommand } from "@aws-sdk/lib-dynamodb"
+import { GetCommand } from "@aws-sdk/lib-dynamodb"
 import {fromCognitoIdentityPool} from "@aws-sdk/credential-providers"
-import {CognitoIdentityClient, GetIdCommand} from "@aws-sdk/client-cognito-identity";
+import {CognitoIdentityClient, GetIdCommand} from "@aws-sdk/client-cognito-identity"
 
-const tableMap = {
-    welcome: 'almunia-company-information',
-}
-
-export async function submitForm(page, formData) {
-    console.log(`Submitted ${page} with data: `, formData)
-
+export async function checkForCompany() {
     const session = await auth()
 
     if (session) {
@@ -51,21 +45,19 @@ export async function submitForm(page, formData) {
         })
 
         const input = {
-            "TableName": tableMap[page],
-            "ReturnValues": "ALL_OLD",
-            "Item": {
+            "TableName": "company-information",
+            "Key": {
                 "identity_id": identityId,
-                "user_id": session.user.id,
-                "company_name": formData.get('companyName'),
             },
         }
 
         try {
-            const putCommand = new PutCommand(input)
-            const putResponse = await dbClient.send(putCommand)
-            console.log('Submission response: ', putResponse)
+            const getCommand = new GetCommand(input)
+            const getResponse = await dbClient.send(getCommand)
+            console.log('Get response: ', getResponse)
+            return getResponse.Item
         } catch (error) {
-            console.error('Error during submission: ', error)
+            console.error('Error during Get request: ', error)
         }
     } else {
         console.error('Not authenticated')

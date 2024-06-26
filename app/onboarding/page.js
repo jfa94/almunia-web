@@ -1,18 +1,32 @@
 'use client';
-
+import {useReducer} from "react"
+import Welcome from "@/app/onboarding/welcome/Welcome"
 import ValuesForm from "@/app/onboarding/values/ValuesForm"
-import {useRef, useState} from "react"
-import Welcome from "@/app/onboarding/welcome/Welcome";
-import TeamInformationForm from "@/app/onboarding/team/TeamInformationForm";
-import QuestionsForm from "@/app/onboarding/questions/QuestionsForm";
+import TeamInformationForm from "@/app/onboarding/team/TeamInformationForm"
+import QuestionsForm from "@/app/onboarding/questions/QuestionsForm"
+import {useSearchParams} from "next/navigation"
+
+const reducer = (state, action) => {
+    return {
+        ...state,
+        [action.field]: action.value
+    }
+}
 
 const Onboarding = () => {
-    const [activePage, setActivePage] = useState(0)
-    const maxPage = useRef(0)
+    const searchParams = useSearchParams()
+    const [formState, dispatch] = useReducer(reducer, {
+        activePage: 0,
+        maxPage: 0,
+        companyId: searchParams.get('cid'),
+        values: []
+    })
 
     const incrementPage = () => {
-        if(maxPage.current === activePage) maxPage.current++
-        setActivePage(prevState => prevState+1)
+        if (formState.maxPage === formState.activePage) {
+            dispatch({field: 'maxPage', value: formState.maxPage + 1})
+        }
+        dispatch({field: 'activePage', value: formState.activePage + 1})
     }
 
     return (
@@ -20,18 +34,29 @@ const Onboarding = () => {
             <main className="min-h-[65svh] max-w-7xl m-auto p-2">
                 <div className="text-sm breadcrumbs">
                     <ul>
-                        <li className="hover:cursor-pointer" onClick={() => setActivePage(0)}>Welcome</li>
-                        {maxPage.current > 0 && <li className="hover:cursor-pointer" onClick={() => setActivePage(1)}>Values</li>}
-                        {maxPage.current > 1 && <li className="hover:cursor-pointer" onClick={() => setActivePage(2)}>Questions</li>}
-                        {maxPage.current > 2 && <li className="hover:cursor-pointer" onClick={() => setActivePage(3)}>Team information</li>}
+                        <li className="hover:cursor-pointer"
+                            onClick={() => dispatch({field: 'activePage', value: 0})}>Basics
+                        </li>
+                        {formState.maxPage > 0 &&
+                            <li className="hover:cursor-pointer"
+                                onClick={() => dispatch({field: 'activePage', value: 1})}>Values</li>}
+                        {formState.maxPage > 1 &&
+                            <li className="hover:cursor-pointer"
+                                onClick={() => dispatch({field: 'activePage', value: 2})}>Questions</li>}
+                        {formState.maxPage > 2 &&
+                            <li className="hover:cursor-pointer"
+                                onClick={() => dispatch({field: 'activePage', value: 3})}>Team information</li>}
                     </ul>
                 </div>
                 <h1 className="heading">Setup</h1>
 
-                <Welcome incrementPage={incrementPage} hidden={activePage !== 0}/>
-                <ValuesForm incrementPage={incrementPage} hidden={activePage !== 1}/>
-                <QuestionsForm incrementPage={incrementPage} hidden={activePage !== 2}/>
-                <TeamInformationForm incrementPage={incrementPage} hidden={activePage !== 3}/>
+                <Welcome formState={formState} dispatch={dispatch} incrementPage={incrementPage}
+                         hidden={formState.activePage !== 0}/>
+                <ValuesForm formState={formState} dispatch={dispatch} incrementPage={incrementPage}
+                            hidden={formState.activePage !== 1}/>
+                <QuestionsForm formState={formState} incrementPage={incrementPage} hidden={formState.activePage !== 2}/>
+                <TeamInformationForm formState={formState} incrementPage={incrementPage}
+                                     hidden={formState.activePage !== 3}/>
 
             </main>
         </>

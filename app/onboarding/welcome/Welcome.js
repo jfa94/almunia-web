@@ -1,7 +1,11 @@
-import {submitForm} from "@/app/onboarding/submitForm";
+import {submitForm} from "@/app/onboarding/actions"
 
-function Welcome({incrementPage, hidden}) {
-    const submitWelcomeForm = submitForm.bind(null, 'welcome')
+function Welcome({formState, incrementPage, hidden}) {
+    const submitWelcomeForm = submitForm.bind(null, {'companyId': formState.companyId, page: 'welcome' })
+
+    const handleSave = () => {
+        incrementPage()
+    }
 
     return <div hidden={hidden}>
         <h2 className="subheading">Welcome to Almunia!</h2>
@@ -50,7 +54,7 @@ function Welcome({incrementPage, hidden}) {
                 />
             </div>
 
-            <button type="submit" onClick={() => incrementPage()} className="btn btn-primary min-w-36 mt-4 self-end">
+            <button type="submit" onClick={() => handleSave()} className="btn btn-primary min-w-36 mt-4 self-end">
                 Save
             </button>
 
