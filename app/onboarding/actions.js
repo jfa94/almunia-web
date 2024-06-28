@@ -63,10 +63,13 @@ export async function submitForm(formArgs, formData) {
             const putCommand = new PutCommand(input)
             const putResponse = await dbClient.send(putCommand)
             console.log('Submission response: ', putResponse)
+            return putResponse
         } catch (error) {
             console.error('Error during submission: ', error)
+            return error
         }
     } else {
         console.error('Not authenticated')
+        return new Error('Not authenticated')
     }
 }

@@ -1,10 +1,15 @@
 import {submitForm} from "@/app/onboarding/actions"
 
 function Welcome({formState, incrementPage, hidden}) {
-    const submitWelcomeForm = submitForm.bind(null, {'companyId': formState.companyId, page: 'welcome' })
+    // const submitWelcomeForm = submitForm.bind(null, {'companyId': formState.companyId, page: 'welcome' })
 
-    const handleSave = () => {
-        incrementPage()
+    const submitWelcomeForm = async (formData) => {
+        const result = await submitForm({'companyId': formState.companyId, page: 'welcome'}, formData)
+        console.log(result)
+        if (result.status === 200) {
+            incrementPage()
+        }
+        alert('An error has occurred. Please try again later.')
     }
 
     return <div hidden={hidden}>
