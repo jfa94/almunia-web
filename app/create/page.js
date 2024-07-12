@@ -1,21 +1,21 @@
 import {redirect} from "next/navigation";
 import {checkForCompany} from "@/app/create/actions";
-import {auth} from "@/auth";
 
 const Create = async () => {
-    const session = await auth()
-
     const createNewCid = async () => {
         'use server';
-        const existingInfo = await checkForCompany()
+        const {item, id} = await checkForCompany()
 
-        if (!existingInfo.company_id) {
+        if (!item) {
+            console.error('Issue with checkForCompany. Returned:', item)
+            redirect('/?error=create')
+        } else if (!item.company_id) {
             const newCid = "C-" + Date.now().toString(32) + Math.random().toString(32).slice(2)
-            console.log('Generated new CID for user', session.user.id, ':', newCid)
+            console.log('Create CID', newCid, 'for identity id:', id)
             redirect(`/onboarding?cid=${newCid}`)
         }
 
-        redirect(`/onboarding?cid=${existingInfo.company_id}`)
+        redirect(`/onboarding?cid=${item.company_id}`)
     }
 
     return <div className="h-dvh w-dvw flex flex-row gap-4 justify-center items-center">

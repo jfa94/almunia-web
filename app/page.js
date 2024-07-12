@@ -12,7 +12,7 @@ export default function Page() {
     return (
         <>
             <Suspense fallback={<header className="bg-amber-50"></header>}>
-                <Header bgClass="bg-amber-50"></Header>
+                    <Header bgClass="bg-amber-50"></Header>
             </Suspense>
             <main>
                 <Hero></Hero>

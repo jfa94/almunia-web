@@ -5,11 +5,11 @@ function Welcome({formState, incrementPage, hidden}) {
 
     const submitWelcomeForm = async (formData) => {
         const result = await submitForm({'companyId': formState.companyId, page: 'welcome'}, formData)
-        console.log(result)
-        if (result.status === 200) {
+        if (result['$metadata']?.httpStatusCode === 200) {
             incrementPage()
+        } else {
+            alert('An error has occurred. Please try again later.')
         }
-        alert('An error has occurred. Please try again later.')
     }
 
     return <div hidden={hidden}>
@@ -18,9 +18,7 @@ function Welcome({formState, incrementPage, hidden}) {
 
         <form action={submitWelcomeForm} className="mt-4">
             <div className="flex flex-col">
-                <label htmlFor="companyName"
-                       className="font-bold text-lg"
-                >
+                <label htmlFor="companyName" className="font-bold text-lg">
                     What is your company&apos;s name?
                 </label>
                 <input type="text"
@@ -59,7 +57,7 @@ function Welcome({formState, incrementPage, hidden}) {
                 />
             </div>
 
-            <button type="submit" onClick={() => handleSave()} className="btn btn-primary min-w-36 mt-4 self-end">
+            <button type="submit" className="btn btn-primary min-w-36 mt-4 self-end">
                 Save
             </button>
 

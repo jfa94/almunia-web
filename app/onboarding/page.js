@@ -4,7 +4,7 @@ import Welcome from "@/app/onboarding/welcome/Welcome"
 import ValuesForm from "@/app/onboarding/values/ValuesForm"
 import TeamInformationForm from "@/app/onboarding/team/TeamInformationForm"
 import QuestionsForm from "@/app/onboarding/questions/QuestionsForm"
-import {useSearchParams} from "next/navigation"
+import {redirect, useSearchParams} from "next/navigation"
 
 const reducer = (state, action) => {
     return {
@@ -21,6 +21,10 @@ const Onboarding = () => {
         companyId: searchParams.get('cid'),
         values: []
     })
+
+    if (!searchParams.has('cid')) {
+        redirect('/create')
+    }
 
     const incrementPage = () => {
         if (formState.maxPage === formState.activePage) {
@@ -50,13 +54,24 @@ const Onboarding = () => {
                 </div>
                 <h1 className="heading">Setup</h1>
 
-                <Welcome formState={formState} dispatch={dispatch} incrementPage={incrementPage}
-                         hidden={formState.activePage !== 0}/>
-                <ValuesForm formState={formState} dispatch={dispatch} incrementPage={incrementPage}
-                            hidden={formState.activePage !== 1}/>
-                <QuestionsForm formState={formState} incrementPage={incrementPage} hidden={formState.activePage !== 2}/>
-                <TeamInformationForm formState={formState} incrementPage={incrementPage}
-                                     hidden={formState.activePage !== 3}/>
+                <Welcome formState={formState}
+                         dispatch={dispatch}
+                         incrementPage={incrementPage}
+                         hidden={formState.activePage !== 0}
+                />
+                <ValuesForm formState={formState}
+                            dispatch={dispatch}
+                            incrementPage={incrementPage}
+                            hidden={formState.activePage !== 1}
+                />
+                <QuestionsForm formState={formState}
+                               incrementPage={incrementPage}
+                               hidden={formState.activePage !== 2}
+                />
+                <TeamInformationForm formState={formState}
+                                     incrementPage={incrementPage}
+                                     hidden={formState.activePage !== 3}
+                />
 
             </main>
         </>

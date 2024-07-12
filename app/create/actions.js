@@ -1,48 +1,19 @@
 'use server';
-import {auth} from "@/auth"
-import {DynamoDBClient} from "@aws-sdk/client-dynamodb"
+import {cookies} from "next/headers";
 import { GetCommand } from "@aws-sdk/lib-dynamodb"
-import {fromCognitoIdentityPool} from "@aws-sdk/credential-providers"
-import {CognitoIdentityClient, GetIdCommand} from "@aws-sdk/client-cognito-identity"
+import {getCognitoIdentity, getDynamoDBClient} from "@/lib/aws";
 
 export async function checkForCompany() {
-    const session = await auth()
+    const cookieStore = cookies()
 
-    if (session) {
-        const login = `cognito-idp.${process.env.CLOUD_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`
-        const credentialsProvider = fromCognitoIdentityPool({
-            clientConfig: {region: process.env.CLOUD_REGION},
-            identityPoolId: process.env.COGNITO_IDENTITY_POOL_ID,
-            logins: {
-                [login]: session.user.bearer_token
-            }
-        })
+    if (!cookieStore.has('idToken')) {
+        return {error: 'Not authenticated'}
+    }
+        const identityToken = cookieStore.get('idToken').value
+        console.log('/create checkForCompany() token:', identityToken)
 
-        const cognitoIdentityClient = new CognitoIdentityClient({
-            region: process.env.CLOUD_REGION,
-            credentials: credentialsProvider,
-        })
-
-        const params = {
-            IdentityPoolId: process.env.COGNITO_IDENTITY_POOL_ID,
-            Logins: {
-                [login]: session.user.bearer_token
-            }
-        }
-        let identityId = {}
-
-        try {
-            const getIdCommand = new GetIdCommand(params)
-            const response = await cognitoIdentityClient.send(getIdCommand)
-            identityId = response.IdentityId
-        } catch (error) {
-            console.error("Error fetching IdentityId:", error)
-        }
-
-        const dbClient = new DynamoDBClient({
-            region: process.env.CLOUD_REGION,
-            credentials: credentialsProvider,
-        })
+        const identityId = await getCognitoIdentity(identityToken)
+        const dbClient = await getDynamoDBClient(identityToken)
 
         const input = {
             "TableName": "company-information",
@@ -55,11 +26,9 @@ export async function checkForCompany() {
             const getCommand = new GetCommand(input)
             const getResponse = await dbClient.send(getCommand)
             console.log('Get response: ', getResponse)
-            return getResponse.Item
+            return {item: getResponse.Item, id: identityId}
         } catch (error) {
             console.error('Error during Get request: ', error)
+            return error
         }
-    } else {
-        console.error('Not authenticated')
-    }
 }
