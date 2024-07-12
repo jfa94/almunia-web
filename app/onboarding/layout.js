@@ -1,7 +1,7 @@
-import { auth, signIn } from "@/auth";
+import {Suspense} from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import {Suspense} from "react";
+import {isAuth, signIn} from "@/lib/auth";
 
 // This is a server-side component to ensure the user is logged in.
 // If not, it will redirect to the login page.
@@ -9,15 +9,10 @@ import {Suspense} from "react";
 // You can also add custom static UI elements like a Navbar, Sidebar, Footer, etc..
 // See https://shipfa.st/docs/tutorials/private-page
 export default async function LayoutPrivate({children}) {
-    const session = await auth();
-
-    // const logIn = async () => {
-    //     'use server'
-    //     await signIn("Cognito", {redirectTo: "/onboarding"})
-    // }
+    const session = await isAuth()
 
     if (!session) {
-      await signIn("Cognito", { redirectTo: "/onboarding" })
+        signIn('cognito', {callbackUrl: '/create'})
     }
 
     return <>

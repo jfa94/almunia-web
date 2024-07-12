@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-
 import {useState} from "react";
 import {Popover, Transition} from "@headlessui/react";
-import {useSession, signOut} from "next-auth/react";
-import apiClient from "@/libs/api";
+import apiClient from "@/lib/api";
+import {useSession} from "@/lib/session";
+import {logOut} from "@/lib/auth";
 
 // A button to show user some account actions
 //  1. Billing: open a Stripe Customer Portal to manage their billing (cancel subscription, update payment method, etc.).
@@ -17,9 +17,7 @@ const ButtonAccount = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSignOut = () => {
-        signOut({
-            callbackUrl: "/api/auth/logout",
-        });
+        logOut();
     };
     const handleBilling = async () => {
         setIsLoading(true);

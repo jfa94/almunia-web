@@ -1,4 +1,4 @@
-import {auth, signIn} from "@/auth";
+import {isAuth, signIn} from "@/lib/auth";
 
 // This is a server-side component to ensure the user is logged in.
 // If not, it will redirect to the login page.
@@ -6,10 +6,8 @@ import {auth, signIn} from "@/auth";
 // You can also add custom static UI elements like a Navbar, Sidebar, Footer, etc..
 // See https://shipfa.st/docs/tutorials/private-page
 export default async function LayoutPrivate({children}) {
-    const session = await auth();
-
-    if (!session) {
-        await signIn('Cognito')
+    if (!isAuth()) {
+        signIn('cognito', {callbackUrl: '/create'})
     }
 
     return <>{children}</>;
