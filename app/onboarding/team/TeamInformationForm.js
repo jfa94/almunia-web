@@ -8,7 +8,14 @@ const TeamInformationForm = ({formState, hidden}) => {
         <InputTeamInformation key="0" id="0"/>
     ])
 
-    const submitTeamInformationForm = submitForm.bind(null, {'companyId': formState.companyId, page: 'team' })
+    const submitTeamInformationForm = async (formData) => {
+        const result = await submitForm({'companyId': formState.companyId, page: 'team'}, formData)
+        if (result['$metadata']?.httpStatusCode === 200) {
+            console.log('Finished')
+        } else {
+            alert('An error has occurred. Please try again later.')
+        }
+    }
 
     let addInputToArray = (e) => {
         e.preventDefault()

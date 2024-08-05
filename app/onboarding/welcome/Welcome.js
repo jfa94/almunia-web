@@ -4,7 +4,7 @@ function Welcome({formState, incrementPage, hidden}) {
     // const submitWelcomeForm = submitForm.bind(null, {'companyId': formState.companyId, page: 'welcome' })
 
     const submitWelcomeForm = async (formData) => {
-        const result = await submitForm({'companyId': formState.companyId, page: 'welcome'}, formData)
+        const result = await submitForm({companyId: formState.companyId, page: 'welcome'}, formData)
         if (result['$metadata']?.httpStatusCode === 200) {
             incrementPage()
         } else {

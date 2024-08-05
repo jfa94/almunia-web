@@ -8,15 +8,15 @@ export function InputValueField({id, removeInput = alertIsOriginal}) {
     return <div className="grid grid-cols-[1fr_auto] md:grid-cols-[1fr_1fr_1fr_1fr_50px] grid-rows-[auto_1fr] md:grid-rows-1 items-start gap-2 md:gap-4 mb-6">
 
         <input type="text"
-               name={`value${id}Name`}
-               id={`value${id}Name`}
+               name={`key${id}`}
+               id={`key${id}`}
                placeholder="New Value"
                autoComplete="off"
                className="col-span-1 text-lg font-bold py-2 pl-1 overflow-ellipsis"
         />
 
-        <textarea name={`value${id}Description`}
-                  id={`value${id}Description`}
+        <textarea name={`value${id}`}
+                  id={`value${id}`}
                   placeholder="Description"
                   autoComplete="off"
                   className="textarea textarea-lg textarea-bordered py-2 px-3 text-base col-span-2 md:col-span-3"

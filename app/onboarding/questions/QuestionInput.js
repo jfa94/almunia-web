@@ -2,12 +2,21 @@ const alertIsOriginal = () => {
     window.alert('Cannot delete the first input')
 }
 
-export function QuestionInput({id, removeInput = alertIsOriginal}) {
+export function QuestionInput({id, valueKey, valueName, removeInput = alertIsOriginal}) {
     return <div className="flex flex-row items-center mb-4">
 
         <input type="text"
-               id={`value${id}Question`}
-               name={`value${id}Question`}
+               name={`key${valueKey}`}
+               id={`key${valueKey}`}
+               value={valueName}
+               autoComplete="off"
+               className="hidden"
+               readOnly={true}
+        />
+
+        <input type="text"
+               id={`${valueKey}value${id}`}
+               name={`${valueKey}value${id}`}
                className="custom-input h-10 mr-2 shadow-sm"
         />
 

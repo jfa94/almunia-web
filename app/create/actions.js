@@ -25,7 +25,7 @@ export async function checkForCompany() {
         try {
             const getCommand = new GetCommand(input)
             const getResponse = await dbClient.send(getCommand)
-            console.log('Get response: ', getResponse)
+            // console.log('Get response: ', getResponse)
             return {item: getResponse.Item, id: identityId}
         } catch (error) {
             console.error('Error during Get request: ', error)

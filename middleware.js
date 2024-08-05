@@ -1,11 +1,17 @@
 import {getTokens} from "@/lib/auth";
 import {NextResponse} from "next/server";
 
+// const protectedRoutes = ['/dashboard']
+
 export const middleware = async (request) => {
-    console.log('Ran middleware for:', request.url)
+    console.log('Ran middleware for:', request.nextUrl.pathname)
     const accessToken = request.cookies.get('accessToken')
     const identityToken = request.cookies.get('idToken')
     const refreshToken = request.cookies.get('refreshToken')
+
+    // if (!protectedRoutes.some((path) => request.nextUrl.pathname.startsWith(path)) && !refreshToken) {
+    //     signIn('cognito', {callbackUrl: request.nextUrl.pathname})
+    // }
 
     if ((!accessToken || !identityToken) && refreshToken) {
         const freshToken = await getTokens('refresh', refreshToken.value)
