@@ -4,7 +4,7 @@ import {getSEOTags} from "@/lib/seo";
 import config from "@/config";
 import "./globals.css";
 import {SessionProvider} from "@/lib/session";
-import {cookies} from "next/headers";
+import {getUserData} from "@/lib/auth";
 
 const font = Inter({subsets: ["latin"]});
 
@@ -19,9 +19,9 @@ export const viewport = {
 // You can override them in each page passing params to getSOTags() function.
 export const metadata = getSEOTags();
 
-export default function RootLayout({children}) {
-    const cookieStore = cookies()
-    const identityToken = cookieStore.get('idToken')?.value || null
+export default async function RootLayout({children}) {
+    console.log('Rendered root')
+    const initialData = await getUserData()
 
     return (
         <html lang="en" data-theme={config.colors.theme} className={font.className}>
@@ -35,7 +35,7 @@ export default function RootLayout({children}) {
         )}
         <body>
         {/* ClientLayout contains all the client wrappers (Crisp chat support, toast messages, tooltips, etc.) */}
-        <SessionProvider identityToken={identityToken}>
+        <SessionProvider initialData={initialData}>
             {children}
         </SessionProvider>
         </body>
