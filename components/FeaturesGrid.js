@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react"
 import Image from "next/image"
-import reportingMockup from "/public/landing/reporting-mockup.png"
+// import reportingMockup from "/public/landing/reporting-mockup.png"
 
 const features = [
     {
@@ -79,12 +79,12 @@ const features = [
                 </div>
 
                 <div>
-                    <Image src={reportingMockup}
+                    <Image src="/landing/reporting-mockup.png"
                            alt="Reporting mockup"
-                           className="lg:max-w-[75%] max-w-[95%] absolute right-4"
+                           className="lg:max-w-[75%] max-w-[90%] absolute right-4"
                            priority={true}
-                           width={600}
-                           height='auto'
+                           height={485}
+                           width={595}
                     />
                 </div>
 
