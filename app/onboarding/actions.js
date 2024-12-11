@@ -45,7 +45,7 @@ export async function submitForm(formArgs, formData) {
         return {error: 'Invalid page value'}
     }
 
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
 
     if (!cookieStore.has('idToken')) {
         console.error('Not authenticated')

@@ -4,7 +4,7 @@ import { GetCommand } from "@aws-sdk/lib-dynamodb"
 import {getCognitoIdentity, getDynamoDBClient} from "@/lib/aws";
 
 export async function checkForCompany() {
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
 
     if (!cookieStore.has('idToken')) {
         return {error: 'Not authenticated'}
