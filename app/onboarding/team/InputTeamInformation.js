@@ -5,7 +5,17 @@ const alertIsOriginal = () => {
 
 export function InputTeamInformation({id, removeInput = alertIsOriginal}) {
     return (
-        <div className="flex md:grid flex-col items-start md:grid-cols-[1fr_1fr_1fr_1fr_auto] grid-rows-2 md:grid-rows-1">
+        <div className="flex md:grid flex-col items-start md:grid-cols-[1fr_1fr_1fr_1fr_1fr_auto] grid-rows-2 md:grid-rows-1">
+
+            <label htmlFor={`value${id}Email`} className="inline-table-label">Email</label>
+            <input type="email"
+                   name={`value${id}Email`}
+                   id={`value${id}Email`}
+                   placeholder="-"
+                   autoComplete="off"
+                   required
+                   className={`${id !== '0' && 'md:border-t-0'} custom-table-input border-l border-l-black/20`}
+            />
 
             <label htmlFor={`value${id}FirstName`} className="inline-table-label">First Name</label>
             <input type="text"
@@ -13,7 +23,7 @@ export function InputTeamInformation({id, removeInput = alertIsOriginal}) {
                    id={`value${id}FirstName`}
                    placeholder="-"
                    autoComplete="off"
-                   className={`${id !== '0' && 'md:border-t-0'} custom-table-input border-l border-l-black/20`}
+                   className={`${id !== '0' && 'md:border-t-0'} custom-table-input`}
             />
 
             <label htmlFor={`value${id}LastName`} className="inline-table-label">Last Name</label>
@@ -34,17 +44,17 @@ export function InputTeamInformation({id, removeInput = alertIsOriginal}) {
                    className={`${id !== '0' && 'md:border-t-0'} custom-table-input`}
             />
 
-            <label htmlFor={`value${id}Email`} className="inline-table-label">Email</label>
-            <input type="email"
-                   name={`value${id}Email`}
-                   id={`value${id}Email`}
+            <label htmlFor={`value${id}Manager`} className="inline-table-label">Manager</label>
+            <input type="text"
+                   name={`value${id}Manager`}
+                   id={`value${id}Manager`}
                    placeholder="-"
                    autoComplete="off"
                    className={`${id !== '0' && 'md:border-t-0'} custom-table-input`}
             />
 
             <div onClick={() => removeInput(id)}
-                 className={`${id === '0' && 'rounded-tr-md !border-t-2 !border-t-red-700/50'} w-full md:w-10 h-8 md:h-full my-4 md:m-0 md:row-span-1 md:col-start-5 inline-flex items-center justify-center bg-red-300/10 border-2 border-red-700/50 md:border-t-0 rounded-md md:rounded-none text-primary hover:cursor-pointer`}>
+                 className={`${id === '0' && 'rounded-tr-md !border-t-2 !border-t-red-700/50'} w-full md:w-10 h-8 md:h-full my-4 md:m-0 md:row-span-1 md:col-start-6 inline-flex items-center justify-center bg-red-300/10 border-2 border-red-700/50 md:border-t-0 rounded-md md:rounded-none text-primary hover:cursor-pointer`}>
                 <p className="md:hidden text-sm font-semibold text-red-700/60 px-2">Remove</p>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                      className="w-4 md:w-5 h-4 md:h-5 duration-200 fill-red-700/60">

@@ -2,6 +2,7 @@ import {useState} from "react";
 import {InputTeamInformation} from "@/app/onboarding/team/InputTeamInformation";
 import { SubmitButton } from "@/app/onboarding/team/SubmitButton";
 import {submitForm} from "@/app/onboarding/actions";
+import {redirect} from "next/navigation";
 
 const TeamInformationForm = ({formState, hidden}) => {
     let [inputArray, setInputArray] = useState([
@@ -11,7 +12,7 @@ const TeamInformationForm = ({formState, hidden}) => {
     const submitTeamInformationForm = async (formData) => {
         const result = await submitForm({'companyId': formState.companyId, page: 'team'}, formData)
         if (result['$metadata']?.httpStatusCode === 200) {
-            console.log('Finished')
+            redirect('/dashboard')
         } else {
             alert('An error has occurred. Please try again later.')
         }
@@ -40,11 +41,12 @@ const TeamInformationForm = ({formState, hidden}) => {
             <div className="subheading">Team Information</div>
 
             <form action={submitTeamInformationForm}>
-                <div className="hidden md:grid grid-cols-[1fr_1fr_1fr_1fr_40px]">
+                <div className="hidden md:grid grid-cols-[1fr_1fr_1fr_1fr_1fr_40px]">
+                    <p className="font-bold ml-2">Email<span className="text-red-600">*</span></p>
                     <p className="font-bold ml-2">First Name</p>
                     <p className="font-bold ml-2">Last Name</p>
                     <p className="font-bold ml-2">Job Title</p>
-                    <p className="font-bold ml-2">Email</p>
+                    <p className="font-bold ml-2">Manager (full name)</p>
                 </div>
 
                 {inputArray}

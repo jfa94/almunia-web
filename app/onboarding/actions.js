@@ -6,7 +6,8 @@ import {getCognitoIdentity, getDynamoDBClient} from "@/lib/aws";
 const tableMap = {
     welcome: ['company-information', 'pairs'],
     values: ['company-values', 'pairs'],
-    questions: ['custom-questions', 'list']
+    questions: ['custom-questions', 'list'],
+    team: ['company-teams', 'table']
 }
 
 const objectFromData = (formData, dataShape) => {
@@ -32,7 +33,49 @@ const objectFromData = (formData, dataShape) => {
             }
         })
     } else if (dataShape === 'table') {
-        // TODO: implement for Team page
+        const groups = new Set();
+
+        // First, find all unique groups
+        for (let [name, value] of formData.entries()) {
+            const match = name.match(/^value(\d+)/);
+            if (match) {
+                groups.add(`value${match[1]}`);
+            }
+        }
+
+        // Transform data for each group
+        groups.forEach(groupPrefix => {
+            // Collect all data for this group
+            const groupData = {};
+
+            // Collect fields for this group
+            for (let [name, value] of formData.entries()) {
+                if (name.startsWith(groupPrefix) && name.length > groupPrefix.length) {
+                    // Extract the field name by removing the group prefix
+                    const fieldName = name.slice(groupPrefix.length);
+
+                    // Only add non-empty values
+                    if (value !== '') {
+                        groupData[fieldName] = value;
+                    }
+                }
+            }
+
+            // Check if group has complete information (requires Email)
+            if (groupData.Email) {
+                newObject[groupData.Email] = {
+                    FirstName: groupData.FirstName || '',
+                    LastName: groupData.LastName || '',
+                    Role: groupData.Role || '',
+                    ...(Object.keys(groupData)
+                        .filter(key => !['FirstName', 'LastName', 'Role', 'Email'].includes(key))
+                        .reduce((acc, key) => {
+                            acc[key] = groupData[key];
+                            return acc;
+                        }, {}))
+                };
+            }
+        });
     }
 
     return newObject

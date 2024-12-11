@@ -6,7 +6,7 @@ export const SubmitButton = () => {
 
     return (
         <button type="submit" disabled={status.pending} className="btn btn-primary min-w-36">
-            {status.pending ? 'Loading...' : 'Save'}
+            {status.pending ? 'Loading...' : 'Finish'}
         </button>
     );
 };
