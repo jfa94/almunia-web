@@ -36,7 +36,7 @@ const objectFromData = (formData, dataShape) => {
         const groups = new Set();
 
         // First, find all unique groups
-        for (let [name, value] of formData.entries()) {
+        for (let [name] of formData.entries()) {
             const match = name.match(/^value(\d+)/);
             if (match) {
                 groups.add(`value${match[1]}`);

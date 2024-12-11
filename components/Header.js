@@ -7,7 +7,6 @@ import Image from "next/image";
 import logo from "@/public/logo.png";
 import config from "@/config";
 import ButtonSignin from "@/components/ButtonSignin";
-import {useSession} from "@/lib/session";
 
 const links = [
     {
