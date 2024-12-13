@@ -1,11 +1,28 @@
+'use client';
 import ButtonAccount from "@/components/ButtonAccount";
+import {useSession} from "@/lib/session";
+import {getTeamInformation} from "@/app/dashboard/actions";
+import {useEffect} from "react";
 
 export const dynamic = "force-dynamic";
 
 // This is a private page: It's protected by the layout.js component which ensures the user is authenticated.
 // It's a server compoment which means you can fetch data (like the user profile) before the page is rendered.
 // See https://shipfa.st/docs/tutorials/private-page
-export default async function Dashboard() {
+export default function Dashboard() {
+    const {data: session} = useSession()
+    console.log('Session:', session)
+    let teamInfo = {}
+
+    useEffect(() => {
+        (async () => {
+            const companyId = session['custom:company-id']
+            console.log(companyId)
+            teamInfo = await getTeamInformation(companyId)
+            console.log(teamInfo)
+        })()
+    })
+
     return (
         <main className="min-h-screen p-8 pb-24">
             <section className="max-w-xl mx-auto space-y-8">

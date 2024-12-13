@@ -1,13 +1,13 @@
 import {redirect} from "next/navigation";
-import {checkForCompany} from "@/app/create/actions";
+import {getCompanyInformation} from "@/lib/actions";
 
 const Create = async () => {
     const createNewCid = async () => {
         'use server';
-        const {item, id} = await checkForCompany()
+        const {item, id} = await getCompanyInformation()
 
         if (!item) {
-            console.error('Issue with checkForCompany. Returned:', item)
+            console.error('Issue with getCompanyInformation. Returned:', item)
             redirect('/?error=create')
         } else if (!item.company_id) {
             const newCid = "C-" + Date.now().toString(32) + Math.random().toString(32).slice(2)

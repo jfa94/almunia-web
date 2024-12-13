@@ -21,7 +21,8 @@ export const metadata = getSEOTags();
 
 export default async function RootLayout({children}) {
     console.log('Rendered root')
-    const initialData = await getUserData()
+    let initialData = await getUserData()
+    // console.log('Initial data:', initialData)
 
     return (
         <html lang="en" data-theme={config.colors.theme} className={font.className}>

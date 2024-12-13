@@ -2,12 +2,94 @@
 import {PutCommand} from "@aws-sdk/lib-dynamodb"
 import {cookies} from "next/headers";
 import {getCognitoIdentity, getDynamoDBClient} from "@/lib/aws";
+import {CognitoIdentityProviderClient, UpdateUserAttributesCommand} from "@aws-sdk/client-cognito-identity-provider";
 
 const tableMap = {
     welcome: ['company-information', 'pairs'],
     values: ['company-values', 'pairs'],
     questions: ['custom-questions', 'list'],
     team: ['company-teams', 'table']
+}
+
+export async function submitForm(formArgs, formData) {
+    console.log(`Submitted ${formArgs.page} with data: `, formData)
+    if (!Object.keys(tableMap).includes(formArgs.page)) {
+        console.error('Invalid page value')
+        return {error: 'Invalid page value'}
+    }
+
+    const cookieStore = await cookies()
+
+    if (!cookieStore.has('idToken')) {
+        console.error('Not authenticated')
+        return {error: 'Not authenticated'}
+    }
+
+    const identityToken = cookieStore.get('idToken').value
+
+    const identityId = await getCognitoIdentity(identityToken)
+    const dbClient = await getDynamoDBClient(identityToken)
+
+    let item = {}
+    const submittedData = objectFromData(formData, tableMap[formArgs.page][1])
+    if (formArgs.page === 'welcome') {
+        item = {
+            "identity_id": identityId,
+            "company_id": formArgs.companyId,
+            "company_name": formData.get('companyName'),
+            "company_mission": formData.get('companyMission'),
+            "company_vision": formData.get('companyVision'),
+        }
+    } else {
+        item = {
+            "company_id": formArgs.companyId,
+            [formArgs.page]: submittedData
+        }
+    }
+
+    const input = {
+        "TableName": tableMap[formArgs.page][0],
+        "Item": item,
+    }
+
+    if (formArgs.page === 'welcome') {
+        console.log('Running Cognito Identity update...')
+        const accessToken = cookieStore.get('accessToken').value
+        const cognitoClient = new CognitoIdentityProviderClient({
+            region: process.env.CLOUD_REGION || 'eu-west-1'
+        });
+
+        try {
+            const updateUserCommand = new UpdateUserAttributesCommand({
+                UserAttributes: [
+                    {
+                        Name: 'custom:company',
+                        Value: formData.get('companyName')
+                    },
+                    {
+                        Name: 'custom:company-id',
+                        Value: formArgs.companyId
+                    }
+                ],
+                AccessToken: accessToken
+            });
+            await cognitoClient.send(updateUserCommand);
+            console.log('User attribute updated successfully');
+        } catch (error) {
+            console.error('Error during user update: ', error)
+            return JSON.stringify(error)
+        }
+    }
+
+    try {
+        const putCommand = new PutCommand(input)
+        const putResponse = await dbClient.send(putCommand)
+        console.log('Submission response: ', putResponse)
+        return Object.assign(putResponse, {data: submittedData})
+    } catch (error) {
+        console.error('Error during submission: ', error)
+        return JSON.stringify(error)
+    }
 }
 
 const objectFromData = (formData, dataShape) => {
@@ -79,56 +161,4 @@ const objectFromData = (formData, dataShape) => {
     }
 
     return newObject
-}
-
-export async function submitForm(formArgs, formData) {
-    console.log(`Submitted ${formArgs.page} with data: `, formData)
-    if (!Object.keys(tableMap).includes(formArgs.page)) {
-        console.error('Invalid page value')
-        return {error: 'Invalid page value'}
-    }
-
-    const cookieStore = await cookies()
-
-    if (!cookieStore.has('idToken')) {
-        console.error('Not authenticated')
-        return {error: 'Not authenticated'}
-    }
-
-    const identityToken = cookieStore.get('idToken').value
-
-    const identityId = await getCognitoIdentity(identityToken)
-    const dbClient = await getDynamoDBClient(identityToken)
-
-    let item = {}
-    const submittedData = objectFromData(formData, tableMap[formArgs.page][1])
-    if (formArgs.page === 'welcome') {
-        item = {
-            "identity_id": identityId,
-            "company_id": formArgs.companyId,
-            "company_name": formData.get('companyName'),
-            "company_mission": formData.get('companyMission'),
-            "company_vision": formData.get('companyVision'),
-        }
-    } else {
-        item = {
-            "company_id": formArgs.companyId,
-            [formArgs.page]: submittedData
-        }
-    }
-
-    const input = {
-        "TableName": tableMap[formArgs.page][0],
-        "Item": item,
-    }
-
-    try {
-        const putCommand = new PutCommand(input)
-        const putResponse = await dbClient.send(putCommand)
-        console.log('Submission response: ', putResponse)
-        return Object.assign(putResponse, {data: submittedData})
-    } catch (error) {
-        console.error('Error during submission: ', error)
-        return JSON.stringify(error)
-    }
 }
