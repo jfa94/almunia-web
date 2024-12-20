@@ -182,6 +182,7 @@ export async function submitTeamForm(formArgs, formData) {
         // Check if group has complete information (requires Email)
         if (groupData.Email) {
             submittedData[groupData.Email] = {
+                Active: true,
                 FirstName: groupData.FirstName || '',
                 LastName: groupData.LastName || '',
                 Role: groupData.Role || '',
