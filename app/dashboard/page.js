@@ -11,12 +11,11 @@ export const dynamic = "force-dynamic";
 // See https://shipfa.st/docs/tutorials/private-page
 export default function Dashboard() {
     const {data: session} = useSession()
-    console.log('Session:', session)
     let teamInfo = {}
 
     useEffect(() => {
         (async () => {
-            const companyId = session['custom:company-id']
+            const companyId = session.user['custom:company-id']
             console.log(companyId)
             teamInfo = await getTeamInformation(companyId)
             console.log(teamInfo)
