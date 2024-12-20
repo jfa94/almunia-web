@@ -1,10 +1,10 @@
-import {submitForm} from "@/app/onboarding/actions"
+import {submitWelcomeForm} from "@/app/onboarding/actions";
 
 function Welcome({formState, incrementPage, hidden}) {
     // const submitWelcomeForm = submitForm.bind(null, {'companyId': formState.companyId, page: 'welcome' })
 
-    const submitWelcomeForm = async (formData) => {
-        const result = await submitForm({companyId: formState.companyId, page: 'welcome'}, formData)
+    const handleSubmitForm = async (formData) => {
+        const result = await submitWelcomeForm({companyId: formState.companyId, page: 'welcome'}, formData)
         if (result['$metadata']?.httpStatusCode === 200) {
             incrementPage()
         } else {
@@ -16,7 +16,7 @@ function Welcome({formState, incrementPage, hidden}) {
         <h2 className="subheading">Welcome to Almunia!</h2>
         <p>Let&apos;s start with the basics.</p>
 
-        <form action={submitWelcomeForm} className="mt-4">
+        <form action={handleSubmitForm} className="mt-4">
             <div className="flex flex-col">
                 <label htmlFor="companyName" className="font-bold text-lg">
                     What is your company&apos;s name?

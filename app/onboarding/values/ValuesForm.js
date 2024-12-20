@@ -1,6 +1,6 @@
 'use client';
+import {submitValuesForm} from "@/app/onboarding/actions";
 import {InputValueField} from "@/app/onboarding/values/InputValueField";
-import {submitForm} from "@/app/onboarding/actions";
 import {useState} from "react"
 
 const ValuesForm = ({formState, dispatch, incrementPage, hidden}) => {
@@ -8,10 +8,10 @@ const ValuesForm = ({formState, dispatch, incrementPage, hidden}) => {
         <InputValueField key="0" id="0"/>
     ])
 
-    const submitValuesForm = async (formData) => {
-        const result = await submitForm({companyId: formState.companyId, page: 'values'}, formData)
+    const handleSubmitForm = async (formData) => {
+        const result = await submitValuesForm({companyId: formState.companyId, page: 'values'}, formData)
         if (result['$metadata']?.httpStatusCode === 200) {
-            dispatch({field: 'values', value: Object.keys(result.data)})
+            dispatch({field: 'values', value: Object.keys(result.data.values)})
             incrementPage()
         } else {
             alert('An error has occurred. Please try again later.')
@@ -55,7 +55,7 @@ const ValuesForm = ({formState, dispatch, incrementPage, hidden}) => {
                 </p>
             </div>
 
-            <form action={submitValuesForm} className="flex flex-col mt-4">
+            <form action={handleSubmitForm} className="flex flex-col mt-4">
 
                 {inputArray}
 

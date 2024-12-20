@@ -1,22 +1,11 @@
 'use server';
-import {PutCommand} from "@aws-sdk/lib-dynamodb"
 import {cookies} from "next/headers";
-import {getCognitoIdentity, getDynamoDBClient} from "@/lib/aws";
 import {CognitoIdentityProviderClient, UpdateUserAttributesCommand} from "@aws-sdk/client-cognito-identity-provider";
+import {getCognitoIdentity, queryDynamoDb, submitDynamoDbUpdate} from "@/lib/aws";
 
-const tableMap = {
-    welcome: ['company-information', 'pairs'],
-    values: ['company-values', 'pairs'],
-    questions: ['custom-questions', 'list'],
-    team: ['company-teams', 'table']
-}
 
-export async function submitForm(formArgs, formData) {
-    console.log(`Submitted ${formArgs.page} with data: `, formData)
-    if (!Object.keys(tableMap).includes(formArgs.page)) {
-        console.error('Invalid page value')
-        return {error: 'Invalid page value'}
-    }
+export async function submitWelcomeForm(formArgs, formData) {
+    console.log('Submitted Welcome form with data:', formData)
 
     const cookieStore = await cookies()
 
@@ -25,140 +14,191 @@ export async function submitForm(formArgs, formData) {
         return {error: 'Not authenticated'}
     }
 
-    const identityToken = cookieStore.get('idToken').value
-
-    const identityId = await getCognitoIdentity(identityToken)
-    const dbClient = await getDynamoDBClient(identityToken)
-
-    let item = {}
-    const submittedData = objectFromData(formData, tableMap[formArgs.page][1])
-    if (formArgs.page === 'welcome') {
-        item = {
-            "identity_id": identityId,
-            "company_id": formArgs.companyId,
-            "company_name": formData.get('companyName'),
-            "company_mission": formData.get('companyMission'),
-            "company_vision": formData.get('companyVision'),
-        }
-    } else {
-        item = {
-            "company_id": formArgs.companyId,
-            [formArgs.page]: submittedData
-        }
-    }
-
-    const input = {
-        "TableName": tableMap[formArgs.page][0],
-        "Item": item,
-    }
-
-    if (formArgs.page === 'welcome') {
-        console.log('Running Cognito Identity update...')
-        const accessToken = cookieStore.get('accessToken').value
-        const cognitoClient = new CognitoIdentityProviderClient({
-            region: process.env.CLOUD_REGION || 'eu-west-1'
-        });
-
-        try {
-            const updateUserCommand = new UpdateUserAttributesCommand({
-                UserAttributes: [
-                    {
-                        Name: 'custom:company',
-                        Value: formData.get('companyName')
-                    },
-                    {
-                        Name: 'custom:company-id',
-                        Value: formArgs.companyId
-                    }
-                ],
-                AccessToken: accessToken
-            });
-            await cognitoClient.send(updateUserCommand);
-            console.log('User attribute updated successfully');
-        } catch (error) {
-            console.error('Error during user update: ', error)
-            return JSON.stringify(error)
-        }
-    }
+    console.log('Running Cognito Identity update...')
+    const accessToken = cookieStore.get('accessToken').value
+    const cognitoClient = new CognitoIdentityProviderClient({
+        region: process.env.CLOUD_REGION || 'eu-west-1'
+    })
 
     try {
-        const putCommand = new PutCommand(input)
-        const putResponse = await dbClient.send(putCommand)
-        console.log('Submission response: ', putResponse)
-        return Object.assign(putResponse, {data: submittedData})
+        const updateUserCommand = new UpdateUserAttributesCommand({
+            UserAttributes: [
+                {Name: 'custom:company', Value: formData.get('companyName')},
+                {Name: 'custom:company-id', Value: formArgs.companyId}
+            ],
+            AccessToken: accessToken
+        })
+        await cognitoClient.send(updateUserCommand)
+        console.log('User attributes updated successfully')
     } catch (error) {
-        console.error('Error during submission: ', error)
+        console.error('Error during user update: ', error)
         return JSON.stringify(error)
     }
+
+    console.log('Creating standard questions record...')
+    const standardQuestionBank = await queryDynamoDb('standard-questions', 'company_id', 'template')
+    try {
+        await submitDynamoDbUpdate('standard-questions', {
+            'company_id': formArgs.companyId,
+            'question_object': standardQuestionBank.item.question_object,
+        })
+        console.log('Standard question bank created for:', formArgs.companyId)
+    } catch (error) {
+        console.error('Error creating standard question bank: ', error)
+        return JSON.stringify(error)
+    }
+
+    console.log('Updating company information...')
+    const identityToken = cookieStore.get('idToken').value
+    const identityId = await getCognitoIdentity(identityToken)
+
+    const item = {
+        "identity_id": identityId,
+        "company_id": formArgs.companyId,
+        "company_name": formData.get('companyName'),
+        "company_mission": formData.get('companyMission'),
+        "company_vision": formData.get('companyVision')
+    }
+
+    return await submitDynamoDbUpdate('company-information', item)
 }
 
-const objectFromData = (formData, dataShape) => {
+
+export async function submitValuesForm(formArgs, formData) {
+    console.log(`Submitted ${formArgs.page} with data: `, formData)
+
     let idList = []
-    let newObject = {}
+    let submittedData = {}
 
     for (const key of formData.keys()) {
         key.includes('key') && idList.push(key.slice(-1))
     }
 
-    if (dataShape === 'pairs') {
-        [...new Set(idList)].forEach((id) => {
-            newObject[formData.get(`key${id}`)] = formData.get(`value${id}`)
-        })
-    } else if (dataShape === 'list') {
-        [...new Set(idList)].forEach((id) => {
-            if (!(newObject[formData.get(`key${id}`)] instanceof Array)) {
-                newObject[formData.get(`key${id}`)] = []
-            }
+    [...new Set(idList)].forEach((id) => {
+        submittedData[formData.get(`key${id}`)] = formData.get(`value${id}`)
+    })
 
-            for (let i = 0; i < formData.getAll(`key${id}`).length; i++) {
-                newObject[formData.get(`key${id}`)].push(formData.get(`${id}value${i}`))
-            }
-        })
-    } else if (dataShape === 'table') {
-        const groups = new Set();
+    const item = {
+        "company_id": formArgs.companyId,
+        "values": submittedData
+    }
 
-        // First, find all unique groups
-        for (let [name] of formData.entries()) {
-            const match = name.match(/^value(\d+)/);
-            if (match) {
-                groups.add(`value${match[1]}`);
-            }
-        }
+    return await submitDynamoDbUpdate('company-values', item)
+}
 
-        // Transform data for each group
-        groups.forEach(groupPrefix => {
-            // Collect all data for this group
-            const groupData = {};
 
-            // Collect fields for this group
-            for (let [name, value] of formData.entries()) {
-                if (name.startsWith(groupPrefix) && name.length > groupPrefix.length) {
-                    // Extract the field name by removing the group prefix
-                    const fieldName = name.slice(groupPrefix.length);
+export async function submitQuestionsForm(formArgs, formData) {
+    console.log(`Submitted ${formArgs.page} with data: `, formData)
 
-                    // Only add non-empty values
-                    if (value !== '') {
-                        groupData[fieldName] = value;
-                    }
+    let questionList = {}
+    let submittedData = {}
+
+    for (const key of formData.keys()) {
+        if (key.includes('key')) {
+            const valueName = formData.get(key)
+            const valueId = valueName.replace(/\s/g, '').toLowerCase()
+
+            if (!(valueId in submittedData)) {
+                submittedData[valueId] = {
+                    value_name: valueName,
+                    question_count: 0,
+                    times_asked: 0,
+                    questions: []
                 }
             }
 
-            // Check if group has complete information (requires Email)
-            if (groupData.Email) {
-                newObject[groupData.Email] = {
-                    FirstName: groupData.FirstName || '',
-                    LastName: groupData.LastName || '',
-                    Role: groupData.Role || '',
-                    ...(Object.keys(groupData)
-                        .filter(key => !['FirstName', 'LastName', 'Role', 'Email'].includes(key))
-                        .reduce((acc, key) => {
-                            acc[key] = groupData[key];
-                            return acc;
-                        }, {}))
-                };
+        } else if (key.includes('value')) {
+            const valueId = formData.get(`key${key.slice(0, 1)}`).replace(/\s/g, '').toLowerCase()
+            const questionNumber = key.slice(-1)
+            const questionId = valueId + questionNumber
+
+            const questionObject = {
+                key: questionId,
+                question: formData.get(key),
+                times_asked: 0
             }
-        });
+
+            if (valueId in questionList && questionObject.question !== '') {
+                questionList[valueId].push(questionObject)
+            } else if (questionObject.question !== '') {
+                questionList[valueId] = [questionObject]
+            }
+
+        }
     }
 
-    return newObject
+    for (const valueId in questionList) {
+        submittedData[valueId].questions = questionList[valueId]
+        submittedData[valueId].question_count = questionList[valueId].length
+    }
+
+    const item = {
+        "company_id": formArgs.companyId,
+        "question_object": submittedData
+    }
+
+    return await submitDynamoDbUpdate('custom-questions', item)
+}
+
+
+export async function submitTeamForm(formArgs, formData) {
+    console.log(`Submitted ${formArgs.page} with data: `, formData)
+
+    let idList = []
+    let submittedData = {}
+
+    for (const key of formData.keys()) {
+        key.includes('key') && idList.push(key.slice(-1))
+    }
+
+    const groups = new Set();
+
+    // First, find all unique groups
+    for (let [name] of formData.entries()) {
+        const match = name.match(/^value(\d+)/);
+        if (match) {
+            groups.add(`value${match[1]}`)
+        }
+    }
+
+    // Transform data for each group
+    groups.forEach(groupPrefix => {
+        // Collect all data for this group
+        const groupData = {}
+
+        // Collect fields for this group
+        for (let [name, value] of formData.entries()) {
+            if (name.startsWith(groupPrefix) && name.length > groupPrefix.length) {
+                // Extract the field name by removing the group prefix
+                const fieldName = name.slice(groupPrefix.length)
+
+                // Only add non-empty values
+                if (value !== '') {
+                    groupData[fieldName] = value
+                }
+            }
+        }
+
+        // Check if group has complete information (requires Email)
+        if (groupData.Email) {
+            submittedData[groupData.Email] = {
+                FirstName: groupData.FirstName || '',
+                LastName: groupData.LastName || '',
+                Role: groupData.Role || '',
+                ...(Object.keys(groupData)
+                    .filter(key => !['FirstName', 'LastName', 'Role', 'Email'].includes(key))
+                    .reduce((acc, key) => {
+                        acc[key] = groupData[key]
+                        return acc
+                    }, {}))
+            }
+        }
+    })
+
+    const item = {
+        "company_id": formArgs.companyId,
+        "team": submittedData
+    }
+
+    return await submitDynamoDbUpdate('company-teams', item)
 }
