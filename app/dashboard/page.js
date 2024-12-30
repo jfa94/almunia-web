@@ -2,31 +2,83 @@
 import ButtonAccount from "@/components/ButtonAccount";
 import {useSession} from "@/lib/session";
 import {getTeamInformation} from "@/app/dashboard/actions";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
+import ToplineCard from "@/app/dashboard/components/ToplineCard"
 
-export const dynamic = "force-dynamic";
+const data = [
+    {
+        id: 'jsat',
+        name: 'Job Satisfaction',
+        stat: '75%',
+        change: '+24 bps',
+        changeType: 'positive',
+    },
+    {
+        id: 'msat',
+        name: 'Manager Satisfaction',
+        stat: '75%',
+        change: '-24 bps',
+        changeType: 'negative',
+    },
+    {
+        id: 'develop',
+        name: 'Career Development',
+        stat: '75%',
+        change: '+24 bps',
+        changeType: 'positive',
+    },
+    {
+        id: 'incl',
+        name: 'Inclusion',
+        stat: '75%',
+        change: '+24 bps',
+        changeType: 'positive',
+    },
+    {
+        id: 'leadership',
+        name: 'Leadership',
+        stat: '75%',
+        change: '+24 bps',
+        changeType: 'positive',
+    },
+    {
+        id: 'mission',
+        name: 'Mission',
+        stat: '75%',
+        change: '+24 bps',
+        changeType: 'positive',
+    },
+    {
+        id: 'vision',
+        name: 'Vision',
+        stat: '75%',
+        change: '+24 bps',
+        changeType: 'positive',
+    },
+];
 
-// This is a private page: It's protected by the layout.js component which ensures the user is authenticated.
-// It's a server compoment which means you can fetch data (like the user profile) before the page is rendered.
-// See https://shipfa.st/docs/tutorials/private-page
 export default function Dashboard() {
     const {data: session} = useSession()
-    let teamInfo = {}
+    let teamInfo = useRef({})
 
     useEffect(() => {
         (async () => {
             const companyId = session.user['custom:company-id']
-            console.log(companyId)
-            teamInfo = await getTeamInformation(companyId)
-            console.log(teamInfo)
+            teamInfo.current = await getTeamInformation(companyId)
+            console.log(teamInfo.current)
         })()
     })
 
     return (
         <main className="min-h-screen p-8 pb-24">
-            <section className="max-w-xl mx-auto space-y-8">
+            <section className="max-w-6xl mx-auto space-y-8">
                 <ButtonAccount/>
-                <h1 className="text-3xl md:text-4xl font-extrabold">Private Page</h1>
+                <h1 className="text-4xl md:text-4xl font-extrabold">Private Page</h1>
+                <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    {data.map((item) => {
+                        return <ToplineCard key={item.id} item={item}/>
+                    })}
+                </div>
             </section>
         </main>
     );

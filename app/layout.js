@@ -25,7 +25,7 @@ export default async function RootLayout({children}) {
     // console.log('Initial data:', initialData)
 
     return (
-        <html lang="en" data-theme={config.colors.theme} className={font.className}>
+        <html lang="en" data-theme={config.colors.theme} className={`${font.className} antialiased`}>
         {config.domainName && (
             <head>
                 <PlausibleProvider domain={config.domainName}

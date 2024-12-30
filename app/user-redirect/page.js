@@ -12,7 +12,7 @@ export default function Page() {
         (async () => {
             try {
                 const userData = await getUserData()
-                setSession(userData)
+                setSession({user: userData})
             } catch (e) {
                 throw new Error(e)
             }

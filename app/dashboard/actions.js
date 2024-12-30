@@ -23,7 +23,7 @@ export async function getTeamInformation(companyId) {
         const getCommand = new GetCommand(input)
         const getResponse = await dbClient.send(getCommand)
         // console.log('Get response: ', getResponse)
-        return {team: getResponse.Item}
+        return getResponse.Item
     } catch (error) {
         console.error('Error during Get request: ', error)
         return error
