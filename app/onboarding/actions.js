@@ -102,7 +102,7 @@ export async function submitQuestionsForm(formArgs, formData) {
                 submittedData[valueId] = {
                     value_name: valueName,
                     question_count: 0,
-                    times_asked: 0,
+                    last_asked: "2000-01-01T00:00:00",
                     questions: []
                 }
             }
@@ -115,7 +115,7 @@ export async function submitQuestionsForm(formArgs, formData) {
             const questionObject = {
                 key: questionId,
                 question: formData.get(key),
-                times_asked: 0
+                last_asked: "2000-01-01T00:00:00"
             }
 
             if (valueId in questionList && questionObject.question !== '') {
