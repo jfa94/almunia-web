@@ -21,7 +21,8 @@ function QuestionsForm({formState, incrementPage, hidden}) {
                 development.<br/>
                 Write any value&ndash;specific questions below that you would like your team to answer anonymously.
                 Please keep in mind that possible answers will be on a scale from 5 (Strongly Agree)
-                to 1 (Strongly Disagree). Questions should be written in a way that accommodates these responses.
+                to 1 (Strongly Disagree). Questions should be written in a way that accommodates these responses (
+                e.g., &rsquo;I am satisfied with my job&lsquo;).
             </p>
 
             {formState.values.map((value, i) => <QuestionContainer key={i} valueKey={i} valueName={value}/>)}

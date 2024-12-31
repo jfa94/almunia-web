@@ -35,19 +35,6 @@ export async function submitWelcomeForm(formArgs, formData) {
         return JSON.stringify(error)
     }
 
-    console.log('Creating standard questions record...')
-    const standardQuestionBank = await queryDynamoDb('standard-questions', 'company_id', 'template')
-    try {
-        await submitDynamoDbUpdate('standard-questions', {
-            'company_id': formArgs.companyId,
-            'question_object': standardQuestionBank.item.question_object,
-        })
-        console.log('Standard question bank created for:', formArgs.companyId)
-    } catch (error) {
-        console.error('Error creating standard question bank: ', error)
-        return JSON.stringify(error)
-    }
-
     console.log('Updating company information...')
     const identityToken = cookieStore.get('idToken').value
     const identityId = await getCognitoIdentity(identityToken)
@@ -102,7 +89,7 @@ export async function submitQuestionsForm(formArgs, formData) {
                 submittedData[valueId] = {
                     value_name: valueName,
                     question_count: 0,
-                    last_asked: "2000-01-01T00:00:00",
+                    last_asked: "2000-01-01T00:00:00.000Z",
                     questions: []
                 }
             }
@@ -115,7 +102,7 @@ export async function submitQuestionsForm(formArgs, formData) {
             const questionObject = {
                 key: questionId,
                 question: formData.get(key),
-                last_asked: "2000-01-01T00:00:00"
+                last_asked: "2000-01-01T00:00:00.000Z"
             }
 
             if (valueId in questionList && questionObject.question !== '') {
@@ -132,12 +119,14 @@ export async function submitQuestionsForm(formArgs, formData) {
         submittedData[valueId].question_count = questionList[valueId].length
     }
 
+    const standardQuestionBank = await queryDynamoDb('company-questions', 'company_id', 'template')
+
     const item = {
         "company_id": formArgs.companyId,
-        "question_object": submittedData
+        "question_object": Object.assign(standardQuestionBank.item.question_object, submittedData)
     }
 
-    return await submitDynamoDbUpdate('custom-questions', item)
+    return await submitDynamoDbUpdate('company-questions', item)
 }
 
 
