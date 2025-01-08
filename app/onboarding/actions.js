@@ -2,6 +2,7 @@
 import {cookies} from "next/headers";
 import {CognitoIdentityProviderClient, UpdateUserAttributesCommand} from "@aws-sdk/client-cognito-identity-provider";
 import {getCognitoIdentity, queryDynamoDb, submitDynamoDbUpdate} from "@/lib/aws";
+import {v4 as uuidv4} from "uuid";
 
 
 export async function submitWelcomeForm(formArgs, formData) {
@@ -170,17 +171,13 @@ export async function submitTeamForm(formArgs, formData) {
 
         // Check if group has complete information (requires Email)
         if (groupData.Email) {
-            submittedData[groupData.Email] = {
-                Active: true,
-                FirstName: groupData.FirstName || '',
-                LastName: groupData.LastName || '',
-                Role: groupData.Role || '',
-                ...(Object.keys(groupData)
-                    .filter(key => !['FirstName', 'LastName', 'Role', 'Email'].includes(key))
-                    .reduce((acc, key) => {
-                        acc[key] = groupData[key]
-                        return acc
-                    }, {}))
+            const userId = uuidv4()
+            submittedData[userId] = {
+                active: true,
+                ...(Object.keys(groupData).reduce((acc, key) => {
+                    acc[String(key).charAt(0).toLowerCase() + String(key).slice(1)] = groupData[key]
+                    return acc
+                }, {}))
             }
         }
     })

@@ -13,6 +13,7 @@ export function InputValueField({id, removeInput = alertIsOriginal}) {
                placeholder="New Value"
                autoComplete="off"
                className="col-span-1 text-lg font-bold py-2 pl-1 overflow-ellipsis"
+               required
         />
 
         <textarea name={`value${id}`}
