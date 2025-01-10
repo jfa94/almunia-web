@@ -150,6 +150,7 @@ export async function submitTeamForm(formArgs, formData) {
         itemList.push({
             "company_id": formArgs.companyId,
             "user_id": uuidv4(),
+            "active": true,
             ...peopleObject[key]
         })
     })
