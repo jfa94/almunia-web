@@ -7,47 +7,47 @@ export function InputTeamInformation({id, removeInput = alertIsOriginal}) {
     return (
         <div className="flex md:grid flex-col items-start md:grid-cols-[1fr_1fr_1fr_1fr_1fr_auto] grid-rows-2 md:grid-rows-1">
 
-            <label htmlFor={`value${id}Email`} className="inline-table-label">Email</label>
+            <label htmlFor={`person${id}-email`} className="inline-table-label">Email</label>
             <input type="email"
-                   name={`value${id}Email`}
-                   id={`value${id}Email`}
+                   name={`person${id}-email`}
+                   id={`person${id}-email`}
                    placeholder="-"
                    autoComplete="off"
                    required
                    className={`${id !== '0' && 'md:border-t-0'} custom-table-input border-l border-l-black/20`}
             />
 
-            <label htmlFor={`value${id}FirstName`} className="inline-table-label">First Name</label>
+            <label htmlFor={`person${id}-first_name`} className="inline-table-label">First Name</label>
             <input type="text"
-                   name={`value${id}FirstName`}
-                   id={`value${id}FirstName`}
+                   name={`person${id}-first_name`}
+                   id={`person${id}-first_name`}
                    placeholder="-"
                    autoComplete="off"
                    className={`${id !== '0' && 'md:border-t-0'} custom-table-input`}
             />
 
-            <label htmlFor={`value${id}LastName`} className="inline-table-label">Last Name</label>
+            <label htmlFor={`person${id}-last_name`} className="inline-table-label">Last Name</label>
             <input type="text"
-                   name={`value${id}LastName`}
-                   id={`value${id}LastName`}
+                   name={`person${id}-last_name`}
+                   id={`person${id}-last_name`}
                    placeholder="-"
                    autoComplete="off"
                    className={`${id !== '0' && 'md:border-t-0'} custom-table-input`}
             />
 
-            <label htmlFor={`value${id}Role`} className="inline-table-label">Job Title</label>
+            <label htmlFor={`person${id}-role`} className="inline-table-label">Job Title</label>
             <input type="text"
-                   name={`value${id}Role`}
-                   id={`value${id}Role`}
+                   name={`person${id}-role`}
+                   id={`person${id}-role`}
                    placeholder="-"
                    autoComplete="off"
                    className={`${id !== '0' && 'md:border-t-0'} custom-table-input`}
             />
 
-            <label htmlFor={`value${id}Manager`} className="inline-table-label">Manager</label>
+            <label htmlFor={`person${id}-manager`} className="inline-table-label">Manager</label>
             <input type="text"
-                   name={`value${id}Manager`}
-                   id={`value${id}Manager`}
+                   name={`person${id}-manager`}
+                   id={`person${id}-manager`}
                    placeholder="-"
                    autoComplete="off"
                    className={`${id !== '0' && 'md:border-t-0'} custom-table-input`}

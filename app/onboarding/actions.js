@@ -1,7 +1,7 @@
 'use server';
 import {cookies} from "next/headers";
 import {CognitoIdentityProviderClient, UpdateUserAttributesCommand} from "@aws-sdk/client-cognito-identity-provider";
-import {getCognitoIdentity, queryDynamoDb, submitDynamoDbUpdate} from "@/lib/aws";
+import {getCognitoIdentity, queryDynamoDb, submitBatchDynamoDbUpdate, submitDynamoDbUpdate} from "@/lib/aws";
 import {v4 as uuidv4} from "uuid";
 
 
@@ -133,59 +133,26 @@ export async function submitQuestionsForm(formArgs, formData) {
 
 export async function submitTeamForm(formArgs, formData) {
     console.log(`Submitted ${formArgs.page} with data: `, formData)
+    let itemList = []
 
-    let idList = []
-    let submittedData = {}
-
-    for (const key of formData.keys()) {
-        key.includes('key') && idList.push(key.slice(-1))
-    }
-
-    const groups = new Set();
-
-    // First, find all unique groups
-    for (let [name] of formData.entries()) {
-        const match = name.match(/^value(\d+)/);
-        if (match) {
-            groups.add(`value${match[1]}`)
+    let peopleObject = {}
+    for (let [name, value] of formData.entries()) {
+        const [personId, valueName] = name.split('-')
+        if (value !== '') {
+            if (!peopleObject[personId]) {
+                peopleObject[personId] = {}
+            }
+            peopleObject[personId][valueName] = value
         }
     }
 
-    // Transform data for each group
-    groups.forEach(groupPrefix => {
-        // Collect all data for this group
-        const groupData = {}
-
-        // Collect fields for this group
-        for (let [name, value] of formData.entries()) {
-            if (name.startsWith(groupPrefix) && name.length > groupPrefix.length) {
-                // Extract the field name by removing the group prefix
-                const fieldName = name.slice(groupPrefix.length)
-
-                // Only add non-empty values
-                if (value !== '') {
-                    groupData[fieldName] = value
-                }
-            }
-        }
-
-        // Check if group has complete information (requires Email)
-        if (groupData.Email) {
-            const userId = uuidv4()
-            submittedData[userId] = {
-                active: true,
-                ...(Object.keys(groupData).reduce((acc, key) => {
-                    acc[String(key).charAt(0).toLowerCase() + String(key).slice(1)] = groupData[key]
-                    return acc
-                }, {}))
-            }
-        }
+    Object.keys(peopleObject).forEach((key) => {
+        itemList.push({
+            "company_id": formArgs.companyId,
+            "user_id": uuidv4(),
+            ...peopleObject[key]
+        })
     })
 
-    const item = {
-        "company_id": formArgs.companyId,
-        "team": submittedData
-    }
-
-    return await submitDynamoDbUpdate('company-teams', item)
+    return await submitBatchDynamoDbUpdate('company-teams', itemList)
 }
