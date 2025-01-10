@@ -1,6 +1,6 @@
 'use server';
 import {cookies} from "next/headers";
-import { GetCommand } from "@aws-sdk/lib-dynamodb"
+import {QueryCommand} from "@aws-sdk/lib-dynamodb"
 import {getDynamoDBClient} from "@/lib/aws";
 
 export async function getTeamInformation(companyId) {
@@ -12,18 +12,19 @@ export async function getTeamInformation(companyId) {
 
     const dbClient = await getDynamoDBClient(identityToken)
 
-    const input = {
+    const params = {
         "TableName": "company-teams",
-        "Key": {
-            "company_id": companyId
-        },
+        "KeyConditionExpression": 'company_id = :companyId',
+        ExpressionAttributeValues: {
+            ':companyId': companyId,
+        }
     }
 
     try {
-        const getCommand = new GetCommand(input)
-        const getResponse = await dbClient.send(getCommand)
-        // console.log('Get response: ', getResponse)
-        return getResponse.Item
+        const queryCommand = new QueryCommand(params)
+        const queryResponse = await dbClient.send(queryCommand)
+        console.log('Query response: ', queryResponse)
+        return queryResponse.Items
     } catch (error) {
         console.error('Error during Get request: ', error)
         return error
