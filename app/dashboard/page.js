@@ -1,7 +1,7 @@
 'use client';
 import ButtonAccount from "@/components/ButtonAccount";
 import {useSession} from "@/lib/session";
-import {getTeamInformation} from "@/app/dashboard/actions";
+import {getSurveyResponses} from "@/app/dashboard/actions";
 import {useEffect, useRef} from "react";
 import ToplineCard from "@/app/dashboard/components/ToplineCard"
 
@@ -64,7 +64,7 @@ export default function Dashboard() {
     useEffect(() => {
         (async () => {
             const companyId = session.user['custom:company-id']
-            teamInfo.current = await getTeamInformation(companyId)
+            teamInfo.current = await getSurveyResponses(companyId)
             console.log(teamInfo.current)
         })()
     })
