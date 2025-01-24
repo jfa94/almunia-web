@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {InputTeamInformation} from "@/app/onboarding/team/InputTeamInformation";
 import { SubmitButton } from "@/app/onboarding/team/SubmitButton";
-import {submitForm} from "@/app/onboarding/actions";
+import {submitTeamForm} from "@/app/onboarding/actions";
 import {redirect} from "next/navigation";
 
 const TeamInformationForm = ({formState, hidden}) => {
@@ -9,8 +9,8 @@ const TeamInformationForm = ({formState, hidden}) => {
         <InputTeamInformation key="0" id="0"/>
     ])
 
-    const submitTeamInformationForm = async (formData) => {
-        const result = await submitForm({'companyId': formState.companyId, page: 'team'}, formData)
+    const handleSubmitForm = async (formData) => {
+        const result = await submitTeamForm({'companyId': formState.companyId, page: 'team'}, formData)
         if (result['$metadata']?.httpStatusCode === 200) {
             redirect('/dashboard')
         } else {
@@ -38,9 +38,15 @@ const TeamInformationForm = ({formState, hidden}) => {
 
     return (
         <div className={`${hidden && 'hidden'}`}>
-            <div className="subheading">Team Information</div>
+            <div className="subheading pb-0">Team Information</div>
+            <p className="mb-6 text-sm italic">
+                To upload information in bulk, please add your email below and send a CSV file with
+                your team&rsquo;s details to&#58; <a href="mailto:team-upload@almunia.io" className="text-blue-500">
+                    team-upload@almunia.io
+                </a>
+            </p>
 
-            <form action={submitTeamInformationForm}>
+            <form action={handleSubmitForm}>
                 <div className="hidden md:grid grid-cols-[1fr_1fr_1fr_1fr_1fr_40px]">
                     <p className="font-bold ml-2">Email<span className="text-red-600">*</span></p>
                     <p className="font-bold ml-2">First Name</p>

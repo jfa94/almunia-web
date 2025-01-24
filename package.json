@@ -15,6 +15,7 @@
     "@aws-sdk/client-dynamodb": "^3.598.0",
     "@aws-sdk/credential-providers": "^3.598.0",
     "@aws-sdk/lib-dynamodb": "^3.600.0",
+    "@aws-sdk/util-dynamodb": "^3.726.0",
     "@headlessui/react": "^1.7.18",
     "@headlessui/tailwindcss": "^0.2.1",
     "@remixicon/react": "^4.6.0",
@@ -36,7 +37,8 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-tooltip": "^5.26.3",
     "sharp": "^0.33.4",
-    "stripe": "^13.11.0"
+    "stripe": "^13.11.0",
+    "uuid": "^11.0.4"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.9",
