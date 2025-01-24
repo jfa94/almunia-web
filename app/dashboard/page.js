@@ -85,7 +85,7 @@ export default function Dashboard() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
                     {loading
                         ? [1, 2, 3, 4].map(i => <Card key={i} className="min-h-24"/>)
-                        : getItem('cards-data').map((item) => {
+                        : getItem('cards-data')?.map((item) => {
                             return <ToplineCard key={item.id} item={item}/>
                         })}
                 </div>
@@ -98,7 +98,7 @@ export default function Dashboard() {
                 <div className="flex flex-col gap-4 sm:pt-2 pt-4">
                     {loading
                         ? <Card><p>Loading ...</p></Card>
-                        : getItem(chartDataType).map(item => {
+                        : getItem(chartDataType)?.map(item => {
                             return (<Card key={item.id} className="mx-auto">
                                 <h3 className="text-2xl font-extrabold pl-8 pb-6">{
                                     item.grouping === 'question_id'
@@ -107,7 +107,8 @@ export default function Dashboard() {
                                 }</h3>
                                 <AreaChartHero key={item.id} chartData={item.stat}/>
                             </Card>)
-                        })}
+                        })
+                    }
                 </div>
             </section>
         </main>

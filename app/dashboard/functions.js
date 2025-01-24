@@ -92,6 +92,7 @@ export const summariseSurveyData = (
 
 
 export const formatDataForCards = (keys, object) => {
+    if (!keys || keys.length === 0) return {}
     return keys.map(key => {
         return {
             id: key,
@@ -105,6 +106,8 @@ export const formatDataForCards = (keys, object) => {
 
 
 export const summariseDataForCharts = (keys, groupBy, data) => {
+    if (!keys || !data || keys.length === 0) return {}
+
     const dataGroupedByKey = Object.groupBy(data, item => {
         return item[groupBy === 'question_id' ? 'question_id' : 'value_id']
     })
