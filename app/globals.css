@@ -47,4 +47,11 @@ progress::-webkit-progress-value {
     .custom-table-input {
         @apply input border border-black/20 md:border-x-0 shadow-sm text-sm md:text-base w-full h-auto py-2 px-1.5 md:px-2 md:rounded-none
     }
+
+    .wip-background {
+        background-color: rgba(229, 229, 247, 0.4);
+        background-image: linear-gradient(rgba(68, 76, 247, 0.1) 2px, transparent 2px), linear-gradient(90deg, rgba(68, 76, 247, 0.1) 2px, transparent 2px), linear-gradient(rgba(68, 76, 247, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(68, 76, 247, 0.1) 1px, #e5e5f7 1px);
+        background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+        background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+    }
 }

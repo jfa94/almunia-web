@@ -21,11 +21,11 @@ export const metadata = getSEOTags();
 
 export default async function RootLayout({children}) {
     console.log('Rendered root')
-    let initialData = await getUserData()
+    let userData = await getUserData()
     // console.log('Initial data:', initialData)
 
     return (
-        <html lang="en" data-theme={config.colors.theme} className={font.className}>
+        <html lang="en" data-theme={config.colors.theme} className={`${font.className} antialiased`}>
         {config.domainName && (
             <head>
                 <PlausibleProvider domain={config.domainName}
@@ -36,7 +36,7 @@ export default async function RootLayout({children}) {
         )}
         <body>
         {/* ClientLayout contains all the client wrappers (Crisp chat support, toast messages, tooltips, etc.) */}
-        <SessionProvider initialData={initialData}>
+        <SessionProvider initialData={{user: userData}}>
             {children}
         </SessionProvider>
         </body>
