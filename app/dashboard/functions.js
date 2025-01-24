@@ -128,6 +128,7 @@ export const summariseDataForCharts = (keys, groupBy, data) => {
 
         return {
             id: key,
+            valueId: dataGroupedByKey[key][0]?.value_id ?? key,
             grouping: groupBy,
             stat: reducedData
         }

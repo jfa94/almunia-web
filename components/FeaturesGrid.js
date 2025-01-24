@@ -93,7 +93,7 @@ const features = [
     },
     {
         title: "Discover new ideas",
-        description: "Encourage your team to suggest improvements and vote on their favourites.",
+        description: "(COMING SOON) Encourage your team to suggest improvements and vote on their favourites.",
         styles: "md:col-span-2 bg-base-100 text-base-content",
         demo: (
             <div className="flex left-0 w-full h-full pt-0 lg:pt-8 overflow-hidden md:-mt-12">
@@ -205,7 +205,7 @@ const features = [
     ,
     {
         title: "Share recognition",
-        description: "Celebrate your team's achievements.",
+        description: "(COMING SOON) Celebrate your team's achievements.",
         styles: "bg-neutral text-neutral-content",
         demo: (
             <div className="text-neutral-content px-6 space-y-4">
@@ -272,8 +272,8 @@ const FeaturesGrid = () => {
                 <h2 className="max-w-3xl font-black text-4xl md:text-5xl tracking-[-0.01em]">
                     Features to help you create<br/>the best{' '}
                     <span className="underline decoration-dashed underline-offset-8 decoration-base-300">
-                team environment
-                </span>
+                        team environment
+                    </span>
                 </h2>
                 <div className="flex flex-col w-full h-fit gap-4 lg:gap-10 text-text-default max-w-[82rem]">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-10">
