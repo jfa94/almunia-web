@@ -33,14 +33,19 @@ const Waitlist = () => {
 
     return (
         <section className="bg-base-200 overflow-hidden" id="pricing">
-            <div className="flex flex-col md:flex-row gap-12 py-24 px-8 max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-12 py-24 px-8 max-w-5xl mx-auto">
 
                 <div className="flex flex-col flex-[3] text-center w-full md:my-6">
-                    <h2 className="font-bold text-3xl lg:text-5xl tracking-tight text-left mb-1">Reach out to learn
-                        more</h2>
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    <p className="font-medium text-primary text-left my-2">Almunia isn't available to everyone just
-                        yet.<br/> Please reach out if you are interested in joining our waitlist</p>
+                    <h2 className="font-bold text-4xl lg:text-5xl tracking-tight text-left mb-1">
+                        Join our waitlist and get Almunia for free
+                    </h2>
+                    <div className="flex flex-col gap-4 font-medium text-primary text-left my-2">
+                        {/* eslint-disable-next-line react/no-unescaped-entities */}
+                        <p>Almunia is in active development, so we can't welcome everyone just yet.</p>
+                        <p>Customers that join now will get full access for free until our first full release.</p>
+                        <p>Additionally, early customers will receive a permanent discount as a thank you for helping us
+                        shape the product.</p>
+                    </div>
                 </div>
 
                 <form className="bg-white lg:p-12 p-6 rounded-xl flex-[2] w-full max-w-2xl m-auto"

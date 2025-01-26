@@ -61,8 +61,11 @@ const Footer = () => {
                                         Support
                                     </a>
                                 )}
-                                <Link href="/#pricing" className="link link-hover">
-                                    Pricing
+                                {/*<Link href="/#pricing" className="link link-hover">*/}
+                                {/*    Pricing*/}
+                                {/*</Link>*/}
+                                <Link href="https://insigh.to/b/almunia-ltd" className="link link-hover">
+                                    Feature Requests
                                 </Link>
                                 {/*<Link href="/blog" className="link link-hover">*/}
                                 {/*    Blog*/}

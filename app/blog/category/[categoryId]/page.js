@@ -1,10 +1,11 @@
 import { categories, articles } from "../../_assets/content";
 import CardArticle from "../../_assets/components/CardArticle";
 import CardCategory from "../../_assets/components/CardCategory";
-import { getSEOTags } from "@/libs/seo";
+import { getSEOTags } from "@/lib/seo";
 import config from "@/config";
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const category = categories.find(
     (category) => category.slug === params.categoryId
   );
@@ -16,7 +17,8 @@ export async function generateMetadata({ params }) {
   });
 }
 
-export default async function Category({ params }) {
+export default async function Category(props) {
+  const params = await props.params;
   const category = categories.find(
     (category) => category.slug === params.categoryId
   );

@@ -1,6 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 // import TestimonialRating from "./TestimonialRating";
-import heroImage from "/public/landing/hero-image.jpg"
+// import heroImage from "/public/landing/hero-image.jpg"
 
 const Hero = () => {
     return (
@@ -33,22 +34,22 @@ const Hero = () => {
                         ensure your company is always a great place to work.
                     </p>
 
-                    <a href="/#pricing">
+                    <Link href="/#pricing">
                         <button className="btn btn-primary btn-wide">
                             Get started
                         </button>
-                    </a>
+                    </Link>
                     {/*<TestimonialRating userCount="Over 1000"/>*/}
                 </div>
 
                 <div className="lg:w-full">
                     <Image
-                        src={heroImage}
+                        src="/landing/hero-image.jpg"
                         alt="Hero image"
                         className="w-full object-cover object-bottom rounded-2xl"
                         priority={true}
+                        height={400}
                         width={600}
-                        height='auto'
                     />
                 </div>
             </div>
