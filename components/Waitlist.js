@@ -36,15 +36,15 @@ const Waitlist = () => {
             <div className="flex flex-col md:flex-row gap-12 py-24 px-8 max-w-5xl mx-auto">
 
                 <div className="flex flex-col flex-[3] text-center w-full md:my-6">
-                    <h2 className="font-bold text-4xl lg:text-5xl tracking-tight text-left mb-1">
+                    <h2 className="font-bold text-4xl lg:text-5xl tracking-tight text-left mb-4">
                         Join our waitlist and get Almunia for free
                     </h2>
                     <div className="flex flex-col gap-4 font-medium text-primary text-left my-2">
                         {/* eslint-disable-next-line react/no-unescaped-entities */}
                         <p>Almunia is in active development, so we can't welcome everyone just yet.</p>
                         <p>Customers that join now will get full access for free until our first full release.</p>
-                        <p>Additionally, early customers will receive a permanent discount as a thank you for helping us
-                        shape the product.</p>
+                        <p>After launch, early customers will receive a permanent discount as a thank you for helping us
+                        shape our product.</p>
                     </div>
                 </div>
 

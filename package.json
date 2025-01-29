@@ -19,7 +19,7 @@
     "@headlessui/react": "^1.7.18",
     "@headlessui/tailwindcss": "^0.2.1",
     "@remixicon/react": "^4.6.0",
-    "@tremor/react": "^3.18.6",
+    "@tremor/react": "^3.18.7",
     "axios": "^1.6.8",
     "crisp-sdk-web": "^1.0.22",
     "cryptr": "^6.3.0",

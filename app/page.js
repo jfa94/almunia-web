@@ -19,7 +19,6 @@ export default function Page() {
                 {/*<Problem></Problem>*/}
                 <About></About>
                 <FeaturesGrid></FeaturesGrid>
-                {/*Comment out waitlist before adding pricing*/}
                 {/*<Pricing></Pricing>*/}
                 <Waitlist></Waitlist>
                 <FAQ></FAQ>

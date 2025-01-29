@@ -46,7 +46,7 @@ const ButtonAccount = () => {
         <Popover className="relative z-10">
             {({open}) => (
                 <>
-                    <Popover.Button className="btn">
+                    <Popover.Button className="btn bg-primary">
                         {session?.user?.image ? (
                             <img
                                 src={session?.user?.image}
@@ -58,12 +58,12 @@ const ButtonAccount = () => {
                             />
                         ) : (
                             <span
-                                className="w-6 h-6 bg-zinc-500 flex justify-center items-center rounded-full shrink-0">
+                                className="w-6 h-6 bg-amber-50 text-zinc-400 flex justify-center items-center rounded-full shrink-0">
                                 {session?.user?.name?.charAt(0) || session?.user?.email?.charAt(0)}
                             </span>
                         )}
 
-                        <span className="text-zinc-500 font-bold">
+                        <span className="text-white font-bold">
                             {session?.user?.name || "Account"}
                         </span>
 
@@ -73,7 +73,7 @@ const ButtonAccount = () => {
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
-                                className={`w-5 h-5 fill-zinc-500 stroke-1 stroke-zinc-700 duration-200 opacity-50 ${
+                                className={`w-5 h-5 fill-white stroke-1 stroke-zinc-200 duration-200 opacity-80 ${
                                     open ? "transform rotate-180 " : ""
                                 }`}
                             >

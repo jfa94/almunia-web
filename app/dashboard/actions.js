@@ -34,6 +34,7 @@ export async function getQuestionData(companyId) {
 
 
 export async function getSurveyResponses(companyId, startDate, endDate) {
+    console.log('Getting latest survey response data...')
     const cookieStore = await cookies()
     if (!cookieStore.has('idToken')) {
         return {error: 'Not authenticated'}
