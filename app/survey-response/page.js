@@ -33,7 +33,7 @@ export default function Page() {
     }, [responseData, responseValue])
 
     return <main className="w-full h-96 mb-auto flex justify-center items-center">
-        <div className="text-xl">
+        <div className="text-xl p-8">
             {
                 isLoading ? <p>Pending...</p> : <p>Thank you! Your response has been captured.</p>
             }

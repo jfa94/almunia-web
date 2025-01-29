@@ -1,6 +1,5 @@
 'use client';
 
-import ButtonAccount from "@/components/ButtonAccount";
 import {useSession} from "@/lib/session";
 import {getSurveyResponses, getQuestionData} from "@/app/dashboard/actions";
 import {useEffect, useRef, useState} from "react";
@@ -13,6 +12,7 @@ import {
 } from "@/app/dashboard/functions";
 import {AreaChartHero} from "@/app/dashboard/components/AreaChartHero";
 import {Card} from "@tremor/react";
+import {RiInformationLine} from "@remixicon/react";
 import {useLocalStorage} from "@/lib/utils";
 import {CustomSelect} from "@/app/dashboard/components/CustomSelect";
 
@@ -24,9 +24,10 @@ export default function Dashboard() {
     let [chartDataType, setChartDataType] = useState('chart-data-value')
     let questionData = useRef({})
 
+    const tooltipText = "Data aggregated monthly. Percentage value in summary card represents change vs previous month."
     const chartOptions = [
-        {value: 'chart-data-value', label: 'Values'},
-        {value: 'chart-data-question', label: 'Questions'}
+        {value: 'chart-data-value', label: 'Theme'},
+        {value: 'chart-data-question', label: 'Question'}
     ]
 
     const findQuestionValue = (questionId) => {
@@ -42,9 +43,8 @@ export default function Dashboard() {
     useEffect(() => {
         (async () => {
             const companyId = session.user['custom:company-id']
-            // const startDate = '2024-01-01T00:00:00.000Z'
-            // const endDate = '2024-12-31T23:59:59.999Z'
-            const {start: startDate, end: endDate} = getISODateRange('year')
+            const today = new Date()
+            const {start: startDate, end: endDate} = getISODateRange('year', today.toISOString())
             console.log(`Displaying data for dates between ${startDate} and ${endDate}`)
 
             const dateRange = getItem('survey-data-date-range')
@@ -67,7 +67,7 @@ export default function Dashboard() {
                 const sortedValues = sortKeys(Object.keys(valueResults), valueResults)
                 const sortedQuestions = sortKeys(Object.keys(questionResults), questionResults)
 
-                setItem('cards-data', formatDataForCards(sortedValues, valueResults))
+                setItem('cards-data', formatDataForCards(sortedValues.slice(0, Math.min(8, sortedValues.length)), valueResults))
                 setItem('chart-data-value', summariseDataForCharts(sortedValues, 'value_id', responseData))
                 setItem('chart-data-question', summariseDataForCharts(sortedQuestions, 'question_id', responseData))
                 console.log('Updated data in localStorage')
@@ -78,10 +78,14 @@ export default function Dashboard() {
     })
 
     return (
-        <main className="min-h-screen p-8 pb-24">
+        <main className="min-h-screen md:p-8 p-4 pb-24">
             <section className="max-w-6xl mx-auto">
-                <ButtonAccount/>
-                <h1 className="text-6xl md:text-4xl font-extrabold md:pt-6 pt-4">Dashboard</h1>
+                <h1 className="text-6xl md:text-4xl font-extrabold md:pt-6 pt-4">
+                    Dashboard
+                    <span className="tooltip tooltip-right pl-2 pt-1 align-top" data-tip={tooltipText}>
+                        <RiInformationLine size={20}/>
+                    </span>
+                </h1>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
                     {loading
                         ? [1, 2, 3, 4].map(i => <Card key={i} className="min-h-24"/>)
@@ -95,12 +99,12 @@ export default function Dashboard() {
                     </div>
                     <CustomSelect data={chartOptions} state={[chartDataType, setChartDataType]}/>
                 </div>
-                <div className="flex flex-col gap-4 sm:pt-2 pt-4">
+                <div className="flex flex-col md:gap-6 gap-4 sm:pt-4 pt-6">
                     {loading
                         ? <Card><p>Loading ...</p></Card>
                         : getItem(chartDataType)?.map(item => {
-                            return (<Card key={item.id} className="mx-auto">
-                                <h3 className="text-2xl font-extrabold pl-8 pb-6">{
+                            return (<Card key={item.id} className="mx-auto md:p-6 p-5">
+                                <h3 className="text-2xl font-extrabold md:pl-8 pb-6">{
                                     item.grouping === 'question_id'
                                         ? findQuestionValue(item.id)
                                         : questionData.current[item.id].value_name

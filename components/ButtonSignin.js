@@ -35,7 +35,7 @@ const ButtonSignin = ({text = "Sign in", extraStyle}) => {
                 {session.user?.image ? (
                     <img
                         src={session.user?.image}
-                        alt={session.user?.name || "Account"}
+                        alt={session.user?.name || "Dashboard"}
                         className="w-6 h-6 rounded-full shrink-0"
                         referrerPolicy="no-referrer"
                         width={24}
@@ -46,7 +46,7 @@ const ButtonSignin = ({text = "Sign in", extraStyle}) => {
                         {session.user?.name?.charAt(0) || session.user?.email?.charAt(0)}
                     </span>
                 )}
-                Account
+                Dashboard
             </Link>
         );
     }
