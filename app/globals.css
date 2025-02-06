@@ -18,7 +18,7 @@ progress::-webkit-progress-value {
     }
 
     .btn {
-        @apply !capitalize !text-white;
+        @apply !text-white;
     }
 
     .heading {
