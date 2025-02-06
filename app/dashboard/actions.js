@@ -4,35 +4,6 @@ import {QueryCommand} from "@aws-sdk/lib-dynamodb"
 import {getDynamoDBClient} from "@/lib/aws";
 
 
-export async function getQuestionData(companyId) {
-    const cookieStore = await cookies()
-    if (!cookieStore.has('idToken')) {
-        return {error: 'Not authenticated'}
-    }
-    const identityToken = cookieStore.get('idToken').value
-
-    const dbClient = await getDynamoDBClient(identityToken)
-
-    const params = {
-        TableName: 'company-questions',
-        KeyConditionExpression: 'company_id = :companyId',
-        ExpressionAttributeValues: {
-            ':companyId': companyId,
-        }
-    }
-
-    try {
-        const queryCommand = new QueryCommand(params)
-        const queryResponse = await dbClient.send(queryCommand)
-        // console.log('Question query response:', queryResponse)
-        return queryResponse.Items[0].question_object
-    } catch (error) {
-        console.error('Error during Get request: ', error)
-        return error
-    }
-}
-
-
 export async function getSurveyResponses(companyId, startDate, endDate) {
     console.log('Getting latest survey response data...')
     const cookieStore = await cookies()
@@ -61,35 +32,6 @@ export async function getSurveyResponses(companyId, startDate, endDate) {
         const queryCommand = new QueryCommand(params)
         const queryResponse = await dbClient.send(queryCommand)
         // console.log('Query response: ', queryResponse)
-        return queryResponse.Items
-    } catch (error) {
-        console.error('Error during Get request: ', error)
-        return error
-    }
-}
-
-
-export async function getTeamInformation(companyId) {
-    const cookieStore = await cookies()
-    if (!cookieStore.has('idToken')) {
-        return {error: 'Not authenticated'}
-    }
-    const identityToken = cookieStore.get('idToken').value
-
-    const dbClient = await getDynamoDBClient(identityToken)
-
-    const params = {
-        TableName: 'company-teams',
-        KeyConditionExpression: 'company_id = :companyId',
-        ExpressionAttributeValues: {
-            ':companyId': companyId,
-        }
-    }
-
-    try {
-        const queryCommand = new QueryCommand(params)
-        const queryResponse = await dbClient.send(queryCommand)
-        console.log('Query response: ', queryResponse)
         return queryResponse.Items
     } catch (error) {
         console.error('Error during Get request: ', error)

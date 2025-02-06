@@ -1,7 +1,8 @@
 'use client';
 
 import {useSession} from "@/lib/session";
-import {getSurveyResponses, getQuestionData} from "@/app/dashboard/actions";
+import {getSurveyResponses} from "@/app/dashboard/actions";
+import {getCompanyData} from "@/lib/actions";
 import {useEffect, useRef, useState} from "react";
 import ToplineCard from "@/app/dashboard/components/ToplineCard"
 import {
@@ -49,7 +50,7 @@ export default function Dashboard() {
 
             const dateRange = getItem('survey-data-date-range')
             let responseData = []
-            questionData.current = await getQuestionData(companyId)
+            questionData.current = await getCompanyData(companyId, 'questions')
 
             if (!dateRange || dateRange.start > startDate || dateRange.end < endDate) {
                 responseData = await getSurveyResponses(companyId, startDate, endDate)
@@ -78,8 +79,8 @@ export default function Dashboard() {
     })
 
     return (
-        <main className="min-h-screen md:p-8 p-4 pb-24">
-            <section className="max-w-6xl mx-auto">
+        <main className="container min-h-screen mx-auto pb-24">
+            <section>
                 <h1 className="text-6xl md:text-4xl font-extrabold md:pt-6 pt-4">
                     Dashboard
                     <span className="tooltip tooltip-right pl-2 pt-1 align-top" data-tip={tooltipText}>
@@ -93,6 +94,9 @@ export default function Dashboard() {
                             return <ToplineCard key={item.id} item={item}/>
                         })}
                 </div>
+            </section>
+
+            <section>
                 <div className="grid md:grid-cols-4 grid-cols-2 gap-4 mt-6">
                     <div className="flex items-center justify-end md:col-start-3">
                         <p className="font-medium text-sm">Group by:</p>
