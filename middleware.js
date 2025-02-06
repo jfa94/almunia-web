@@ -1,7 +1,7 @@
 import {signIn, getTokens} from "@/lib/auth";
 import {NextResponse} from "next/server";
 
-const protectedRoutes = ['/dashboard', '/onboarding', '/create']
+const protectedRoutes = ['/account', '/dashboard', '/onboarding', '/create']
 
 export const middleware = async (request) => {
     console.log('Ran middleware for:', request.nextUrl.pathname)
