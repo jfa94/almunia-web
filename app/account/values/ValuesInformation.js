@@ -30,11 +30,7 @@ export default async function ValuesInformation({companyId}) {
     }
 
     return <section>
-        <div className="flex flex-row gap-2 items-center pb-2">
-            <h1 className="subheading p-0">Values</h1>
-            <div className="link"><RiPencilFill/></div>
-        </div>
-        <CustomTable headers={tableHeaders} rows={valuesArray} />
+        <CustomTable title="Values" headers={tableHeaders} rows={valuesArray} data={request} />
     </section>
 
 }
