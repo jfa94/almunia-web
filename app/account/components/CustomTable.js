@@ -11,7 +11,6 @@ import {
 } from '@tremor/react';
 import {useState} from "react";
 import {EditModal} from "@/app/account/components/EditModal";
-import {Transition} from "@headlessui/react";
 
 
 export default function CustomTable({title, headers, rows, rowLimit, data}) {
@@ -35,15 +34,15 @@ export default function CustomTable({title, headers, rows, rowLimit, data}) {
         {title && <div className="flex flex-row justify-between pb-2">
             <div className="flex flex-row gap-2 items-center">
                 <h1 className="subheading p-0">{title}</h1>
-                <EditModal title={title} headers={headers} rows={rows} data={data}/>
+                {/*<EditModal title={title} headers={headers} rows={rows} data={data}/>*/}
             </div>
-            <Transition show={displayCollapse}>
+            {displayCollapse ? (
                 <div className="btn btn-sm bg-slate-600 transition duration-150 ease-in data-[closed]:opacity-0"
                      onClick={toggleLimit}
                 >
                     <p className="font-medium">Collapse</p>
                 </div>
-            </Transition>
+            ) : null}
         </div>}
 
         <Card className="p-0">
