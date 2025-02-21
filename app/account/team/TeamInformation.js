@@ -1,8 +1,7 @@
-import CustomTable from "@/app/account/components/CustomTable"
-import {RiPencilFill} from "@remixicon/react"
 import {getCompanyData} from "@/lib/actions"
 import {redirect} from "next/navigation";
-import {EditModal} from "@/app/account/components/EditModal";
+import {DataTable} from "@/components/DataTable";
+import {columns} from "./columns.js"
 
 const demoData = [
     {
@@ -24,32 +23,22 @@ const demoData = [
     },
 ]
 
-const tableHeaders = ['First Name', 'Last Name', 'Email', 'Role', 'Manager', 'Active']
 
 export default async function TeamInformation({companyId}) {
-    let teamArray = []
-
     // TODO: Change for prod
     // const request = await getCompanyData(companyId, 'team')
     const request = demoData
     if (!request[0]?.email) {
         console.error('Issue with getTeamData. Returned:', request)
         redirect('/?error=account')
-    } else {
-        for (let row of request) {
-            teamArray.push({
-                'firstName': row.first_name,
-                'lastName': row.last_name,
-                'email': row.email,
-                'role': row.role,
-                'manager': row.manager,
-                'active': row.active ? 'Yes' : 'No'
-            })
-        }
     }
 
     return <section>
-        <CustomTable title="Team" headers={tableHeaders} rows={teamArray} rowLimit={5} data={request}/>
+        {/*<CustomTable title="Team" headers={tableHeaders} rows={teamArray} rowLimit={5} data={request}/>*/}
+        <div className="flex flex-col gap-2">
+            <h1 className="subheading p-0">Team</h1>
+            <DataTable columns={columns} data={request}/>
+        </div>
     </section>
 
 }

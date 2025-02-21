@@ -1,7 +1,8 @@
 import CustomTable from "@/app/account/components/CustomTable"
-import {RiPencilFill} from "@remixicon/react"
 import {getCompanyData} from "@/lib/actions"
 import {redirect} from "next/navigation";
+import {DataTable} from "@/components/DataTable";
+import {columns} from "./columns.js"
 
 const demoData = {
     "Hot": "Hotness is important",
@@ -30,7 +31,10 @@ export default async function ValuesInformation({companyId}) {
     }
 
     return <section>
-        <CustomTable title="Values" headers={tableHeaders} rows={valuesArray} data={request} />
+        <div className="flex flex-col gap-2">
+            <h1 className="subheading p-0">Values</h1>
+        </div>
+        <DataTable columns={columns} data={valuesArray}/>
     </section>
 
 }

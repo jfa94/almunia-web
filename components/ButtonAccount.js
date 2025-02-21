@@ -76,18 +76,17 @@ const ButtonAccount = () => {
                 </div>
             </PopoverTrigger>
 
-            <PopoverContent className="bg-base-100 max-w-[16rem] p-2">
-                <div className="space-y-0.5 text-sm">
+            <PopoverContent className="bg-base-100 max-w-[16rem] p-2 flex flex-col gap-1" align="end">
                     {dropdownItems.map(({label, icon, link}) => {
                         return <Link key={label} href={link}>
                             <button
-                                className={`${currentPath === link ? 'font-bold bg-gray-100' : 'font-medium'} flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded-lg`}
+                                className={`${currentPath === link ? 'font-bold bg-gray-100' : 'font-medium'} flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded`}
                             >
-                                {icon}
-                                {label}
+                                {icon}{label}
                             </button>
                         </Link>
                     })}
+
                     <button
                         className="flex items-center gap-2 hover:bg-error/20 hover:text-error duration-200 py-1.5 px-4 w-full rounded-lg font-medium"
                         onClick={handleSignOut}
@@ -111,7 +110,6 @@ const ButtonAccount = () => {
                         </svg>
                         Logout
                     </button>
-                </div>
             </PopoverContent>
         </Popover>
     );

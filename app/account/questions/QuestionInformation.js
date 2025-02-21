@@ -1,8 +1,7 @@
-import CustomTable from "@/app/account/components/CustomTable"
-import {RiPencilFill} from "@remixicon/react"
 import {getCompanyData} from "@/lib/actions"
 import {redirect} from "next/navigation";
-import {EditModal} from "@/app/account/components/EditModal";
+import {DataTable} from "@/components/DataTable";
+import {columns} from "./columns.js"
 
 const demoData = {
     "vision": {
@@ -56,7 +55,6 @@ const demoData = {
     }
 }
 
-const tableHeaders = ['Theme', 'Question', 'Last Asked']
 
 export default async function QuestionInformation({companyId}) {
     let questionArray = []
@@ -87,7 +85,10 @@ export default async function QuestionInformation({companyId}) {
     }
 
     return <section>
-        <CustomTable title="Questions" headers={tableHeaders} rows={questionArray} rowLimit={5} data={request}/>
+        <div className="flex flex-col gap-2">
+            <h1 className="subheading p-0">Questions</h1>
+        </div>
+        <DataTable columns={columns} data={questionArray} pageSize={5}/>
     </section>
 
 }

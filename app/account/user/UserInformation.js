@@ -1,7 +1,8 @@
 import {getUserData} from "@/lib/auth";
 import {redirect} from "next/navigation";
-import CustomTable from "@/app/account/components/CustomTable";
 import {RiInformationLine} from "@remixicon/react";
+import {DataTable} from "@/components/DataTable";
+import {columns} from "./columns.js"
 
 const sampleData = {
     "email": "j.flores.almagro@gmail.com",
@@ -12,27 +13,17 @@ const sampleData = {
     "sub": "828564a4-90e1-70e0-b53b-dba7201b44d9"
 }
 
-const headers = ['Name', 'Company', 'Email', 'Verified']
 const tooltipText = 'This data cannot be edited directly. Please reach out to request changes.'
 
 export default async function UserInformation() {
     // TODO: Change for prod
     // const user = await getUserData()
     const user = sampleData
-    const userArray = []
 
     if (!user?.sub) {
         console.error('Issue with getUserData. Returned:', user)
         redirect('/?error=account')
-    } else {
-        userArray.push({
-            name: user.name,
-            company: user['custom:company'],
-            email: user.email,
-            verified: user.email_verified ? 'Yes' : 'No'
-        })
     }
-
 
     return <section>
         <div className="flex flex-row gap-2 items-center pb-2">
@@ -41,7 +32,7 @@ export default async function UserInformation() {
                 <RiInformationLine size={20}/>
             </span>
         </div>
-        <CustomTable headers={headers} rows={userArray}/>
+        <DataTable columns={columns} data={[user]}/>
     </section>
 
 }
