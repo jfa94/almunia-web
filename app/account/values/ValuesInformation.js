@@ -1,4 +1,3 @@
-import CustomTable from "@/app/account/components/CustomTable"
 import {getCompanyData} from "@/lib/actions"
 import {redirect} from "next/navigation";
 import {DataTable} from "@/components/DataTable";
@@ -9,7 +8,6 @@ const demoData = {
     "Fun": "but fun is more important"
 }
 
-const tableHeaders = ['Value Name', 'Description']
 
 export default async function ValuesInformation({companyId}) {
     let valuesArray = []

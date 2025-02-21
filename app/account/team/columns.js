@@ -1,8 +1,6 @@
 "use client";
 
 import {EditModal} from "@/app/account/components/EditModal"
-import {Button} from "@/components/ui/button"
-import {ArrowUpDown} from "lucide-react"
 import {SortableButton} from "@/app/account/components/SortableButton";
 
 
