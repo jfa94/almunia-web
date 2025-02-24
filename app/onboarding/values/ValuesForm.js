@@ -9,12 +9,13 @@ const ValuesForm = ({formState, dispatch, incrementPage, hidden}) => {
     ])
 
     const handleSubmitForm = async (formData) => {
-        const result = await submitValuesForm({companyId: formState.companyId, page: 'values'}, formData)
-        if (result['$metadata']?.httpStatusCode === 200) {
-            dispatch({field: 'values', value: Object.keys(result.data.values)})
-            incrementPage()
-        } else {
+        const {result, items} = await submitValuesForm({companyId: formState.companyId, page: 'values'}, formData)
+        if (result.find(batch => batch['$metadata']?.httpStatusCode !== 200)) {
+            console.log('Result:', result)
             alert('An error has occurred. Please try again later.')
+        } else {
+            dispatch({field: 'values', value: items})
+            incrementPage()
         }
     }
 
@@ -41,9 +42,12 @@ const ValuesForm = ({formState, dispatch, incrementPage, hidden}) => {
             <div className="flex flex-col mb-2">
                 <h2 className="subheading">Values</h2>
                 <p>
-                    Let&apos;s define your company values. Useful values are genuinely reflective of a company&apos;s
-                    ideals, without being idealistic. Avoid generic statements that are not specific to the culture you
-                    want to create (for example, &quot;excellence&quot;). Keep in mind that you should integrate these
+                    Let&apos;s define your company values. Useful values are genuinely reflective of a
+                    company&apos;s
+                    ideals, without being idealistic. Avoid generic statements that are not specific to the culture
+                    you
+                    want to create (for example, &quot;excellence&quot;). Keep in mind that you should integrate
+                    these
                     values in every aspect of your organisation, from hiring and performance reviews to strategic
                     decision-making.
                 </p>

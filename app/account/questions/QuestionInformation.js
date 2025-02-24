@@ -3,92 +3,112 @@ import {redirect} from "next/navigation";
 import {DataTable} from "@/components/DataTable";
 import {columns} from "./columns.js"
 
-const demoData = {
-    "vision": {
-        "questions": [
-            {
-                "question": "I feel excited about our organisation's future",
-                "id": "vision0",
-                "last_asked": "2000-01-01T00:00:00.000Z"
-            },
-            {
-                "question": "Our organisation's current direction will eventually achieve our mission",
-                "id": "vision1",
-                "last_asked": "2000-01-01T00:00:00.000Z"
-            },
-            {
-                "question": "I have clarity on the direction our organisation is going",
-                "id": "vision2",
-                "last_asked": "2025-01-24T15:26:06.578Z"
-            }
-        ],
-        "question_count": 3,
-        "last_asked": "2025-01-24T15:26:06.578Z",
-        "value_name": "Vision"
+const demoData = [
+    {
+        "company_id": "C-1i19vvu1qt8otual7op8",
+        "question_id": "develop3",
+        "last_asked": "2000-01-01T00:00:00.000Z",
+        "question": "My organisation is committed to my professional development",
+        "value_id": "develop"
     },
-    "mission": {
-        "questions": [
-            {
-                "question": "I feel inspired by our mission",
-                "id": "mission0",
-                "last_asked": "2000-01-01T00:00:00.000Z"
-            },
-            {
-                "question": "I am familiar with our mission",
-                "id": "mission1",
-                "last_asked": "2000-01-01T00:00:00.000Z"
-            },
-            {
-                "question": "My work contributes to our mission",
-                "id": "mission2",
-                "last_asked": "2000-01-01T00:00:00.000Z"
-            },
-            {
-                "question": "I feel proud to work here",
-                "id": "mission3",
-                "last_asked": "2025-01-27T08:26:13.203Z"
-            }
-        ],
-        "question_count": 4,
-        "last_asked": "2025-01-27T08:26:13.203Z",
-        "value_name": "Mission"
+    {
+        "company_id": "C-1i19vvu1qt8otual7op8",
+        "question_id": "develop0",
+        "last_asked": "2000-01-01T00:00:00.000Z",
+        "question": "I am making progress towards my career goals",
+        "value_id": "develop"
+    },
+    {
+        "company_id": "C-1i19vvu1qt8otual7op8",
+        "question_id": "develop1",
+        "last_asked": "2000-01-01T00:00:00.000Z",
+        "question": "I am learning and developing new skills",
+        "value_id": "develop"
+    },
+    {
+        "company_id": "C-1i19vvu1qt8otual7op8",
+        "question_id": "incl0",
+        "last_asked": "2000-01-01T00:00:00.000Z",
+        "question": "Opportunities are allocated fairly",
+        "value_id": "incl"
+    },
+    {
+        "company_id": "C-1i19vvu1qt8otual7op8",
+        "question_id": "jsat0",
+        "last_asked": "2000-01-01T00:00:00.000Z",
+        "question": "Overall, I am satisfied with my job right now",
+        "value_id": "jsat"
+    },
+    {
+        "company_id": "C-1i19vvu1qt8otual7op8",
+        "question_id": "leadership0",
+        "last_asked": "2000-01-01T00:00:00.000Z",
+        "question": "We have the right leadership in place to achieve our goals",
+        "value_id": "leadership"
     }
-}
+]
 
+const demoVals = [
+    {
+        "company_id": "default",
+        "name": "Development",
+        "value_id": "develop"
+    },
+    {
+        "company_id": "default",
+        "name": "Inclusion",
+        "value_id": "incl"
+    },
+    {
+        "company_id": "default",
+        "name": "Job Satisfaction",
+        "value_id": "jsat"
+    },
+    {
+        "company_id": "default",
+        "name": "Leadership",
+        "value_id": "leadership"
+    },
+    {
+        "company_id": "default",
+        "name": "Mission",
+        "value_id": "mission"
+    },
+    {
+        "company_id": "default",
+        "name": "Manager Satisfaction",
+        "value_id": "msat"
+    },
+    {
+        "company_id": "default",
+        "name": "Vision",
+        "value_id": "vision"
+    }
+]
 
 export default async function QuestionInformation({companyId}) {
-    let questionArray = []
-
     // TODO: Change for prod
-    // const request = await getCompanyData(companyId, 'questions')
-    const request = demoData
+    // const questionsRequest = await getCompanyData(companyId, 'questions')
+    const questionsRequest = demoData
+    // const valuesRequest = await getCompanyData(companyId, 'values')
+    const valuesRequest = demoVals
     // TODO: Add a better error check
-    if (!request) {
-        console.error('Issue with getCompanyData. Returned:', request)
+    if (!questionsRequest || !valuesRequest) {
+        console.error('Issue with getCompanyData. Returned:', questionsRequest)
         redirect('/?error=account')
-    } else {
-        for (let key of Object.keys(request)) {
-            for (let question of request[key].questions) {
-                let lastAsked = new Date(question.last_asked)
-                const dateFormat = {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                }
-                questionArray.push({
-                    theme: request[key].value_name,
-                    question: question.question,
-                    lastAsked: lastAsked.toLocaleDateString('en-GB', dateFormat)
-                })
-            }
-        }
     }
+
+    const data = questionsRequest.map((question) => {
+        const valueObject = valuesRequest.find(value => value.value_id === question.value_id)
+        question.theme = valueObject?.name || ""
+        return question
+    })
 
     return <section>
         <div className="flex flex-col gap-2">
             <h1 className="subheading p-0">Questions</h1>
+            <DataTable columns={columns} data={data} pageSize={5} filterColumn="question"/>
         </div>
-        <DataTable columns={columns} data={questionArray} pageSize={5}/>
     </section>
 
 }

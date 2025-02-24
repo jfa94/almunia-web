@@ -26,8 +26,8 @@ const demoData = [
 
 export default async function TeamInformation({companyId}) {
     // TODO: Change for prod
-    // const request = await getCompanyData(companyId, 'team')
-    const request = demoData
+    const request = await getCompanyData(companyId, 'team')
+    // const request = demoData
     if (!request[0]?.email) {
         console.error('Issue with getTeamData. Returned:', request)
         redirect('/?error=account')
@@ -37,7 +37,7 @@ export default async function TeamInformation({companyId}) {
         {/*<CustomTable title="Team" headers={tableHeaders} rows={teamArray} rowLimit={5} data={request}/>*/}
         <div className="flex flex-col gap-2">
             <h1 className="subheading p-0">Team</h1>
-            <DataTable columns={columns} data={request}/>
+            <DataTable columns={columns} data={request} filterColumn="email"/>
         </div>
     </section>
 

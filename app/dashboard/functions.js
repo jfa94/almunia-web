@@ -49,24 +49,24 @@ export const getISODateRange = (timeframe, periodEnd) => {
 
 export const summariseSurveyData = (
     surveyResponses,
-    questionData,
     groupBy = 'value_id',
     timeframe = 'month',
     periodEnd
 ) => {
     let summarised = {}
-
     const currentPeriod = getISODateRange(timeframe, periodEnd)
     const previousEnd = new Date(Date.parse(currentPeriod.start) - 1)
     const previousPeriod = getISODateRange(timeframe, previousEnd.toISOString())
 
     for (let response of surveyResponses) {
+        if (!response.question && !response.value_name) continue
+
         const key = response[groupBy]
         if (!summarised[key]) {
             summarised[key] = {
                 name: groupBy === 'question_id'
-                    ? questionData[response.value_id].questions.filter(value => value.id === response.question_id)[0]
-                    : questionData[key].value_name,
+                    ? response.question
+                    : response.value_name,
                 currentPeriod: [],
                 previousPeriod: [],
                 change: 0

@@ -5,7 +5,7 @@ import {SortableButton} from "@/app/account/components/SortableButton";
 
 const displayColumns = [
     {
-        accessorKey: "valueName",
+        accessorKey: "name",
         headerText: "Name",
         header: ({column}) => <SortableButton column={column} buttonText="Name"/>
     },

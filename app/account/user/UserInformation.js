@@ -13,7 +13,7 @@ const sampleData = {
     "sub": "828564a4-90e1-70e0-b53b-dba7201b44d9"
 }
 
-const tooltipText = 'This data cannot be edited directly. Please reach out to request changes.'
+const tooltipText = 'This information cannot be edited directly. Please reach out to request changes.'
 
 export default async function UserInformation() {
     // TODO: Change for prod

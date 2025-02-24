@@ -3,9 +3,9 @@
 import {QuestionInput} from "@/app/onboarding/questions/QuestionInput";
 import {useState} from "react";
 
-export default function QuestionContainer({valueKey, valueName}) {
+export default function QuestionContainer({valueId, valueName}) {
     let [inputArray, setInputArray] = useState([
-        <QuestionInput key="0" id="0" valueKey={`${valueKey}`} valueName={valueName}/>
+        <QuestionInput key="0" id="0" valueId={valueId} valueName={valueName}/>
     ])
 
     let addInputToArray = (e) => {
@@ -14,7 +14,7 @@ export default function QuestionContainer({valueKey, valueName}) {
         const newKey = Number(maxInputArrKey) + 1
         setInputArray((prevState) => [
             ...prevState,
-            <QuestionInput key={`${newKey}`} id={`${newKey}`} valueKey={`${valueKey}`} valueName={valueName} removeInput={RemoveInputFromArray}/>
+            <QuestionInput key={`${newKey}`} id={`${newKey}`} valueId={valueId} valueName={valueName} removeInput={RemoveInputFromArray}/>
         ])
     }
 

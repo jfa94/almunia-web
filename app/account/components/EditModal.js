@@ -20,11 +20,12 @@ import {submitDynamoDbUpdate} from "@/lib/aws";
 
 const inputTypes = {
     email: "email",
-    active: "switch"
+    active: "switch",
 }
 
 
 const tableNames = {
+    "Company Details": "company-information",
     "Team Member": "company-teams",
     "Value": "company-values",
     "Question": "company-questions"
@@ -47,7 +48,7 @@ const reducer = (state, action) => {
 export function EditModal({title, data, columns}) {
     const [formData, dispatch] = useReducer(reducer, data)
     const [open, setOpen] = useState(false)
-    const [submitted, setSubmitted] = useState(false)
+    const [submitted, setSubmitted] = useState("")
 
     const handleChange = (key, value) => {
         dispatch({
@@ -59,7 +60,7 @@ export function EditModal({title, data, columns}) {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        setSubmitted(true)
+        setSubmitted("submit")
         try {
             const result = await submitDynamoDbUpdate(tableNames[title], formData)
             if(result['$metadata']?.httpStatusCode !== 200) {
@@ -69,9 +70,21 @@ export function EditModal({title, data, columns}) {
                 setOpen(false)
             }
         } catch (error) {
+            alert('Error updating data')
             console.error('Error updating data:', error)
+        } finally {
+            setSubmitted("")
         }
-        setTimeout(() => setSubmitted(false), 1000)
+    }
+
+    const handleDelete = async () => {
+        setSubmitted("delete")
+        console.log(formData)
+        setTimeout(() => {
+            setSubmitted("")
+            setOpen(false)
+        }, 2000)
+        alert('Update successful. Please allow a few minutes for the changes to take effect.')
     }
 
     return (
@@ -92,20 +105,22 @@ export function EditModal({title, data, columns}) {
 
                 <form onSubmit={handleSubmit}>
                     <section className="flex flex-col gap-4">
-                        {columns.map(({headerText, accessorKey}) => {
+                        {columns.map(({accessorKey, noEdit, header, headerText}) => {
                             return <div key={accessorKey} className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor={accessorKey}>
-                                    {headerText}
+                                    {headerText ? headerText : header}
                                 </Label>
                                 {inputTypes[accessorKey] === "switch"
                                     ? <Switch id={accessorKey}
                                               checked={formData[accessorKey]}
                                               onCheckedChange={(e) => handleChange(accessorKey, e)}
+                                              disabled={noEdit ?? false}
                                     />
                                     : <Input id={accessorKey}
                                              type={inputTypes[accessorKey] ? inputTypes[accessorKey] : "text"}
                                              value={formData[accessorKey] ?? ""}
                                              onChange={(e) => handleChange(accessorKey, e.target.value)}
+                                             disabled={noEdit ?? false}
                                              className="col-span-3"
                                     />
                                 }
@@ -114,11 +129,21 @@ export function EditModal({title, data, columns}) {
                     </section>
 
                     <DialogFooter className="mt-4">
+                        <Button type="button"
+                                onClick={handleDelete}
+                                disabled={submitted !== ""}
+                                className="inline-flex items-center gap-2 rounded-md py-1.5 px-3 min-w-20 bg-transparent hover:bg-red-100 text-red-700 text-sm/6 font-semibold border-2 border-red-600 shadow-inner shadow-white/10"
+                        >
+                            {submitted === "delete"
+                                ? <span className="loading loading-dots loading-sm"></span>
+                                : <span>Delete</span>}
+                        </Button>
+
                         <Button type="submit"
-                                disabled={submitted}
+                                disabled={submitted !== ""}
                                 className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 min-w-20 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                         >
-                            {submitted
+                            {submitted === "submit"
                                 ? <span className="loading loading-dots loading-sm"></span>
                                 : <span>Save & Close</span>}
                         </Button>

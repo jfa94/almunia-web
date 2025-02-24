@@ -6,10 +6,11 @@ function QuestionsForm({formState, incrementPage, hidden}) {
     // console.log('formState:', formState)
     const handleSubmitForm = async (formData) => {
         const result = await submitQuestionsForm({companyId: formState.companyId, page: 'questions'}, formData)
-        if (result['$metadata']?.httpStatusCode === 200) {
-            incrementPage()
-        } else {
+        if (result.find(batch => batch['$metadata']?.httpStatusCode !== 200)) {
+            console.log('Result:', result)
             alert('An error has occurred. Please try again later.')
+        } else {
+            incrementPage()
         }
     }
 
@@ -25,7 +26,9 @@ function QuestionsForm({formState, incrementPage, hidden}) {
                 e.g., &rsquo;I am satisfied with my job&lsquo;).
             </p>
 
-            {formState.values.map((value, i) => <QuestionContainer key={i} valueKey={i} valueName={value}/>)}
+            {formState.values.map(({value_id, name}) => {
+                return <QuestionContainer key={value_id} valueId={value_id} valueName={name}/>
+            })}
 
             <div className="flex flex-col md:flex-row gap-4 md:justify-end mt-4">
                 <button type="submit" className="btn btn-primary min-w-36">

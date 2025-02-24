@@ -45,7 +45,7 @@ export function InputTeamInformation({id, removeInput = alertIsOriginal}) {
             />
 
             <label htmlFor={`person${id}-manager`} className="inline-table-label">Manager</label>
-            <input type="text"
+            <input type="email"
                    name={`person${id}-manager`}
                    id={`person${id}-manager`}
                    placeholder="-"

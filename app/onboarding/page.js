@@ -35,7 +35,7 @@ const Onboarding = () => {
 
     return (
         <>
-            <main className="min-h-[65svh] max-w-7xl m-auto p-2">
+            <main className="min-h-[65svh] max-w-7xl m-auto md:p-4 p-2">
                 <div className="text-sm breadcrumbs">
                     <ul>
                         <li className="hover:cursor-pointer"

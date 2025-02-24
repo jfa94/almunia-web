@@ -6,6 +6,7 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
+    getFilteredRowModel
 } from "@tanstack/react-table"
 
 import {
@@ -18,9 +19,11 @@ import {
 } from "@/components/ui/table"
 import {Button} from "@/components/ui/button";
 import {useState} from "react";
+import {Input} from "@/components/ui/input";
 
-export function DataTable({columns, data, pageSize = 10}) {
+export function DataTable({columns, data, pageSize = 10, filterColumn}) {
     const [sorting, setSorting] = useState([])
+    const [columnFilters, setColumnFilters] = useState([])
 
     const table = useReactTable({
         data,
@@ -34,10 +37,12 @@ export function DataTable({columns, data, pageSize = 10}) {
         },
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
+        onColumnFiltersChange: setColumnFilters,
+        getFilteredRowModel: getFilteredRowModel(),
         state: {
             sorting,
+            columnFilters
         },
-
     })
 
     return (
@@ -87,24 +92,42 @@ export function DataTable({columns, data, pageSize = 10}) {
                 </Table>
             </div>
 
-            {data.length > pageSize && <div className="flex items-center justify-end space-x-2 py-4">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    Previous
-                </Button>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                >
-                    Next
-                </Button>
-            </div>}
+            <div className={(filterColumn || data.length > pageSize)
+                ? "flex flex-col md:flex-row items-center justify-between gap-4 py-4"
+                : "hidden"}
+            >
+                {filterColumn && <div className="w-full py-0">
+                    <Input
+                        className="max-w-sm"
+                        placeholder={`Filter ${filterColumn}s...`}
+                        value={(table.getColumn(filterColumn)?.getFilterValue()) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
+                        }
+                    />
+                </div>}
+
+                {data.length > pageSize && <div className="w-full md:max-w-sm flex items-center justify-end gap-2 py-0">
+                    <Button
+                        className="w-full"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                    >
+                        Previous
+                    </Button>
+                    <Button
+                        className="w-full"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                    >
+                        Next
+                    </Button>
+                </div>}
+            </div>
         </div>
     )
 }

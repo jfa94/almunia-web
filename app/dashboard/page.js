@@ -18,28 +18,20 @@ import {useLocalStorage} from "@/lib/utils";
 import {CustomSelect} from "@/app/dashboard/components/CustomSelect";
 
 
+const tooltipText = "Data aggregated monthly. Percentage value in summary card represents change vs previous month."
+const chartOptions = [
+    {value: 'chart-data-value', label: 'Theme'},
+    {value: 'chart-data-question', label: 'Question'}
+]
+
+
 export default function Dashboard() {
     const {data: session} = useSession()
     const {setItem, getItem} = useLocalStorage()
     let [loading, setLoading] = useState(true)
     let [chartDataType, setChartDataType] = useState('chart-data-value')
+    let valueData = useRef({})
     let questionData = useRef({})
-
-    const tooltipText = "Data aggregated monthly. Percentage value in summary card represents change vs previous month."
-    const chartOptions = [
-        {value: 'chart-data-value', label: 'Theme'},
-        {value: 'chart-data-question', label: 'Question'}
-    ]
-
-    const findQuestionValue = (questionId) => {
-        if (questionData.current === {}) return undefined
-        for (let valueId of Object.keys(questionData.current)) {
-            for (let question of questionData.current[valueId].questions) {
-                if (question.id === questionId) return question.question
-            }
-        }
-        return undefined
-    }
 
     useEffect(() => {
         (async () => {
@@ -50,14 +42,25 @@ export default function Dashboard() {
 
             const dateRange = getItem('survey-data-date-range')
             let responseData = []
+            valueData.current = await getCompanyData(companyId, 'values')
             questionData.current = await getCompanyData(companyId, 'questions')
 
             if (!dateRange || dateRange.start > startDate || dateRange.end < endDate) {
-                responseData = await getSurveyResponses(companyId, startDate, endDate)
                 setItem('survey-data-date-range', {start: startDate, end: endDate})
 
-                const valueResults = summariseSurveyData(responseData, questionData.current, 'value_id', 'month')
-                const questionResults = summariseSurveyData(responseData, questionData.current, 'question_id', 'month')
+                responseData = await getSurveyResponses(companyId, startDate, endDate)
+                const contextualizedResponses = responseData.map(response => {
+                    const relevantValue = valueData.current.find(val => val.value_id === response.value_id)
+                    const relevantQuestion = questionData.current.find(q => q.question_id === response.question_id)
+                    const context = {
+                        value_name: relevantValue?.name ?? "",
+                        question: relevantQuestion?.question ?? ""
+                    }
+                    return Object.assign(response, context)
+                })
+
+                const valueResults = summariseSurveyData(contextualizedResponses, 'value_id', 'month')
+                const questionResults = summariseSurveyData(contextualizedResponses, 'question_id', 'month')
 
                 const sortKeys = (keys, object) => {
                     return keys.sort((a, b) => {
@@ -107,11 +110,14 @@ export default function Dashboard() {
                     {loading
                         ? <Card><p>Loading ...</p></Card>
                         : getItem(chartDataType)?.map(item => {
+                            const itemName = item.grouping === 'question_id'
+                                ? questionData.current.find(q => q.question_id === item.id)
+                                : valueData.current.find(val => val.value_id === item.id)
                             return (<Card key={item.id} className="mx-auto md:p-6 p-5">
                                 <h3 className="text-2xl font-extrabold md:pl-8 pb-6">{
-                                    item.grouping === 'question_id'
-                                        ? findQuestionValue(item.id)
-                                        : questionData.current[item.id].value_name
+                                    item.grouping === "question_id"
+                                        ? itemName?.question ?? "Missing Theme Name"
+                                        : itemName?.name ?? "Missing Theme Name"
                                 }</h3>
                                 <AreaChartHero key={item.id} chartData={item.stat}/>
                             </Card>)
