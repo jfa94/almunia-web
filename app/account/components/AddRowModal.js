@@ -16,7 +16,7 @@ import {Label} from "@/components/ui/label"
 import {Switch} from "@/components/ui/switch"
 import toast, {Toaster} from "react-hot-toast"
 import {MoreHorizontal} from "lucide-react"
-import {deleteDynamoDbItem, submitDynamoDbUpdate} from "@/lib/aws"
+import {submitDynamoDbUpdate} from "@/lib/aws"
 
 
 const inputTypes = {
@@ -46,7 +46,7 @@ const reducer = (state, action) => {
 }
 
 
-export function EditModal({title, data, columns}) {
+export function AddRowModal({title, data, columns}) {
     const [formData, dispatch] = useReducer(reducer, data)
     const [open, setOpen] = useState(false)
     const [submitted, setSubmitted] = useState("")
@@ -64,29 +64,6 @@ export function EditModal({title, data, columns}) {
         setSubmitted("submit")
         try {
             const result = await submitDynamoDbUpdate(updateMap[title].tableName, formData)
-            if (result['$metadata']?.httpStatusCode !== 200) {
-                toast.error('Error updating data')
-            } else {
-                toast.success('Update successful. Please allow a few minutes for the changes to take effect.')
-                setOpen(false)
-            }
-        } catch (error) {
-            toast.error('Error updating data')
-            console.error('Error updating data:', error)
-        } finally {
-            setSubmitted("")
-        }
-    }
-
-    const handleDelete = async () => {
-        setSubmitted("delete")
-        try {
-            const {tableName, itemKeys} = updateMap[title]
-            let deleteKey = {}
-            for (const key of itemKeys) {
-                deleteKey[key] = formData[key]
-            }
-            const result = await deleteDynamoDbItem(tableName, deleteKey)
             if (result['$metadata']?.httpStatusCode !== 200) {
                 toast.error('Error updating data')
             } else {
@@ -145,16 +122,6 @@ export function EditModal({title, data, columns}) {
                     </section>
 
                     <DialogFooter className="mt-4">
-                        <Button type="button"
-                                onClick={handleDelete}
-                                disabled={submitted !== ""}
-                                className="inline-flex items-center gap-2 rounded-md py-1.5 px-3 min-w-20 bg-transparent hover:bg-red-100 text-red-700 text-sm/6 font-semibold border-2 border-red-600 shadow-inner shadow-white/10"
-                        >
-                            {submitted === "delete"
-                                ? <span className="loading loading-dots loading-sm"></span>
-                                : <span>Delete</span>}
-                        </Button>
-
                         <Button type="submit"
                                 disabled={submitted !== ""}
                                 className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 min-w-20 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
