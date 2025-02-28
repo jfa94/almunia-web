@@ -1,7 +1,9 @@
-import {getCompanyData} from "@/lib/actions"
+import {createNewItem, getCompanyData} from "@/lib/actions"
 import {redirect} from "next/navigation";
 import {DataTable} from "@/components/DataTable";
 import {columns} from "./columns.js"
+import {v4 as uuidv4} from "uuid";
+import {AddRowModal} from "@/app/account/components/AddRowModal";
 
 const demoData = [
     {
@@ -97,18 +99,51 @@ export default async function QuestionInformation({companyId}) {
         console.error('Issue with getCompanyData. Returned:', questionsRequest)
         redirect('/?error=account')
     }
-
+// {
+//         "company_id": "C-1i19vvu1qt8otual7op8",
+//         "question_id": "leadership0",
+//         "last_asked": "2000-01-01T00:00:00.000Z",
+//         "question": "We have the right leadership in place to achieve our goals",
+//         "value_id": "leadership"
+//     }
     const data = questionsRequest.map((question) => {
         const valueObject = valuesRequest.find(value => value.value_id === question.value_id)
         question.theme = valueObject?.name || ""
         return question
     })
 
-    return <section>
-        <div className="flex flex-col gap-2">
-            <h1 className="subheading p-0">Questions</h1>
-            <DataTable columns={columns} data={data} pageSize={5} filterColumn="question"/>
-        </div>
-    </section>
+    const possibleValues = []
+    for (const val of valuesRequest) {
+        possibleValues.push({id: val.value_id, value: val.name})
+    }
 
+    const formColumns = [
+        {accessorKey: "value_id", headerText: "Value", required: true, possibleVals: possibleValues},
+        {accessorKey: "question", headerText: "Question", required: true}
+    ]
+
+    const createValue = async ({valueId, question}) => {
+        "use server";
+        const teamMemberData = {
+            company_id: companyId,
+            value_id: valueId,
+            question_id: `${valueId}${Math.floor(Math.random() * 10000000000000000)}`,
+            last_asked: "2000-01-01T00:00:00.000Z",
+            question: question,
+        }
+        return await createNewItem(companyId, 'team', teamMemberData)
+    }
+
+    return <section>
+        <DataTable
+            title="Questions"
+            columns={columns}
+            data={data}
+            filterColumn="question"
+            pageSize={5}
+            NewRowModal={AddRowModal}
+            newRowColumns={formColumns}
+            newRowFunction={createValue}
+        />
+    </section>
 }

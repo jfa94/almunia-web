@@ -14,7 +14,7 @@ import {Button} from "@/components/ui/button"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import {Switch} from "@/components/ui/switch"
-import toast, {Toaster} from "react-hot-toast"
+import toast from "react-hot-toast"
 import {MoreHorizontal} from "lucide-react"
 import {deleteDynamoDbItem, submitDynamoDbUpdate} from "@/lib/aws"
 
@@ -103,7 +103,6 @@ export function EditModal({title, data, columns}) {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <Toaster/>
             <DialogTrigger
                 className="justify-self-end flex justify-center items-center h-8 w-8 p-0 hover:bg-neutral-100 rounded">
                 <MoreHorizontal className="h-4 w-4"/>

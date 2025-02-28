@@ -1,7 +1,10 @@
-import {getCompanyData} from "@/lib/actions"
+import {createNewItem, getCompanyData} from "@/lib/actions"
 import {redirect} from "next/navigation";
 import {DataTable} from "@/components/DataTable";
 import {columns} from "./columns.js"
+import {AddRowModal} from "@/app/account/components/AddRowModal";
+import {v4 as uuidv4} from "uuid";
+
 
 const demoData = [
     {
@@ -33,12 +36,40 @@ export default async function TeamInformation({companyId}) {
         redirect('/?error=account')
     }
 
+    const formColumns = [
+        {accessorKey: "email", headerText: "Email", required: true},
+        {accessorKey: "first_name", headerText: "First Name"},
+        {accessorKey: "last_name", headerText: "Last Name"},
+        {accessorKey: "role", headerText: "Role"},
+        {accessorKey: "manager", headerText: "Manager"}
+    ]
+
+    const createValue = async ({firstName, lastName, email, role, manager}) => {
+        "use server";
+        const teamMemberData = {
+            company_id: companyId,
+            active: true,
+            user_id: uuidv4(),
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            role: role,
+            manager: manager
+
+        }
+        return await createNewItem(companyId, 'team', teamMemberData)
+    }
+
     return <section>
-        {/*<CustomTable title="Team" headers={tableHeaders} rows={teamArray} rowLimit={5} data={request}/>*/}
-        <div className="flex flex-col gap-2">
-            <h1 className="subheading p-0">Team</h1>
-            <DataTable columns={columns} data={request} filterColumn="email"/>
-        </div>
+        <DataTable
+            title="Team"
+            columns={columns}
+            data={request}
+            filterColumn="email"
+            NewRowModal={AddRowModal}
+            newRowColumns={formColumns}
+            newRowFunction={createValue}
+        />
     </section>
 
 }

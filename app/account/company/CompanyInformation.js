@@ -22,10 +22,7 @@ export default async function CompanyInformation() {
     }
 
     return <section>
-        <div className="flex flex-col gap-2">
-            <h1 className="subheading p-0">Company</h1>
-            <DataTable columns={columns} data={[item]}/>
-        </div>
+            <DataTable title="Company" columns={columns} data={[item]}/>
     </section>
 
 }

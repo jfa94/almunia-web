@@ -1,7 +1,9 @@
-import {getCompanyData} from "@/lib/actions"
+import {createNewItem, getCompanyData} from "@/lib/actions"
 import {redirect} from "next/navigation";
 import {DataTable} from "@/components/DataTable";
 import {columns} from "./columns.js"
+import {toCamelCase} from "@/lib/utils";
+import {AddRowModal} from "@/app/account/components/AddRowModal";
 
 const demoData = [
     {
@@ -29,11 +31,31 @@ export default async function ValuesInformation({companyId}) {
         redirect('/?error=account')
     }
 
+    const formColumns = [
+        {accessorKey: "name", headerText: "Name", required: true},
+        {accessorKey: "description", headerText: "Description"}
+    ]
+
+    const createValue = async ({name, description}) => {
+        "use server";
+        const valueData = {
+            company_id: companyId,
+            value_id: toCamelCase(name),
+            name: name,
+            description: description,
+        }
+        return await createNewItem(companyId, 'values', valueData)
+    }
+
     return <section>
-        <div className="flex flex-col gap-2">
-            <h1 className="subheading p-0">Values</h1>
-            <DataTable columns={columns} data={request}/>
-        </div>
+        <DataTable
+            title="Values"
+            columns={columns}
+            data={request}
+            NewRowModal={AddRowModal}
+            newRowColumns={formColumns}
+            newRowFunction={createValue}
+        />
     </section>
 
 }

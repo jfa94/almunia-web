@@ -13,24 +13,17 @@ import {
 import {Button} from "@/components/ui/button"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
-import {Switch} from "@/components/ui/switch"
-import toast, {Toaster} from "react-hot-toast"
-import {MoreHorizontal} from "lucide-react"
-import {submitDynamoDbUpdate} from "@/lib/aws"
-
-
-const inputTypes = {
-    email: "email",
-    active: "switch",
-}
-
-
-const updateMap = {
-    "Company Details": {tableName: "company-information", itemKeys: ["company_id"]},
-    "Team Member": {tableName: "company-teams", itemKeys: ["company_id", "user_id"]},
-    "Value": {tableName: "company-values", itemKeys: ["company_id", "value_id"]},
-    "Question": {tableName: "company-questions", itemKeys: ["company_id", "question_id"]}
-}
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue
+} from "@/components/ui/select"
+import toast from "react-hot-toast"
+import {Plus} from "lucide-react"
 
 
 const reducer = (state, action) => {
@@ -45,9 +38,16 @@ const reducer = (state, action) => {
     throw Error('Unknown action: ' + action.type);
 }
 
+const initializer = (columns) => {
+    const initialState = {}
+    for (const column of columns) {
+        initialState[column.accessorKey] = column.initialValue ?? ""
+    }
+    return initialState
+}
 
-export function AddRowModal({title, data, columns}) {
-    const [formData, dispatch] = useReducer(reducer, data)
+export function AddRowModal({columns, addRow}) {
+    const [formData, dispatch] = useReducer(reducer, columns, initializer)
     const [open, setOpen] = useState(false)
     const [submitted, setSubmitted] = useState("")
 
@@ -63,7 +63,8 @@ export function AddRowModal({title, data, columns}) {
         event.preventDefault()
         setSubmitted("submit")
         try {
-            const result = await submitDynamoDbUpdate(updateMap[title].tableName, formData)
+            const result = await addRow(formData)
+            console.log('Results:', result)
             if (result['$metadata']?.httpStatusCode !== 200) {
                 toast.error('Error updating data')
             } else {
@@ -80,16 +81,14 @@ export function AddRowModal({title, data, columns}) {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <Toaster/>
-            <DialogTrigger
-                className="justify-self-end flex justify-center items-center h-8 w-8 p-0 hover:bg-neutral-100 rounded">
-                <MoreHorizontal className="h-4 w-4"/>
+            <DialogTrigger className="btn btn-primary btn-sm h-full max-h-9 w-full md:max-w-28 border-0 rounded-md">
+                <div className="h-9 inline-flex items-center gap-1"><Plus strokeWidth={2.5} size={16}/>Add Row</div>
             </DialogTrigger>
 
             <DialogContent className="bg-white focus:outline-none">
                 <DialogHeader>
                     <DialogTitle>
-                        Edit {title}
+                        Create
                     </DialogTitle>
                     <DialogDescription>
                         Make changes here and click save when you&rsquo;re done.
@@ -98,21 +97,35 @@ export function AddRowModal({title, data, columns}) {
 
                 <form onSubmit={handleSubmit}>
                     <section className="flex flex-col gap-4">
-                        {columns.map(({accessorKey, noEdit, header, headerText}) => {
+                        {columns.map(({accessorKey, headerText, noEdit, required, possibleVals}) => {
                             return <div key={accessorKey} className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor={accessorKey}>
-                                    {headerText ? headerText : header}
+                                    {headerText}
                                 </Label>
-                                {inputTypes[accessorKey] === "switch"
-                                    ? <Switch id={accessorKey}
-                                              checked={formData[accessorKey]}
-                                              onCheckedChange={(e) => handleChange(accessorKey, e)}
+                                {possibleVals
+                                    ? <Select id={accessorKey}
+                                              onChange={(e) => handleChange(accessorKey, e.target.value)}
                                               disabled={noEdit ?? false}
-                                    />
+                                              required={required ?? false}
+                                    >
+                                        <SelectTrigger className="col-span-3">
+                                            <SelectValue placeholder="Select value"/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {possibleVals.map(({id, name}) => {
+                                                    return <SelectItem key={id} value={id} className="bg-white ">
+                                                        {name}
+                                                    </SelectItem>
+                                                })}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                     : <Input id={accessorKey}
-                                             type={inputTypes[accessorKey] ? inputTypes[accessorKey] : "text"}
+                                             type={accessorKey === "email" ? "email" : "text"}
                                              value={formData[accessorKey] ?? ""}
                                              onChange={(e) => handleChange(accessorKey, e.target.value)}
+                                             required={required ?? false}
                                              disabled={noEdit ?? false}
                                              className="col-span-3"
                                     />
