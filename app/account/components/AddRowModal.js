@@ -18,7 +18,6 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select"
@@ -104,18 +103,18 @@ export function AddRowModal({columns, addRow}) {
                                 </Label>
                                 {possibleVals
                                     ? <Select id={accessorKey}
-                                              onChange={(e) => handleChange(accessorKey, e.target.value)}
+                                              onValueChange={(e) => handleChange(accessorKey, e)}
                                               disabled={noEdit ?? false}
                                               required={required ?? false}
                                     >
                                         <SelectTrigger className="col-span-3">
                                             <SelectValue placeholder="Select value"/>
                                         </SelectTrigger>
-                                        <SelectContent>
+                                        <SelectContent className="bg-white">
                                             <SelectGroup>
-                                                {possibleVals.map(({id, name}) => {
-                                                    return <SelectItem key={id} value={id} className="bg-white ">
-                                                        {name}
+                                                {possibleVals.map(({id, value}) => {
+                                                    return <SelectItem key={id} value={id} className="text-black focus:bg-neutral-100">
+                                                        {value}
                                                     </SelectItem>
                                                 })}
                                             </SelectGroup>

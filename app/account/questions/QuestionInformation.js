@@ -99,13 +99,7 @@ export default async function QuestionInformation({companyId}) {
         console.error('Issue with getCompanyData. Returned:', questionsRequest)
         redirect('/?error=account')
     }
-// {
-//         "company_id": "C-1i19vvu1qt8otual7op8",
-//         "question_id": "leadership0",
-//         "last_asked": "2000-01-01T00:00:00.000Z",
-//         "question": "We have the right leadership in place to achieve our goals",
-//         "value_id": "leadership"
-//     }
+
     const data = questionsRequest.map((question) => {
         const valueObject = valuesRequest.find(value => value.value_id === question.value_id)
         question.theme = valueObject?.name || ""
@@ -122,16 +116,16 @@ export default async function QuestionInformation({companyId}) {
         {accessorKey: "question", headerText: "Question", required: true}
     ]
 
-    const createValue = async ({valueId, question}) => {
+    const createQuestion = async ({value_id, question}) => {
         "use server";
-        const teamMemberData = {
+        const newQuestionData = {
             company_id: companyId,
-            value_id: valueId,
-            question_id: `${valueId}${Math.floor(Math.random() * 10000000000000000)}`,
+            value_id: value_id,
+            question_id: `${value_id}${Math.floor(Math.random() * 10000000000000000)}`,
             last_asked: "2000-01-01T00:00:00.000Z",
             question: question,
         }
-        return await createNewItem(companyId, 'team', teamMemberData)
+        return await createNewItem(companyId, 'questions', newQuestionData)
     }
 
     return <section>
@@ -143,7 +137,7 @@ export default async function QuestionInformation({companyId}) {
             pageSize={5}
             NewRowModal={AddRowModal}
             newRowColumns={formColumns}
-            newRowFunction={createValue}
+            newRowFunction={createQuestion}
         />
     </section>
 }

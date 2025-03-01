@@ -44,7 +44,7 @@ export default async function TeamInformation({companyId}) {
         {accessorKey: "manager", headerText: "Manager"}
     ]
 
-    const createValue = async ({firstName, lastName, email, role, manager}) => {
+    const createTeamMember = async ({firstName, lastName, email, role, manager}) => {
         "use server";
         const teamMemberData = {
             company_id: companyId,
@@ -68,7 +68,7 @@ export default async function TeamInformation({companyId}) {
             filterColumn="email"
             NewRowModal={AddRowModal}
             newRowColumns={formColumns}
-            newRowFunction={createValue}
+            newRowFunction={createTeamMember}
         />
     </section>
 

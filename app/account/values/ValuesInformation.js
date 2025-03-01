@@ -52,6 +52,7 @@ export default async function ValuesInformation({companyId}) {
             title="Values"
             columns={columns}
             data={request}
+            pageSize={5}
             NewRowModal={AddRowModal}
             newRowColumns={formColumns}
             newRowFunction={createValue}
