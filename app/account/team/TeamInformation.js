@@ -28,9 +28,9 @@ const demoData = [
 
 
 export default async function TeamInformation({companyId}) {
-    // TODO: Change for prod
-    // const request = await getCompanyData(companyId, 'team')
-    const request = demoData
+    const request = await getCompanyData(companyId, 'team')
+    // const request = demoData
+
     if (!request[0]?.email) {
         console.error('Issue with getTeamData. Returned:', request)
         redirect('/?error=account')

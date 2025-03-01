@@ -14,9 +14,8 @@ const sampleData = {
 
 
 export default async function UserInformation() {
-    // TODO: Change for prod
-    // const user = await getUserData()
-    const user = sampleData
+    const user = await getUserData()
+    // const user = sampleData
 
     if (!user?.sub) {
         console.error('Issue with getUserData. Returned:', user)

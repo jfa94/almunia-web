@@ -89,14 +89,13 @@ const demoVals = [
 ]
 
 export default async function QuestionInformation({companyId}) {
-    // TODO: Change for prod
-    // const questionsRequest = await getCompanyData(companyId, 'questions')
-    const questionsRequest = demoData
-    // const valuesRequest = await getCompanyData(companyId, 'values')
-    const valuesRequest = demoVals
-    // TODO: Add a better error check
-    if (!questionsRequest || !valuesRequest) {
-        console.error('Issue with getCompanyData. Returned:', questionsRequest)
+    const questionsRequest = await getCompanyData(companyId, 'questions')
+    // const questionsRequest = demoData
+    const valuesRequest = await getCompanyData(companyId, 'values')
+    // const valuesRequest = demoVals
+
+    if (!questionsRequest[0].company_id || !valuesRequest[0].company_id) {
+        console.error('Issue whilst getting question data. Returned:', questionsRequest)
         redirect('/?error=account')
     }
 

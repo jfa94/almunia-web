@@ -14,19 +14,18 @@ const demoData = [
     },
     {
         "company_id": "C-1i19vvu1qt8otual7op8",
-        "value_id": "hot",
+        "value_id": "jsat",
         "description": "",
-        "name": "Hot"
+        "name": "Job Satisfaction"
     }
 ]
 
 
 export default async function ValuesInformation({companyId}) {
-    // TODO: Change for prod
-    // const request = await getCompanyData(companyId, 'values')
-    const request = demoData
-    // TODO: Add a better error check
-    if (!request) {
+    const request = await getCompanyData(companyId, 'values')
+    // const request = demoData
+
+    if (!request[0].company_id) {
         console.error('Issue with getValuesData. Returned:', request)
         redirect('/?error=account')
     }
