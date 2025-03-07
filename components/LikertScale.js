@@ -1,7 +1,7 @@
 import {cn} from "@/lib/utils"
 import {Label} from "@/components/ui/label";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const inputs = [
     {
@@ -36,16 +36,15 @@ const inputs = [
     }
 ]
 
-export function LikertScale({id, inverse, onChange}) {
-    const [selectedItem, setSelectedItem] = useState(null)
+export function LikertScale({id, inverse, value, onChange}) {
+    const [selectedItem, setSelectedItem] = useState(value)
 
-    const handleValueChange = (event) => {
-        setSelectedItem(event)
-        onChange(event)
-    }
+    useEffect(() => {
+        setSelectedItem(value)
+    }, [value])
 
     return <RadioGroup
-        onValueChange={handleValueChange}
+        onValueChange={onChange}
         className="grid grid-cols-5 m-auto w-full border border-solid border-neutral-200 rounded-md shadow-sm"
     >
         {inputs.map(({labelText, defaultValue, style, checkedStyle}, i) => {
