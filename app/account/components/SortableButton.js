@@ -1,7 +1,7 @@
 import {Button} from "@/components/ui/button";
 import {ArrowDown, ArrowUp} from "lucide-react"
 
-export const SortableButton = ({column, buttonText}) => {
+export function SortableButton ({column, buttonText}) {
     let arrowIcon = <span className="w-4"></span>
     switch (column.getIsSorted()) {
         case "asc":
