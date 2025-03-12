@@ -6,9 +6,8 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import {Form, FormControl, FormField, FormItem, FormMessage} from "@/components/ui/form"
 import {LikertScale} from "@/components/LikertScale"
 import {Button} from "@/components/ui/button"
-import questions from "../questions.json"
 import {Separator} from "@/components/ui/separator"
-import {useState, useEffect} from "react"
+import {useState, useEffect, useMemo} from "react"
 import {
     Pagination,
     PaginationContent,
@@ -19,19 +18,26 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 
-const formSchema = z.object(
-    questions.reduce((acc, {id}) => {
-        acc[id] = z.number({required_error: "Required"})
-        return acc
-    }, {})
-)
 
-// Define questions per page
-const QUESTIONS_PER_PAGE = 5
-
-export default function CalibrationForm() {
+export default function CalibrationForm({ questions, questionsPerPage = 5 }) {
     const [currentPage, setCurrentPage] = useState(1)
     const [pagesWithErrors, setPagesWithErrors] = useState([])
+
+    // Calculate pagination values
+    const totalPages = Math.ceil(questions.length / questionsPerPage)
+    const startIndex = (currentPage - 1) * questionsPerPage
+    const endIndex = Math.min(startIndex + questionsPerPage, questions.length)
+    const currentQuestions = questions.slice(startIndex, endIndex)
+
+    const formSchema = useMemo(() =>
+            z.object(
+                questions.reduce((acc, {id}) => {
+                    acc[id] = z.number({required_error: "Required"})
+                    return acc
+                }, {})
+            ),
+        [questions]
+    )
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -44,6 +50,28 @@ export default function CalibrationForm() {
     const {formState} = form
     const {errors, isSubmitted} = formState
 
+    const handlePageChange = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page)
+        }
+    }
+
+    const onSubmit = (data) => {
+        let returnObj = {}
+        for (const key of Object.keys(data)) {
+            let dimensionId = key.substring(0, key.lastIndexOf('-'))
+            if (returnObj[dimensionId]) {
+                returnObj[dimensionId].push(data[key])
+            } else {
+                returnObj[dimensionId] = [data[key]]
+            }
+        }
+        for (const dimensionKey of Object.keys(returnObj)) {
+            returnObj[dimensionKey] = returnObj[dimensionKey].reduce((a, b) => a + b) / returnObj[dimensionKey].length
+        }
+        console.log('returnObj:', returnObj)
+    }
+
     // Update pages with errors whenever errors or isSubmitted changes
     useEffect(() => {
         if (isSubmitted) {
@@ -53,8 +81,8 @@ export default function CalibrationForm() {
             Object.keys(errors).forEach(fieldId => {
                 const questionIndex = questions.findIndex(q => q.id === fieldId)
                 if (questionIndex !== -1) {
-                    const errorPage = Math.floor(questionIndex / QUESTIONS_PER_PAGE) + 1;
-                    errorPages.add(errorPage);
+                    const errorPage = Math.floor(questionIndex / questionsPerPage) + 1
+                    errorPages.add(errorPage)
                 }
             })
 
@@ -66,23 +94,6 @@ export default function CalibrationForm() {
             // }
         }
     }, [errors, isSubmitted, currentPage])
-
-    const onSubmit = (data) => {
-        console.log('submitted')
-        console.log(data)
-    }
-
-    // Calculate pagination values
-    const totalPages = Math.ceil(questions.length / QUESTIONS_PER_PAGE)
-    const startIndex = (currentPage - 1) * QUESTIONS_PER_PAGE
-    const endIndex = Math.min(startIndex + QUESTIONS_PER_PAGE, questions.length)
-    const currentQuestions = questions.slice(startIndex, endIndex)
-
-    const handlePageChange = (page) => {
-        if (page >= 1 && page <= totalPages) {
-            setCurrentPage(page)
-        }
-    }
 
     return <main>
         <Form {...form}>
