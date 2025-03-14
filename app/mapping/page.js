@@ -1,6 +1,5 @@
 import CalibrationForm from './components/CalibrationForm'
 import questions from "@/app/mapping/questions.json"
-import SpiderGraph from "@/app/mapping/components/SpiderGraph";
 
 
 const getRandomSubset = (arr, sizePerDimension) => {
@@ -29,15 +28,5 @@ export default function Page() {
             <h1 className="text-3xl font-bold">Calibration</h1>
         </section>
         <CalibrationForm questions={questionSubset}/>
-        <section>
-            <SpiderGraph inputData={{
-                "local-professional-identity": 2.3333333333333335,
-                "means-goals-oriented": 2.3333333333333335,
-                "open-closed-system": 5,
-                "people-task-oriented": 3.6666666666666665,
-                "easygoing-strict-work-ethic": 2.3333333333333335,
-                "internal-external-driven": 3.6666666666666665
-            }}/>
-        </section>
     </div>
 }
