@@ -1,5 +1,5 @@
-import RadarGraph from "@/app/mapping/components/RadarGraph";
-import SpectrumCard from "@/app/mapping/components/SpectrumCard";
+import RadarGraph from "@/app/calibration/components/RadarGraph";
+import SpectrumCard from "@/app/calibration/components/SpectrumCard";
 
 const dummyData = {
     "local-professional-identity": 1,
