@@ -48,7 +48,9 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public/ folder
+     * - landing/ folder
+     * - user-redirect/ folder
      */
-    '/((?!js/script.js|_next/static|_next/image|favicon.ico|landing/).*)',
+    '/((?!js/script.js|_next/static|_next/image|favicon.ico|public|landing|user-redirect).*)',
   ],
 }
