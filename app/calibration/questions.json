@@ -1,0 +1,442 @@
+[
+  {
+    "id": "means-goals-oriented-9",
+    "question": "I am encouraged to take calculated risks in my work.",
+    "calibration": "Employees should take calculated risks in their work. ",
+    "dimension": "means-goals-oriented",
+    "direction": "goals",
+    "inverse": false
+  },
+  {
+    "id": "means-goals-oriented-8",
+    "question": "My performance is measured primarily by results, rather than how tasks were performed.",
+    "calibration": "Performance should be measured by results, rather than how tasks are performed.",
+    "dimension": "means-goals-oriented",
+    "direction": "goals",
+    "inverse": false
+  },
+  {
+    "id": "means-goals-oriented-7",
+    "question": "We adapt our strategies to meet our goals, even if it means deviating from the plan.",
+    "calibration": "We adapt our strategies to meet our goals, even if it means deviating from the plan.",
+    "dimension": "means-goals-oriented",
+    "direction": "goals",
+    "inverse": false
+  },
+  {
+    "id": "means-goals-oriented-6",
+    "question": "Following established procedures is critical to my role.",
+    "calibration": "It is critical that employees follow established procedures.",
+    "dimension": "means-goals-oriented",
+    "direction": "means",
+    "inverse": true
+  },
+  {
+    "id": "means-goals-oriented-5",
+    "question": "Goals are clearly defined and communicated across the organisation.",
+    "calibration": "Goals are clearly defined and communicated across the organisation.",
+    "dimension": "means-goals-oriented",
+    "direction": "goals",
+    "inverse": false
+  },
+  {
+    "id": "means-goals-oriented-4",
+    "question": "Meetings focus more on achieving objectives than on the efficiency of completing tasks.",
+    "calibration": "Meetings focus more on achieving objectives than on the efficiency of completing tasks.",
+    "dimension": "means-goals-oriented",
+    "direction": "goals",
+    "inverse": false
+  },
+  {
+    "id": "means-goals-oriented-3",
+    "question": "Feedback I receive emphasises the results achieved rather than the methods I used.",
+    "calibration": "Feedback should be based on the results achieved, as opposed to the methods used. ",
+    "dimension": "means-goals-oriented",
+    "direction": "goals",
+    "inverse": false
+  },
+  {
+    "id": "means-goals-oriented-2",
+    "question": "We are encouraged to try new approaches to achieve better outcomes.",
+    "calibration": "Employees should try new approaches to achieve better outcomes.",
+    "dimension": "means-goals-oriented",
+    "direction": "goals",
+    "inverse": false
+  },
+  {
+    "id": "means-goals-oriented-1",
+    "question": "I am expected to take initiative, without waiting for approval or instructions.",
+    "calibration": "Employees should take the initiative, without waiting for approval or instructions. ",
+    "dimension": "means-goals-oriented",
+    "direction": "goals",
+    "inverse": false
+  },
+  {
+    "id": "internal-external-driven-9",
+    "question": "Strategic decisions are made based on our long-term vision, as opposed to immediate customer needs.",
+    "calibration": "Strategic decisions are made based on our long-term vision, as opposed to immediate customer needs.",
+    "dimension": "internal-external-driven",
+    "direction": "internal",
+    "inverse": true
+  },
+  {
+    "id": "internal-external-driven-8",
+    "question": "Customers have a significant influence on how we operate.",
+    "calibration": "Customers have a significant influence on how we operate.",
+    "dimension": "internal-external-driven",
+    "direction": "external",
+    "inverse": false
+  },
+  {
+    "id": "internal-external-driven-7",
+    "question": "We are encouraged to prioritise our mission over client requests.",
+    "calibration": "Employees should prioritise our mission over client requests.",
+    "dimension": "internal-external-driven",
+    "direction": "internal",
+    "inverse": true
+  },
+  {
+    "id": "internal-external-driven-6",
+    "question": "We are quick to adapt when market trends and conditions change.",
+    "calibration": "We are quick to adapt when market trends and conditions change.",
+    "dimension": "internal-external-driven",
+    "direction": "external",
+    "inverse": false
+  },
+  {
+    "id": "internal-external-driven-5",
+    "question": "Achieving business goals is more important than adhering to internal values.",
+    "calibration": "Achieving business goals is more important than adhering to internal values.",
+    "dimension": "internal-external-driven",
+    "direction": "external",
+    "inverse": false
+  },
+  {
+    "id": "internal-external-driven-4",
+    "question": "I am closely familiar with our company values.",
+    "calibration": "Our company values are central to our daily operations. ",
+    "dimension": "internal-external-driven",
+    "direction": "internal",
+    "inverse": true
+  },
+  {
+    "id": "internal-external-driven-3",
+    "question": "External factors, such as market trends, influence how we operate.",
+    "calibration": "External factors, such as market trends, should influence how we operate.",
+    "dimension": "internal-external-driven",
+    "direction": "external",
+    "inverse": false
+  },
+  {
+    "id": "internal-external-driven-2",
+    "question": "We rely on internal values and policies to guide decision-making, even when it means saying no to clients.",
+    "calibration": "We rely on internal values and policies to guide decision-making, even when it means saying no to clients.",
+    "dimension": "internal-external-driven",
+    "direction": "internal",
+    "inverse": true
+  },
+  {
+    "id": "internal-external-driven-1",
+    "question": "Our approach to business is shaped more by our vision and values than by market demands.",
+    "calibration": "Our approach to business is shaped more by our vision and values than by market demands.",
+    "dimension": "internal-external-driven",
+    "direction": "internal",
+    "inverse": true
+  },
+  {
+    "id": "easygoing-strict-work-ethic-10",
+    "question": "Rules and policies are strictly enforced.",
+    "calibration": "Rules and policies are strictly enforced.",
+    "dimension": "easygoing-strict-work-ethic",
+    "direction": "strict",
+    "inverse": false
+  },
+  {
+    "id": "easygoing-strict-work-ethic-9",
+    "question": "I often start or finish work at different times to my teammates.",
+    "calibration": "Employees often start or finish work at different times to their teammates.",
+    "dimension": "easygoing-strict-work-ethic",
+    "direction": "easygoing",
+    "inverse": true
+  },
+  {
+    "id": "easygoing-strict-work-ethic-8",
+    "question": "Senior managers consider employee input when making strategic decisions.",
+    "calibration": "Employee input is an important consideration when making strategic decisions",
+    "dimension": "easygoing-strict-work-ethic",
+    "direction": "easygoing",
+    "inverse": true
+  },
+  {
+    "id": "easygoing-strict-work-ethic-7",
+    "question": "Communication is informal, even between reporting lines.",
+    "calibration": "Communication is informal, even between reporting lines.",
+    "dimension": "easygoing-strict-work-ethic",
+    "direction": "easygoing",
+    "inverse": true
+  },
+  {
+    "id": "easygoing-strict-work-ethic-6",
+    "question": "We are closely monitored to ensure procedures are followed.",
+    "calibration": "Employees are closely monitored to ensure procedures are followed.",
+    "dimension": "easygoing-strict-work-ethic",
+    "direction": "strict",
+    "inverse": false
+  },
+  {
+    "id": "easygoing-strict-work-ethic-5",
+    "question": "Flexible schedules and remote work options are commonly available.",
+    "calibration": "Flexible schedules and remote work options are commonly available.",
+    "dimension": "easygoing-strict-work-ethic",
+    "direction": "easygoing",
+    "inverse": true
+  },
+  {
+    "id": "easygoing-strict-work-ethic-4",
+    "question": "We are expected to adhere to a dress code.",
+    "calibration": "Employees are expected to adhere to a dress code.",
+    "dimension": "easygoing-strict-work-ethic",
+    "direction": "strict",
+    "inverse": false
+  },
+  {
+    "id": "easygoing-strict-work-ethic-3",
+    "question": "There are well-defined disciplinary measures.",
+    "calibration": "There are well-defined disciplinary measures.",
+    "dimension": "easygoing-strict-work-ethic",
+    "direction": "strict",
+    "inverse": false
+  },
+  {
+    "id": "easygoing-strict-work-ethic-2",
+    "question": "We are encouraged to consider the financial cost of our decisions.",
+    "calibration": "Employees should consider the financial cost of their decisions. ",
+    "dimension": "easygoing-strict-work-ethic",
+    "direction": "strict",
+    "inverse": false
+  },
+  {
+    "id": "easygoing-strict-work-ethic-1",
+    "question": "I am aware of the consequences of not reaching my goals.",
+    "calibration": "Everyone is aware of the consequences of not reaching their goals. ",
+    "dimension": "easygoing-strict-work-ethic",
+    "direction": "strict",
+    "inverse": false
+  },
+  {
+    "id": "local-professional-identity-9",
+    "question": "We develop skills that are transferrable to other companies in my industry. ",
+    "calibration": "Employees develop skills that would be transferrable to other companies in the industry.",
+    "dimension": "local-professional-identity",
+    "direction": "professional",
+    "inverse": false
+  },
+  {
+    "id": "local-professional-identity-8",
+    "question": "Our tools and processes are standard for our industry.",
+    "calibration": "Our tools and processes are standard for our industry.",
+    "dimension": "local-professional-identity",
+    "direction": "professional",
+    "inverse": false
+  },
+  {
+    "id": "local-professional-identity-7",
+    "question": "My manager is solely responsible for evaluating my performance.",
+    "calibration": "Managers have full control of their team members' performance evaluations.",
+    "dimension": "local-professional-identity",
+    "direction": "local",
+    "inverse": true
+  },
+  {
+    "id": "local-professional-identity-6",
+    "question": "I spend a lot of time with my immediate team members. ",
+    "calibration": "It is important that team members spend time with each other.",
+    "dimension": "local-professional-identity",
+    "direction": "local",
+    "inverse": true
+  },
+  {
+    "id": "local-professional-identity-5",
+    "question": "I rely on my company's common practices more than on industry standards.",
+    "calibration": "Employees should follow our company's standard practices rather than those common in the industry.",
+    "dimension": "local-professional-identity",
+    "direction": "local",
+    "inverse": true
+  },
+  {
+    "id": "local-professional-identity-4",
+    "question": "We are encouraged to study for independent certifications.",
+    "calibration": "Employees should be given time to study for independent certifications.",
+    "dimension": "local-professional-identity",
+    "direction": "professional",
+    "inverse": false
+  },
+  {
+    "id": "local-professional-identity-3",
+    "question": "I am aware of how my work impacts the perception of my profession outside of this company.",
+    "calibration": "The perception of an employee's profession outside of the company is important.",
+    "dimension": "local-professional-identity",
+    "direction": "professional",
+    "inverse": false
+  },
+  {
+    "id": "local-professional-identity-2",
+    "question": "It is important that my work contributes to building a professional reputation outside of this company.",
+    "calibration": "Work should contribute to employees' professional reputation outside of this company.",
+    "dimension": "local-professional-identity",
+    "direction": "professional",
+    "inverse": false
+  },
+  {
+    "id": "local-professional-identity-1",
+    "question": "We often attend industry events, such as trade shows or awards.",
+    "calibration": "We often attend industry events, such as trade shows or awards.",
+    "dimension": "local-professional-identity",
+    "direction": "professional",
+    "inverse": false
+  },
+  {
+    "id": "open-closed-system-9",
+    "question": "People with experience outside of our organisation are encouraged to share their knowledge.",
+    "calibration": "People with experience outside of our organisation are encouraged to share their knowledge.",
+    "dimension": "open-closed-system",
+    "direction": "open",
+    "inverse": true
+  },
+  {
+    "id": "open-closed-system-8",
+    "question": "Opinions that go against generally accepted beliefs are valued in my team.",
+    "calibration": "Opinions that go against generally accepted beliefs are valued in our company.",
+    "dimension": "open-closed-system",
+    "direction": "open",
+    "inverse": true
+  },
+  {
+    "id": "open-closed-system-7",
+    "question": "Anyone would be able to fit in at our company.",
+    "calibration": "Anyone would be able to fit in at our company.",
+    "dimension": "open-closed-system",
+    "direction": "open",
+    "inverse": true
+  },
+  {
+    "id": "open-closed-system-6",
+    "question": "We have mechanisms to help new joiners integrate with their team.",
+    "calibration": "We have mechanisms to help new joiners integrate with their team.",
+    "dimension": "open-closed-system",
+    "direction": "open",
+    "inverse": true
+  },
+  {
+    "id": "open-closed-system-5",
+    "question": "New employees are expected to prove their ability before being assigned important work.",
+    "calibration": "New employees are expected to prove their ability before being assigned important work.",
+    "dimension": "open-closed-system",
+    "direction": "closed",
+    "inverse": false
+  },
+  {
+    "id": "open-closed-system-4",
+    "question": "I feel comfortable sharing my opinions in meetings.",
+    "calibration": "Junior employees should feel comfortable sharing their opinions in meetings.",
+    "dimension": "open-closed-system",
+    "direction": "open",
+    "inverse": true
+  },
+  {
+    "id": "open-closed-system-3",
+    "question": "The company is open to changing its policies or processes based on feedback from employees.",
+    "calibration": "The company is open to changing its policies or processes based on feedback from employees.",
+    "dimension": "open-closed-system",
+    "direction": "open",
+    "inverse": true
+  },
+  {
+    "id": "open-closed-system-2",
+    "question": "It is easy for new hires to adjust and feel part of the team.",
+    "calibration": "It is easy for new hires to adjust and feel part of the team.",
+    "dimension": "open-closed-system",
+    "direction": "open",
+    "inverse": true
+  },
+  {
+    "id": "open-closed-system-1",
+    "question": "We are encouraged to socialise across teams or departments.",
+    "calibration": "It is important for employees to socialise across teams or departments.",
+    "dimension": "open-closed-system",
+    "direction": "open",
+    "inverse": true
+  },
+  {
+    "id": "people-task-oriented-9",
+    "question": "The company adapts its policies to accommodate employees' personal issues.",
+    "calibration": "Company a policies should adapt to accommodate employees' personal issues.",
+    "dimension": "people-task-oriented",
+    "direction": "people",
+    "inverse": true
+  },
+  {
+    "id": "people-task-oriented-8",
+    "question": "The company recognises and celebrates achievements that are not related to work performance.",
+    "calibration": "The company should recognise and celebrate achievements that are not related to work performance.",
+    "dimension": "people-task-oriented",
+    "direction": "people",
+    "inverse": true
+  },
+  {
+    "id": "people-task-oriented-7",
+    "question": "There are initiatives in place to support employees' well-being. ",
+    "calibration": "There are initiatives in place to support employees' well-being. ",
+    "dimension": "people-task-oriented",
+    "direction": "people",
+    "inverse": true
+  },
+  {
+    "id": "people-task-oriented-6",
+    "question": "I feel comfortable pushing back on objectives or deliverables because of personal reasons. ",
+    "calibration": "It is valid to push back on objectives or deliverables because of personal reasons. ",
+    "dimension": "people-task-oriented",
+    "direction": "people",
+    "inverse": true
+  },
+  {
+    "id": "people-task-oriented-5",
+    "question": "My manager takes into account my personal circumstances when assigning tasks, goals, or deadlines.",
+    "calibration": "Managers should consider personal circumstances when assigning tasks, goals, or deadlines.",
+    "dimension": "people-task-oriented",
+    "direction": "people",
+    "inverse": true
+  },
+  {
+    "id": "people-task-oriented-4",
+    "question": "It is common for me to work more than my contracted hours.",
+    "calibration": "Employees should work more than their contracted hours to reach important deadlines.",
+    "dimension": "people-task-oriented",
+    "direction": "task",
+    "inverse": false
+  },
+  {
+    "id": "people-task-oriented-3",
+    "question": "Flexible work arrangements are available to employees who request them.",
+    "calibration": "Flexible work arrangements are available to employees who request them.",
+    "dimension": "people-task-oriented",
+    "direction": "people",
+    "inverse": true
+  },
+  {
+    "id": "people-task-oriented-2",
+    "question": "Work-life balance is considered an important aspect of the organisation's policies and culture.",
+    "calibration": "Work-life balance is an important aspect of the organisation's policies and culture.",
+    "dimension": "people-task-oriented",
+    "direction": "people",
+    "inverse": true
+  },
+  {
+    "id": "people-task-oriented-1",
+    "question": "Employees are encouraged to take breaks when needed, even if it temporarily affects productivity.",
+    "calibration": "Employees should take frequent breaks, even if it temporarily affects productivity.",
+    "dimension": "people-task-oriented",
+    "direction": "people",
+    "inverse": true
+  }
+]
