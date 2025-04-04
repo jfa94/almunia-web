@@ -19,13 +19,15 @@ import {
 } from "@/components/ui/pagination"
 import {submitCalibrationData} from "@/app/calibration/actions";
 import {useSession} from "@/lib/session"
+import {useLocalStorage} from "@/lib/utils";
+import {redirect} from "next/navigation";
 
 
 export default function CalibrationForm({questions, questionsPerPage = 5}) {
     const {status} = useSession()
-
     const [currentPage, setCurrentPage] = useState(1)
     const [pagesWithErrors, setPagesWithErrors] = useState([])
+    const {setItem} = useLocalStorage()
 
     // Calculate pagination values
     const totalPages = Math.ceil(questions.length / questionsPerPage)
@@ -81,8 +83,9 @@ export default function CalibrationForm({questions, questionsPerPage = 5}) {
             console.log('result:', result)
         } else {
             console.log('Not authenticated')
-            console.log('results:', meanResponses)
         }
+        setItem('calibration-results', meanResponses)
+        redirect("/calibration/results")
     }
 
     // Update pages with errors whenever errors or isSubmitted changes

@@ -2,6 +2,7 @@
 
 import {getCompanyInformation} from "@/lib/actions"
 import {submitBatchDynamoDbUpdate} from "@/lib/aws"
+import {redirect} from "next/navigation";
 
 
 export async function submitCalibrationData(data) {
@@ -25,3 +26,28 @@ export async function submitCalibrationData(data) {
 
     return await submitBatchDynamoDbUpdate(process.env.CALIBRATION_DYNAMODB_TABLE, dimensionList)
 }
+
+export async function submitSignupForm(formData) {
+    const object = {}
+    formData.forEach(function (value, key) {
+        if (value !== '') object[key] = value
+    })
+
+    try {
+        const response = await fetch('https://tktpruza72.execute-api.eu-west-1.amazonaws.com/items', {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(object),
+        })
+
+        const result = await response.json()
+        console.log('Success: ', result)
+    } catch (e) {
+        console.log('Error: ', e)
+    }
+
+    redirect('calibration/results?success=true')
+}
+
