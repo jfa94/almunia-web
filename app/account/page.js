@@ -5,11 +5,10 @@ import ValuesInformation from "@/app/account/values/ValuesInformation";
 import QuestionInformation from "@/app/account/questions/QuestionInformation";
 import CompanyInformation from "@/app/account/company/CompanyInformation";
 import {Toaster} from "react-hot-toast";
+import {getCompanyInformation} from "@/lib/actions";
 
 export default async function Page() {
-    // TODO: Change for prod
-    // const {company} = await getCompanyInformation()
-    const company = {"company_id": "C-1i19vvu1qt8otual7op8",}
+    const {item: company} = await getCompanyInformation()
 
     if (!company?.company_id) {
         console.error('Issue with getCompanyInformation. Returned:', company)
