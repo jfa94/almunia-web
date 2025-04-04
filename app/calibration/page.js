@@ -29,7 +29,7 @@ export default async function Page({searchParams}) {
     const questionSubset = getRandomSubset(questions, item ? 12 : 3)
 
     return <div className="my-8 min-h-[60vh]">
-        <section className="container mx-auto md:mb-6 mb-4">
+        <section className="container mx-auto px-4 md:mb-6 mb-4">
             {!showForm && <>
                 <h1 className="text-3xl font-bold pb-6">Welcome to the Calibration Form</h1>
 

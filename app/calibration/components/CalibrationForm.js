@@ -17,9 +17,13 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
+import {submitCalibrationData} from "@/app/calibration/actions";
+import {useSession} from "@/lib/session"
 
 
-export default function CalibrationForm({ questions, questionsPerPage = 5 }) {
+export default function CalibrationForm({questions, questionsPerPage = 5}) {
+    const {status} = useSession()
+
     const [currentPage, setCurrentPage] = useState(1)
     const [pagesWithErrors, setPagesWithErrors] = useState([])
 
@@ -56,20 +60,29 @@ export default function CalibrationForm({ questions, questionsPerPage = 5 }) {
         }
     }
 
-    const onSubmit = (data) => {
-        let returnObj = {}
+    const onSubmit = async (data) => {
+        let meanResponses = {}
+
         for (const key of Object.keys(data)) {
             let dimensionId = key.substring(0, key.lastIndexOf('-'))
-            if (returnObj[dimensionId]) {
-                returnObj[dimensionId].push(data[key])
+            if (meanResponses[dimensionId]) {
+                meanResponses[dimensionId].push(data[key])
             } else {
-                returnObj[dimensionId] = [data[key]]
+                meanResponses[dimensionId] = [data[key]]
             }
         }
-        for (const dimensionKey of Object.keys(returnObj)) {
-            returnObj[dimensionKey] = returnObj[dimensionKey].reduce((a, b) => a + b) / returnObj[dimensionKey].length
+
+        for (const dimensionKey of Object.keys(meanResponses)) {
+            meanResponses[dimensionKey] = meanResponses[dimensionKey].reduce((a, b) => a + b) / meanResponses[dimensionKey].length
         }
-        console.log('returnObj:', returnObj)
+
+        if (status ==='authenticated') {
+            const result = await submitCalibrationData(meanResponses)
+            console.log('result:', result)
+        } else {
+            console.log('Not authenticated')
+            console.log('results:', meanResponses)
+        }
     }
 
     // Update pages with errors whenever errors or isSubmitted changes
@@ -93,12 +106,12 @@ export default function CalibrationForm({ questions, questionsPerPage = 5 }) {
             //     setCurrentPage(Math.min(...errorPages))
             // }
         }
-    }, [errors, isSubmitted, currentPage])
+    }, [errors, isSubmitted, currentPage, questions, questionsPerPage])
 
     return <main>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}
-                  className="container mx-auto flex flex-col sm:gap-4 gap-3 sm:px-0 px-2"
+                  className="container mx-auto flex flex-col sm:gap-4 gap-3"
             >
                 {currentQuestions.map(({id, calibration, inverse}) => (
                     <div key={id}>
