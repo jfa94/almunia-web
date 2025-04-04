@@ -4,7 +4,7 @@ import RadarGraph from "@/app/calibration/components/RadarGraph";
 import SpectrumCard from "@/app/calibration/components/SpectrumCard";
 import {useLocalStorage} from "@/lib/utils";
 import {redirect} from "next/navigation";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {InfoDropdown} from "@/app/calibration/components/InfoDropdown";
 import {SignupForm} from "@/app/calibration/components/SignupForm";
 

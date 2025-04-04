@@ -6,25 +6,25 @@ import {AddRowModal} from "@/app/account/components/AddRowModal";
 import {v4 as uuidv4} from "uuid";
 
 
-const demoData = [
-    {
-        "company_id": "C-1i19vvu1qt8otual7op8",
-        "active": true,
-        "user_id": "42c3f5e8-6bc5-4849-a952-570e268235c8",
-        "role": "Director",
-        "last_name": "Flores",
-        "first_name": "Javier",
-        "email": "jflores@almunia.io"
-    },
-    {
-        "company_id": "C-1i19vvu1qt8otual7op8",
-        "active": true,
-        "user_id": "6b72fd5b-5838-4506-844a-68a5a30deac0",
-        "last_name": "Flores",
-        "email": "j.flores.almagro@gmail.com",
-        "first_name": "Javier"
-    },
-]
+// const demoData = [
+//     {
+//         "company_id": "C-1i19vvu1qt8otual7op8",
+//         "active": true,
+//         "user_id": "42c3f5e8-6bc5-4849-a952-570e268235c8",
+//         "role": "Director",
+//         "last_name": "Flores",
+//         "first_name": "Javier",
+//         "email": "jflores@almunia.io"
+//     },
+//     {
+//         "company_id": "C-1i19vvu1qt8otual7op8",
+//         "active": true,
+//         "user_id": "6b72fd5b-5838-4506-844a-68a5a30deac0",
+//         "last_name": "Flores",
+//         "email": "j.flores.almagro@gmail.com",
+//         "first_name": "Javier"
+//     },
+// ]
 
 
 export default async function TeamInformation({companyId}) {

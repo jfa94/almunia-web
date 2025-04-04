@@ -3,14 +3,14 @@ import {redirect} from "next/navigation";
 import {DataTable} from "@/components/DataTable";
 import {columns} from "./columns.js"
 
-const sampleData = {
-    "email": "j.flores.almagro@gmail.com",
-    "email_verified": "true",
-    "name": "Javier Flores",
-    "custom:company-id": "C-1i19vvu1qt8otual7op8",
-    "custom:company": "Almunia",
-    "sub": "828564a4-90e1-70e0-b53b-dba7201b44d9"
-}
+// const sampleData = {
+//     "email": "j.flores.almagro@gmail.com",
+//     "email_verified": "true",
+//     "name": "Javier Flores",
+//     "custom:company-id": "C-1i19vvu1qt8otual7op8",
+//     "custom:company": "Almunia",
+//     "sub": "828564a4-90e1-70e0-b53b-dba7201b44d9"
+// }
 
 
 export default async function UserInformation() {

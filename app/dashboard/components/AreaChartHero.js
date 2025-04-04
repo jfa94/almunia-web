@@ -2,18 +2,18 @@
 
 import {AreaChart} from "@tremor/react";
 
-const sampleData = [
-    {
-        date: "Jan 23",
-        SolarPanels: 2890,
-        Inverters: 2338,
-    },
-    {
-        date: "Feb 23",
-        SolarPanels: 2756,
-        Inverters: 2103,
-    }
-]
+// const sampleData = [
+//     {
+//         date: "Jan 23",
+//         SolarPanels: 2890,
+//         Inverters: 2338,
+//     },
+//     {
+//         date: "Feb 23",
+//         SolarPanels: 2756,
+//         Inverters: 2103,
+//     }
+// ]
 
 export const AreaChartHero = ({chartData}) => (
     <div className="md:ml-0 -ml-6">

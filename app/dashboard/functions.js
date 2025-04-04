@@ -98,7 +98,7 @@ export const formatDataForCards = (keys, object) => {
             id: key,
             name: object[key].name,
             stat: Math.round(10 * object[key]?.currentPeriodMean) / 10,
-            change: `${Math.round(100 * object[key].change)}%` ?? '-',
+            change: object[key].change ? `${Math.round(100 * object[key].change)}%` : '-',
             changeType: object[key].change < 0 ? 'negative' : 'positive'
         }
     })

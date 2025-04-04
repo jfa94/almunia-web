@@ -2,7 +2,7 @@ const alertIsOriginal = () => {
     window.alert('Cannot delete the first input')
 }
 
-export function QuestionInput({id, valueId, valueName, removeInput = alertIsOriginal}) {
+export function QuestionInput({id, valueId, removeInput = alertIsOriginal}) {
     return <div className="flex flex-row items-center mb-4">
 
         {/*<input type="text"*/}

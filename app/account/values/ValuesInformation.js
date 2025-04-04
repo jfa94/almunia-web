@@ -5,20 +5,20 @@ import {columns} from "./columns.js"
 import {toCamelCase} from "@/lib/utils";
 import {AddRowModal} from "@/app/account/components/AddRowModal";
 
-const demoData = [
-    {
-        "company_id": "C-1i19vvu1qt8otual7op8",
-        "value_id": "fun",
-        "description": "Being fun is top tier",
-        "name": "Fun"
-    },
-    {
-        "company_id": "C-1i19vvu1qt8otual7op8",
-        "value_id": "jsat",
-        "description": "",
-        "name": "Job Satisfaction"
-    }
-]
+// const demoData = [
+//     {
+//         "company_id": "C-1i19vvu1qt8otual7op8",
+//         "value_id": "fun",
+//         "description": "Being fun is top tier",
+//         "name": "Fun"
+//     },
+//     {
+//         "company_id": "C-1i19vvu1qt8otual7op8",
+//         "value_id": "jsat",
+//         "description": "",
+//         "name": "Job Satisfaction"
+//     }
+// ]
 
 
 export default async function ValuesInformation({companyId}) {
