@@ -81,7 +81,7 @@ const features = [
                 <div>
                     <Image src="/landing/reporting-mockup.png"
                            alt="Reporting mockup"
-                           className="lg:max-w-[75%] max-w-[90%] absolute right-4"
+                           className="lg:max-w-[75%] max-w-[90%] absolute right-4 rounded-2xl"
                            priority={true}
                            height={485}
                            width={595}
