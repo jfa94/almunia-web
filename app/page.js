@@ -7,6 +7,7 @@ import About from "@/components/About";
 import FeaturesGrid from "@/components/FeaturesGrid";
 import Waitlist from "@/components/Waitlist";
 import {Suspense} from "react";
+import FeaturesList from "@/components/FeaturesList";
 
 export default function Page() {
     return (
@@ -19,6 +20,7 @@ export default function Page() {
                 {/*<Problem></Problem>*/}
                 <About></About>
                 <FeaturesGrid></FeaturesGrid>
+                {/*<FeaturesList />*/}
                 {/*<Pricing></Pricing>*/}
                 <Waitlist></Waitlist>
                 <FAQ></FAQ>
