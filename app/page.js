@@ -8,6 +8,7 @@ import FeaturesGrid from "@/components/FeaturesGrid";
 import Waitlist from "@/components/Waitlist";
 import {Suspense} from "react";
 import FeaturesList from "@/components/FeaturesList";
+import Statistics from "@/components/Statistics";
 
 export default function Page() {
     return (
@@ -17,10 +18,10 @@ export default function Page() {
             </Suspense>
             <main>
                 <Hero></Hero>
-                {/*<Problem></Problem>*/}
+                <Statistics></Statistics>
+                {/*<FeaturesGrid></FeaturesGrid>*/}
+                <FeaturesList />
                 <About></About>
-                <FeaturesGrid></FeaturesGrid>
-                {/*<FeaturesList />*/}
                 {/*<Pricing></Pricing>*/}
                 <Waitlist></Waitlist>
                 <FAQ></FAQ>

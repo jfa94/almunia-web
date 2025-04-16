@@ -7,9 +7,9 @@ const Hero = () => {
     return (
         <section className="bg-amber-50">
             <div
-                className="container mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 px-4 py-8 lg:py-20">
+                className="container mx-auto flex flex-col-reverse lg:flex-row items-center justify-center gap-16 lg:gap-18 px-4 py-8 lg:py-28 xl:py-32">
                 <div
-                    className="flex flex-col gap-10 lg:gap-14 items-center justify-center text-center lg:text-left lg:items-start">
+                    className="max-w-[650px] flex flex-col gap-10 xl:gap-14 items-center justify-center text-left lg:items-start">
                     {/*<a*/}
                     {/*  href="https://www.producthunt.com/posts/shipfast-2?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-shipfast&#0045;2"*/}
                     {/*  target="_blank"*/}
@@ -25,28 +25,27 @@ const Hero = () => {
                     {/*  </svg>*/}
                     {/*</a>*/}
 
-                    <h1 className="font-extrabold text-4xl lg:text-6xl tracking-tight md:-mb-4">
-                        Cultivate your company culture
+                    <h1 className="md:-mb-4">
+                        Effortlessly build a <span className="text-amber-600">world-class culture</span>
                     </h1>
-                    <p className="text-lg opacity-80 leading-relaxed max-w-6xl">
-                        Start using data to define and nurture the working environment you want to create.
-                        Almunia helps you capture employee feedback, identify trends, and make policy changes that will
-                        ensure your company is always a great place to work.
+                    <p className="max-w-6xl">
+                        Our research-driven approach helps you define your ideal culture, gather employee feedback, and
+                        make changes to ensure your company is always a great place to work.
                     </p>
 
                     <Link href="/#pricing">
                         <button className="btn btn-primary btn-wide">
-                            Get started
+                            Get early access
                         </button>
                     </Link>
                     {/*<TestimonialRating userCount="Over 1000"/>*/}
                 </div>
 
-                <div className="lg:w-full">
+                <div className="w-full max-w-[600px]">
                     <Image
                         src="/landing/hero-image.jpg"
                         alt="Hero image"
-                        className="w-full object-cover object-bottom rounded-2xl"
+                        className="object-fill object-bottom rounded-2xl"
                         priority={true}
                         height={400}
                         width={600}

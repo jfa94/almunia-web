@@ -40,7 +40,7 @@ const Header = ({bgClass = "bg-white"}) => {
     return (
         <header className={`${bgClass} ...`}>
             <nav
-                className="container flex items-center justify-between p-4 mx-auto"
+                className="container flex items-center justify-between pt-8 p-4 mx-auto"
                 aria-label="Global"
             >
                 {/* Your logo/name on large screens */}
