@@ -54,7 +54,7 @@ const PrivacyPolicy = () => {
                     Privacy Policy for <span className="capitalize">{config.appName}</span>
                 </h1>
 
-                <h2 className="subheading">Privacy Policy (Last Updated: 28 March, 2024)</h2>
+                <h2 className="subheading">Privacy Policy (Last Updated: 28 March, 2025)</h2>
                 <p className="paragraph">This privacy policy explains how Almunia (&quot;we&quot;, &quot;our&quot;,
                     or &quot;us&quot;) collects, uses, and discloses information about you when you access or use our
                     web application.</p>
@@ -75,7 +75,7 @@ const PrivacyPolicy = () => {
                 <p className="paragraph">We do not share your personal information with any third parties.</p>
 
                 <h3 className="subheading">Children&rsquo;s Privacy:</h3>
-                <p className="paragraph">Our services are not directed towards children under the age of 13, and we do
+                <p className="paragraph">Our services are not directed towards persons under the age of 18, and we do
                     not knowingly collect personal information from children.</p>
 
                 <h3 className="subheading">Updates to this Policy:</h3>

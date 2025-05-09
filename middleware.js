@@ -1,7 +1,7 @@
 import {signIn, getTokens} from "@/lib/auth";
 import {NextResponse} from "next/server";
 
-const protectedRoutes = ['/dashboard', '/onboarding', '/create']
+const protectedRoutes = ['/account', '/dashboard', '/onboarding', '/create']
 
 export const middleware = async (request) => {
     console.log('Ran middleware for:', request.nextUrl.pathname)
@@ -46,9 +46,12 @@ export const config = {
      * - js/script.js
      * - _next/static (static files)
      * - _next/image (image optimization files)
+     * - ingest/ (PostHog reverse proxy rewrites)
      * - favicon.ico (favicon file)
      * - public/ folder
+     * - landing/ folder
+     * - user-redirect/ folder
      */
-    '/((?!js/script.js|_next/static|_next/image|favicon.ico|landing/).*)',
+    '/((?!js/script.js|_next/static|_next/image|ingest|favicon.ico|public|landing|user-redirect).*)',
   ],
 }

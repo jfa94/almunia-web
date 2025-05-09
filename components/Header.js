@@ -7,6 +7,8 @@ import Image from "next/image";
 import logo from "@/public/logo.png";
 import config from "@/config";
 import ButtonSignin from "@/components/ButtonSignin";
+import {useSession} from "@/lib/session";
+import ButtonAccount from "@/components/ButtonAccount";
 
 const links = [
     {
@@ -23,15 +25,13 @@ const links = [
     },
 ];
 
-// const cta = <SessionProvider><ButtonSignin extraStyle="btn-primary"/></SessionProvider>
-const defaultCta = <ButtonSignin extraStyle="btn-primary"/>
-
-// A header with a logo on the left, links in the center (like Pricing, etc...), and a CTA (like Get Started or Login) on the right.
-// The header is responsive, and on mobile, the links are hidden behind a burger button.
-const Header = ({bgClass = "bg-white", cta = defaultCta}) => {
-    const searchParams = useSearchParams();
+const Header = ({bgClass = "bg-white"}) => {
     const [isOpen, setIsOpen] = useState(false);
+    const searchParams = useSearchParams();
+    const {status} = useSession()
 
+    const cta = status === 'authenticated' ? <ButtonAccount/> : <ButtonSignin extraStyle="btn-primary"/>
+   
     // setIsOpen(false) when the route changes (i.e: when the user clicks on a link on mobile)
     useEffect(() => {
         setIsOpen(false);
@@ -40,7 +40,7 @@ const Header = ({bgClass = "bg-white", cta = defaultCta}) => {
     return (
         <header className={`${bgClass} ...`}>
             <nav
-                className="container flex items-center justify-between px-8 py-4 mx-auto"
+                className="container flex items-center justify-between pt-8 p-4 mx-auto"
                 aria-label="Global"
             >
                 {/* Your logo/name on large screens */}
@@ -56,7 +56,7 @@ const Header = ({bgClass = "bg-white", cta = defaultCta}) => {
                             // placeholder="blur"
                             priority={true}
                             width='auto'
-                            height={60}
+                            height={45}
                         />
                     </Link>
                 </div>
@@ -66,7 +66,7 @@ const Header = ({bgClass = "bg-white", cta = defaultCta}) => {
                     <div className="flex lg:hidden">
                         <button
                             type="button"
-                            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5"
+                            className="inline-flex items-center justify-center rounded-md p-2.5"
                             onClick={() => setIsOpen(true)}
                         >
                             <span className="sr-only">Open main menu</span>

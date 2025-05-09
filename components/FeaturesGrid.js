@@ -17,7 +17,6 @@ const features = [
                     </p>
                     <div
                         className="relative textarea py-4 h-full mr-12 bg-base-100 group-hover:border-base-content/10 text-base-content"
-                        placeholder="Hover highlight feature"
                     >
                         <div className="absolute left-4 top-4 group-hover:hidden flex items-center ">
                             <span>We recogn</span>
@@ -37,63 +36,9 @@ const features = [
         ),
     },
     {
-        title: "Track progress over time",
-        description: "Get feedback from your team in one click. Keep track of how your culture is evolving.",
-        styles: "md:col-span-2 bg-base-300 text-base-content",
-        demo: (
-            <div className="px-6 relative h-full flex flex-row gap-4 overflow-hidden">
-
-                <div
-                    className="bg-white p-8 h-full max-w-[21rem] rounded-t-box drop-shadow-lg absolute top-16 hover:top-10 duration-300 z-10">
-                    <p className="font-medium uppercase tracking-wide text-base-content/60 text-sm mb-1 border-b-2 border-b-base-600">
-                        {/*<span className="font-bold">From: </span> Almunia Ltd<br/>*/}
-                        {/*<span className="font-bold">To: </span> Tim Apple<br/>*/}
-                        <span className="font-bold">Subject: </span> Daily Feedback
-                    </p>
-
-                    <p className="font-medium leading-normal my-2">
-                        I feel comfortable asking my manager for feedback
-                    </p>
-
-                    <div className="flex flex-col gap-2">
-                        {[
-                            {answer: 'Strongly agree', value: '5'},
-                            {answer: 'Agree', value: '4'},
-                            {answer: 'Neither agree nor disagree', value: '3'},
-                            {answer: 'Disagree', value: '2'},
-                            {answer: 'Strongly disagree', value: '1'},
-                        ].map((theme) => (
-                            <p className="bg-base-200 text-base-400 px-4 py-1.5 rounded-md w-full"
-                               key={theme.value}
-                            >
-                                {theme.answer}
-                                <span
-                                    className="bg-primary/90 font-bold text-white text-sm py-0.5 px-1.5 mt-0.5 rounded-md float-end"
-                                >
-                                {theme.value}
-                            </span>
-                            </p>
-                        ))
-                        }
-                    </div>
-                </div>
-
-                <div>
-                    <Image src="/landing/reporting-mockup.png"
-                           alt="Reporting mockup"
-                           className="lg:max-w-[75%] max-w-[90%] absolute right-4"
-                           priority={true}
-                           height={485}
-                           width={595}
-                    />
-                </div>
-
-            </div>
-        ),
-    },
-    {
-        title: "Discover new ideas",
-        description: "(COMING SOON) Encourage your team to suggest improvements and vote on their favourites.",
+        title: "Something",
+        description: "(COMING SOON) Seamlessly integrate with your existing Human Capital Management tools and keep" +
+            " all your data synced.",
         styles: "md:col-span-2 bg-base-100 text-base-content",
         demo: (
             <div className="flex left-0 w-full h-full pt-0 lg:pt-8 overflow-hidden md:-mt-12">
@@ -201,65 +146,138 @@ const features = [
                 </div>
             </div>
         ),
-    }
-    ,
+    },
     {
-        title: "Share recognition",
-        description: "(COMING SOON) Celebrate your team's achievements.",
+        title: "Track progress over time",
+        description: "Get feedback from your team in one click. Keep track of how your culture is evolving.",
+        styles: "md:col-span-2 bg-base-300 text-base-content",
+        demo: (
+            <div className="px-6 relative h-full flex flex-row gap-4 overflow-hidden">
+
+                <div
+                    className="bg-white p-8 h-full max-w-[21rem] rounded-t-box drop-shadow-lg absolute top-16 hover:top-10 duration-300 z-10">
+                    <p className="font-medium uppercase tracking-wide text-base-content/60 text-sm mb-1 border-b-2 border-b-base-600">
+                        {/*<span className="font-bold">From: </span> Almunia Ltd<br/>*/}
+                        {/*<span className="font-bold">To: </span> Tim Apple<br/>*/}
+                        <span className="font-bold">Subject: </span> Daily Feedback
+                    </p>
+
+                    <p className="font-medium leading-normal my-2">
+                        I feel comfortable asking my manager for feedback
+                    </p>
+
+                    <div className="flex flex-col gap-2">
+                        {[
+                            {answer: 'Strongly agree', value: '5'},
+                            {answer: 'Agree', value: '4'},
+                            {answer: 'Neither agree nor disagree', value: '3'},
+                            {answer: 'Disagree', value: '2'},
+                            {answer: 'Strongly disagree', value: '1'},
+                        ].map((theme) => (
+                            <p className="bg-base-200 text-base-400 px-4 py-1.5 rounded-md w-full"
+                               key={theme.value}
+                            >
+                                {theme.answer}
+                                <span
+                                    className="bg-primary/90 font-bold text-white text-sm py-0.5 px-1.5 mt-0.5 rounded-md float-end"
+                                >
+                                {theme.value}
+                            </span>
+                            </p>
+                        ))
+                        }
+                    </div>
+                </div>
+
+                <div>
+                    <Image src="/landing/reporting-mockup.png"
+                           alt="Reporting mockup"
+                           className="lg:max-w-[75%] max-w-[90%] absolute right-4 rounded-2xl"
+                           priority={true}
+                           height={485}
+                           width={595}
+                    />
+                </div>
+
+            </div>
+        ),
+    },
+    {
+        title: "Integrate with existing tools",
+        description: "(COMING SOON) Keep your data synced by linking your existing Human Capital Management software.",
         styles: "bg-neutral text-neutral-content",
         demo: (
-            <div className="text-neutral-content px-6 space-y-4">
-                {[
-                    {
-                        id: 1,
-                        name: "Olivia",
-                        text: " delivered an amazing training on growth strategy this week!",
-                        userImg: "/landing/user-image.png",
-                        userName: "Javier A.",
-                        createdAt: "2024-09-01T00:00:00Z",
-                    },
-                    {
-                        id: 2,
-                        name: "Geoff",
-                        text: " for being a great mentor.",
-                        userImg:
-                            "https://pbs.twimg.com/profile_images/1778434561556320256/knBJT1OR_400x400.jpg",
-                        userName: "Dan K.",
-                        createdAt: "2024-09-02T00:00:00Z",
-                        transition:
-                            "opacity-0 group-hover:opacity-100 duration-500 translate-x-1/4 group-hover:translate-x-0",
-                    },
-                ]?.map((reply) => (
-                    <div
-                        key={reply.id}
-                        className={`px-6 py-4 bg-neutral-content text-neutral rounded-box ${reply?.transition}`}
-                    >
-                        <div className="mb-2 whitespace-pre-wrap">
-                            <span className="font-bold">@{reply.name}</span>
-                            {reply.text}
+            <div className="lg:pt-8 pb-6">
+                <div className="relative w-full">
+                    {/* Create a wider container that holds both sets of logos side by side */}
+                    <div className="flex animate-infinite-scroll whitespace-nowrap">
+                        {/* First set of logos */}
+                        <div className="flex lg:gap-10 gap-8 min-w-full h-full select-none">
+                            <Image src="/landing/logos/adp-logo.png"
+                                   alt="ADP Logo"
+                                   priority={true}
+                                   height={200}
+                                   width={300}
+                                   style={{objectFit: "contain"}}
+                            />
+                            <Image src="/landing/logos/workday-logo.png"
+                                   alt="Workday Logo"
+                                   priority={true}
+                                   height={200}
+                                   width={500}
+                                   style={{objectFit: "contain"}}
+                            />
+                            <Image src="/landing/logos/personio-logo.png"
+                                   alt="Personio Logo"
+                                   priority={true}
+                                   height={200}
+                                   width={600}
+                                   style={{objectFit: "contain"}}
+                            />
+                            <Image src="/landing/logos/dayforce-logo.png"
+                                   alt="Dayforce Logo"
+                                   priority={true}
+                                   height={200}
+                                   width={600}
+                                   style={{objectFit: "contain"}}
+                            />
                         </div>
-                        <div className="text-neutral/80 flex items-center gap-2 text-sm">
-                            <div className="flex items-center gap-2">
-                                <div className="avatar">
-                                    <div className="w-7 rounded-full bg-orange-200">
-                                        <img src={reply.userImg} alt={reply.userName}/>
-                                    </div>
-                                </div>
-                                <div className=""> {reply.userName} </div>
-                            </div>
-                            •
-                            <div>
-                                {new Date(reply.createdAt).toLocaleDateString("en-US", {
-                                    month: "short",
-                                    day: "numeric",
-                                    year: "numeric",
-                                })}
-                            </div>
-                            •
-                            <div>Reply</div>
+                        {/* Second set of logos (exact duplicate) */}
+                        <div
+                            className="flex lg:gap-10 gap-8 min-w-full h-full select-none"
+                            aria-hidden={true}
+                        >
+                            <Image src="/landing/logos/adp-logo.png"
+                                   alt="ADP Logo"
+                                   priority={true}
+                                   height={200}
+                                   width={300}
+                                   style={{objectFit: "contain"}}
+                            />
+                            <Image src="/landing/logos/workday-logo.png"
+                                   alt="Workday Logo"
+                                   priority={true}
+                                   height={200}
+                                   width={500}
+                                   style={{objectFit: "contain"}}
+                            />
+                            <Image src="/landing/logos/personio-logo.png"
+                                   alt="Personio Logo"
+                                   priority={true}
+                                   height={200}
+                                   width={600}
+                                   style={{objectFit: "contain"}}
+                            />
+                            <Image src="/landing/logos/dayforce-logo.png"
+                                   alt="Dayforce Logo"
+                                   priority={true}
+                                   height={200}
+                                   width={600}
+                                   style={{objectFit: "contain"}}
+                            />
                         </div>
                     </div>
-                ))}
+                </div>
             </div>
         ),
     },
@@ -295,7 +313,7 @@ const FeaturesGrid = () => {
                 </div>
             </div>
         </section>
-    );
-};
+    )
+}
 
 export default FeaturesGrid;

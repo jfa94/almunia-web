@@ -1,7 +1,8 @@
 'use client';
 
 import {useSession} from "@/lib/session";
-import {getSurveyResponses, getQuestionData} from "@/app/dashboard/actions";
+import {getSurveyResponses} from "@/app/dashboard/actions";
+import {getCompanyData} from "@/lib/actions";
 import {useEffect, useRef, useState} from "react";
 import ToplineCard from "@/app/dashboard/components/ToplineCard"
 import {
@@ -17,28 +18,20 @@ import {useLocalStorage} from "@/lib/utils";
 import {CustomSelect} from "@/app/dashboard/components/CustomSelect";
 
 
+const tooltipText = "Data aggregated monthly. Percentage value in summary card represents change vs previous month."
+const chartOptions = [
+    {value: 'chart-data-value', label: 'Theme'},
+    {value: 'chart-data-question', label: 'Question'}
+]
+
+
 export default function Dashboard() {
     const {data: session} = useSession()
     const {setItem, getItem} = useLocalStorage()
     let [loading, setLoading] = useState(true)
     let [chartDataType, setChartDataType] = useState('chart-data-value')
+    let valueData = useRef({})
     let questionData = useRef({})
-
-    const tooltipText = "Data aggregated monthly. Percentage value in summary card represents change vs previous month."
-    const chartOptions = [
-        {value: 'chart-data-value', label: 'Theme'},
-        {value: 'chart-data-question', label: 'Question'}
-    ]
-
-    const findQuestionValue = (questionId) => {
-        if (questionData.current === {}) return undefined
-        for (let valueId of Object.keys(questionData.current)) {
-            for (let question of questionData.current[valueId].questions) {
-                if (question.id === questionId) return question.question
-            }
-        }
-        return undefined
-    }
 
     useEffect(() => {
         (async () => {
@@ -49,14 +42,25 @@ export default function Dashboard() {
 
             const dateRange = getItem('survey-data-date-range')
             let responseData = []
-            questionData.current = await getQuestionData(companyId)
+            valueData.current = await getCompanyData(companyId, 'values')
+            questionData.current = await getCompanyData(companyId, 'questions')
 
             if (!dateRange || dateRange.start > startDate || dateRange.end < endDate) {
-                responseData = await getSurveyResponses(companyId, startDate, endDate)
                 setItem('survey-data-date-range', {start: startDate, end: endDate})
 
-                const valueResults = summariseSurveyData(responseData, questionData.current, 'value_id', 'month')
-                const questionResults = summariseSurveyData(responseData, questionData.current, 'question_id', 'month')
+                responseData = await getSurveyResponses(companyId, startDate, endDate)
+                const contextualizedResponses = responseData.map(response => {
+                    const relevantValue = valueData.current.find(val => val.value_id === response.value_id)
+                    const relevantQuestion = questionData.current.find(q => q.question_id === response.question_id)
+                    const context = {
+                        value_name: relevantValue?.name ?? "",
+                        question: relevantQuestion?.question ?? ""
+                    }
+                    return Object.assign(response, context)
+                })
+
+                const valueResults = summariseSurveyData(contextualizedResponses, 'value_id', 'month')
+                const questionResults = summariseSurveyData(contextualizedResponses, 'question_id', 'month')
 
                 const sortKeys = (keys, object) => {
                     return keys.sort((a, b) => {
@@ -78,8 +82,8 @@ export default function Dashboard() {
     })
 
     return (
-        <main className="min-h-screen md:p-8 p-4 pb-24">
-            <section className="max-w-6xl mx-auto">
+        <main className="container min-h-screen mx-auto pb-24">
+            <section>
                 <h1 className="text-6xl md:text-4xl font-extrabold md:pt-6 pt-4">
                     Dashboard
                     <span className="tooltip tooltip-right pl-2 pt-1 align-top" data-tip={tooltipText}>
@@ -93,6 +97,9 @@ export default function Dashboard() {
                             return <ToplineCard key={item.id} item={item}/>
                         })}
                 </div>
+            </section>
+
+            <section>
                 <div className="grid md:grid-cols-4 grid-cols-2 gap-4 mt-6">
                     <div className="flex items-center justify-end md:col-start-3">
                         <p className="font-medium text-sm">Group by:</p>
@@ -103,11 +110,14 @@ export default function Dashboard() {
                     {loading
                         ? <Card><p>Loading ...</p></Card>
                         : getItem(chartDataType)?.map(item => {
+                            const itemName = item.grouping === 'question_id'
+                                ? questionData.current.find(q => q.question_id === item.id)
+                                : valueData.current.find(val => val.value_id === item.id)
                             return (<Card key={item.id} className="mx-auto md:p-6 p-5">
                                 <h3 className="text-2xl font-extrabold md:pl-8 pb-6">{
-                                    item.grouping === 'question_id'
-                                        ? findQuestionValue(item.id)
-                                        : questionData.current[item.id].value_name
+                                    item.grouping === "question_id"
+                                        ? itemName?.question ?? "Missing Theme Name"
+                                        : itemName?.name ?? "Missing Theme Name"
                                 }</h3>
                                 <AreaChartHero key={item.id} chartData={item.stat}/>
                             </Card>)

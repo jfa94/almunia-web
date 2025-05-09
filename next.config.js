@@ -1,18 +1,23 @@
-const {withPlausibleProxy} = require("next-plausible");
-
 const nextConfig = {
     reactStrictMode: true,
-    images: {
-        domains: [
-            // NextJS <Image> component needs to whitelist domains for src={}
-            "lh3.googleusercontent.com",
-            "pbs.twimg.com",
-            "images.unsplash.com",
-            "logos-world.net",
-        ],
+    async rewrites() {
+        return [
+            {
+                source: "/ingest/static/:path*",
+                destination: "https://eu-assets.i.posthog.com/static/:path*",
+            },
+            {
+                source: "/ingest/:path*",
+                destination: "https://eu.i.posthog.com/:path*",
+            },
+            {
+                source: "/ingest/decide",
+                destination: "https://eu.i.posthog.com/decide",
+            },
+        ];
     },
+    // This is required to support PostHog trailing slash API requests
+    skipTrailingSlashRedirect: true,
 };
 
-module.exports = withPlausibleProxy({
-    customDomain: 'https://analytics.almunia.io',
-})(nextConfig);
+module.exports = nextConfig

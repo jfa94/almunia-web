@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {InputTeamInformation} from "@/app/onboarding/team/InputTeamInformation";
-import { SubmitButton } from "@/app/onboarding/team/SubmitButton";
+import {SubmitButton} from "@/app/onboarding/team/SubmitButton";
 import {submitTeamForm} from "@/app/onboarding/actions";
 import {redirect} from "next/navigation";
 
@@ -11,10 +11,11 @@ const TeamInformationForm = ({formState, hidden}) => {
 
     const handleSubmitForm = async (formData) => {
         const result = await submitTeamForm({'companyId': formState.companyId, page: 'team'}, formData)
-        if (result['$metadata']?.httpStatusCode === 200) {
-            redirect('/dashboard')
-        } else {
+        if (result.find(batch => batch['$metadata']?.httpStatusCode !== 200)) {
+            console.log('Result:', result)
             alert('An error has occurred. Please try again later.')
+        } else {
+            redirect('/dashboard')
         }
     }
 
@@ -42,8 +43,8 @@ const TeamInformationForm = ({formState, hidden}) => {
             <p className="mb-6 text-sm italic">
                 To upload information in bulk, please add your email below and send a CSV file with
                 your team&rsquo;s details to&#58; <a href="mailto:team-upload@almunia.io" className="text-blue-500">
-                    team-upload@almunia.io
-                </a>
+                team-upload@almunia.io
+            </a>
             </p>
 
             <form action={handleSubmitForm}>
@@ -52,7 +53,7 @@ const TeamInformationForm = ({formState, hidden}) => {
                     <p className="font-bold ml-2">First Name</p>
                     <p className="font-bold ml-2">Last Name</p>
                     <p className="font-bold ml-2">Job Title</p>
-                    <p className="font-bold ml-2">Manager (full name)</p>
+                    <p className="font-bold ml-2">Manager (email)</p>
                 </div>
 
                 {inputArray}
@@ -65,7 +66,7 @@ const TeamInformationForm = ({formState, hidden}) => {
                                 d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11H7V13H11V17H13V13H17V11H13V7H11V11Z"></path>
                         </svg>
                     </button>
-                    <SubmitButton />
+                    <SubmitButton/>
                 </div>
             </form>
         </div>

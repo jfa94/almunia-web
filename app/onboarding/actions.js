@@ -1,8 +1,14 @@
 'use server';
 import {cookies} from "next/headers";
 import {CognitoIdentityProviderClient, UpdateUserAttributesCommand} from "@aws-sdk/client-cognito-identity-provider";
-import {getCognitoIdentity, queryDynamoDb, submitBatchDynamoDbUpdate, submitDynamoDbUpdate} from "@/lib/aws";
+import {
+    getCognitoIdentity,
+    queryDynamoDb,
+    submitBatchDynamoDbUpdate,
+    submitDynamoDbUpdate
+} from "@/lib/aws";
 import {v4 as uuidv4} from "uuid";
+import {toCamelCase} from "@/lib/utils";
 
 
 export async function submitWelcomeForm(formArgs, formData) {
@@ -54,80 +60,56 @@ export async function submitWelcomeForm(formArgs, formData) {
 
 export async function submitValuesForm(formArgs, formData) {
     console.log(`Submitted ${formArgs.page} with data: `, formData)
-
     let idList = []
-    let submittedData = {}
+    let items = []
 
     for (const key of formData.keys()) {
         key.includes('key') && idList.push(key.slice(-1))
     }
 
     [...new Set(idList)].forEach((id) => {
-        submittedData[formData.get(`key${id}`)] = formData.get(`value${id}`)
+        items.push({
+            "company_id": formArgs.companyId,
+            "value_id": toCamelCase(formData.get(`key${id}`)),
+            "name": formData.get(`key${id}`),
+            "description": formData.get(`value${id}`)
+        })
     })
 
-    const item = {
-        "company_id": formArgs.companyId,
-        "values": submittedData
+    const standardItems = []
+    const standardValues = await queryDynamoDb('company-values', 'company_id', 'default')
+    for (let row of standardValues) {
+        row.company_id = formArgs.companyId
+        standardItems.push(row)
     }
 
-    return await submitDynamoDbUpdate('company-values', item)
+    const result = await submitBatchDynamoDbUpdate('company-values', [...items, ...standardItems])
+    return {result, items}
 }
 
 
 export async function submitQuestionsForm(formArgs, formData) {
     console.log(`Submitted ${formArgs.page} with data: `, formData)
+    let itemList = []
 
-    let questionList = {}
-    let submittedData = {}
-
-    for (const key of formData.keys()) {
-        if (key.includes('key')) {
-            const valueName = formData.get(key)
-            const valueId = valueName.replace(/\s/g, '').toLowerCase()
-
-            if (!(valueId in submittedData)) {
-                submittedData[valueId] = {
-                    value_name: valueName,
-                    question_count: 0,
-                    last_asked: "2000-01-01T00:00:00.000Z",
-                    questions: []
-                }
-            }
-
-        } else if (key.includes('value')) {
-            const valueId = formData.get(`key${key.slice(0, 1)}`).replace(/\s/g, '').toLowerCase()
-            const questionNumber = key.slice(-1)
-            const questionId = valueId + questionNumber
-
-            const questionObject = {
-                key: questionId,
-                question: formData.get(key),
-                last_asked: "2000-01-01T00:00:00.000Z"
-            }
-
-            if (valueId in questionList && questionObject.question !== '') {
-                questionList[valueId].push(questionObject)
-            } else if (questionObject.question !== '') {
-                questionList[valueId] = [questionObject]
-            }
-
-        }
-    }
-
-    for (const valueId in questionList) {
-        submittedData[valueId].questions = questionList[valueId]
-        submittedData[valueId].question_count = questionList[valueId].length
+    for (const [name, value] of formData.entries()) {
+        itemList.push({
+            company_id: formArgs.companyId,
+            question_id: name.replace("_q", ""),
+            question: value,
+            value_id: name.substring(0, name.indexOf("_q")),
+            last_asked: "2000-01-01T00:00:00.000Z",
+        })
     }
 
     const standardQuestionBank = await queryDynamoDb('company-questions', 'company_id', 'template')
 
-    const item = {
-        "company_id": formArgs.companyId,
-        "question_object": Object.assign(standardQuestionBank.item.question_object, submittedData)
+    for (let row of standardQuestionBank) {
+        row.company_id = formArgs.companyId
+        itemList.push(row)
     }
 
-    return await submitDynamoDbUpdate('company-questions', item)
+    return await submitBatchDynamoDbUpdate('company-questions', itemList)
 }
 
 

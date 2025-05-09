@@ -10,7 +10,7 @@ export default function Page() {
     const responseValue = searchParams.get("val")
 
     useEffect(() => {
-        if (responseData && responseData) {
+        if (responseData && responseValue) {
             (async () => {
                 try {
                     // setTimeout(() => setIsLoading(false), 3000)
