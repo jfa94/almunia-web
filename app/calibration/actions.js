@@ -48,6 +48,6 @@ export async function submitSignupForm(formData) {
         console.log('Error: ', e)
     }
 
-    redirect('calibration/results?success=true')
+    redirect('/calibration/results?success=true')
 }
 
