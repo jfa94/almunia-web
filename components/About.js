@@ -9,17 +9,22 @@ const About = () => {
                 </h1>
 
                 <div className="md:basis-3/5 text-lg opacity-80 leading-relaxed text-left">
-                    <p className='mb-4'>At Almunia, we want to help workplaces become community that are driven by their purpose. Our mission is to enable every company&mdash;regardless of its size&mdash;to design a culture that is aligned with their values and to deliver the best possible version of that culture.</p>
-                    
+                    <p className='mb-4'>At Almunia, we want to help workplaces become communities that are engaged and
+                        driven by their purpose. Our mission is to enable every company&mdash;regardless of its
+                        size&mdash;to design a culture that is aligned with their values and to deliver the best
+                        possible version of that culture.</p>
+
                     <div className="flex flex-col md:flex-row gap-8 pt-2">
                         <div className="md:basis-1/2 p-6 bg-base-100 rounded-lg border border-base-200">
                             <h3 className="font-bold text-xl mb-2">For HR Leaders</h3>
-                            <p>Tools to develop and implement cultural strategies without needing a large team or specialized expertise.</p>
+                            <p>Tools to develop and implement cultural strategies without needing a large team or
+                                specialized expertise.</p>
                         </div>
-                        
+
                         <div className="md:basis-1/2 p-6 bg-base-100 rounded-lg border border-base-200">
                             <h3 className="font-bold text-xl mb-2">For Business Leaders</h3>
-                            <p>Data-driven insights to make decisions that align your culture with your business objectives.</p>
+                            <p>Data-driven insights to make decisions that align your culture with your business
+                                objectives.</p>
                         </div>
                     </div>
                 </div>
