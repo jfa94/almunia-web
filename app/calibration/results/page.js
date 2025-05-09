@@ -75,7 +75,7 @@ const pageContent = [
             <p>A <strong>local identity</strong> means that employees primarily associate with their immediate team
                 and direct supervisor. There is a strong sense of loyalty to colleagues, and relationships often
                 shape workplace dynamics. While this can create a cohesive and close-knit work environment, it may
-                also be prone to politics and lead to siloed thinking&emdash;where teams focus more on internal
+                also be prone to politics and lead to siloed thinking&mdash;where teams focus more on internal
                 harmony than broader company or industry trends.</p>
             <p>In contrast, employees in a <strong>professional identity</strong> culture align themselves with
                 their field or industry rather than their specific workplace. Their primary focus is on career

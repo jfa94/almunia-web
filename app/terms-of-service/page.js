@@ -53,7 +53,7 @@ const TOS = () => {
                     Terms and Conditions for <span className="capitalize">{config.appName}</span>
                 </h1>
 
-                <p className="paragraph"><strong>Effective Date: 28 March 2024</strong></p>
+                <p className="paragraph"><strong>Effective Date: 28 March 2025</strong></p>
 
                 <h2 className="subheading">1. Acceptance of Terms</h2>
                 <p className="paragraph">By accessing or using the Almunia website and services, you agree to be bound
@@ -71,12 +71,12 @@ const TOS = () => {
 
                 <h2 className="subheading">4. Intellectual Property</h2>
                 <p className="paragraph">The Almunia website, services, and all associated intellectual property rights
-                    are owned by Almunia. You may not modify, reproduce, distribute, or create derivative works based on
+                    are owned by Almunia Ltd. You may not modify, reproduce, distribute, or create derivative works based on
                     our services without prior written consent.</p>
 
                 <h2 className="subheading">5. User Conduct</h2>
                 <p className="paragraph">You agree to use the services in compliance with all applicable laws and
-                    regulations. You shall not misuse the services for any illegal or unauthorized purpose.</p>
+                    regulations. You shall not misuse the services for any illegal or unauthorised purpose.</p>
 
                 <h2 className="subheading">6. Data Collection</h2>
                 <p className="paragraph">Almunia collects certain personal and non-personal data as described in our

@@ -24,6 +24,7 @@ module.exports = {
                 wiggle: "wiggle 1.5s ease-in-out infinite",
                 popup: "popup 0.25s ease-in-out",
                 shimmer: "shimmer 3s ease-out infinite alternate",
+                'infinite-scroll': 'scroll 5s linear infinite',
             },
             keyframes: {
                 opacity: {
@@ -60,6 +61,10 @@ module.exports = {
                     "0%": {backgroundPosition: "0 50%"},
                     "50%": {backgroundPosition: "100% 50%"},
                     "100%": {backgroundPosition: "0% 50%"},
+                },
+                scroll: {
+                    '0%': {transform: 'translateX(0)'},
+                    '100%': {transform: 'translateX(-100%)'},
                 },
             },
             colors: {

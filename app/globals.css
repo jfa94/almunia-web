@@ -21,16 +21,25 @@ progress::-webkit-progress-value {
         @apply !text-white;
     }
 
-    .heading {
-        @apply text-2xl md:text-3xl lg:text-4xl font-extrabold pb-4 md:pb-6
+    h1 {
+        @apply font-extrabold text-4xl lg:text-5xl xl:text-6xl tracking-[-0.02rem] xl:tracking-tight text-base-content
     }
 
-    .subheading {
-        @apply text-xl md:text-2xl font-bold py-2
+    h2 {
+        @apply font-bold text-3xl lg:text-4xl xl:text-5xl tracking-tight text-base-content
+        /*lg:text-4xl text-3xl text-base-content font-bold tracking-tight*/
     }
 
-    .paragraph {
-        @apply pb-2 md:pb-4
+    h3 {
+        @apply font-semibold text-2xl lg:text-3xl xl:text-4xl tracking-[-0.01rem] text-base-content/80
+    }
+
+    h4 {
+        @apply font-medium text-xl lg:text-2xl xl:text-3xl tracking-[-0.01rem] text-base-content/80
+    }
+
+    p {
+        @apply text-lg xl:text-xl text-base-content/90 leading-relaxed xl:leading-[1.75]
     }
 
     .form-field {
