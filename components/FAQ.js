@@ -1,32 +1,60 @@
 "use client";
 
 import {useRef, useState} from "react";
-
-// <FAQ> component is a lsit of <Item> component
-// Just import the FAQ & add your FAQ content to the const faqList
+import config from "@/config";
 
 const faqList = [
     {
+        question: "How does Almunia help improve company culture?",
+        answer: <div className="space-y-2 leading-relaxed">
+            Almunia provides tools to define your cultural values, gather employee feedback through anonymous surveys,
+            track progress over time with analytics, and implement best practices that align with your company&rsquo;s
+            values.
+            Our data-driven approach helps you identify what&rsquo;s working and what needs improvement, allowing you to
+            make
+            informed decisions that positively impact your workplace culture.
+        </div>,
+    },
+    {
+        question: "Is Almunia suitable for small businesses?",
+        answer: <div className="space-y-2 leading-relaxed">
+            Absolutely! Almunia is designed to help organizations of any size develop a strong culture. While large
+            companies often have dedicated HR departments for this work, small businesses typically don&rsquo;t have
+            these resources. Our platform makes it easy to implement best practices at companies that don&rsquo;t have
+            specialised expertise or large teams.
+        </div>,
+    },
+    // {
+    //     question: "How long does it take to see results?",
+    //     answer: <div className="space-y-2 leading-relaxed">
+    //         Companies typically begin seeing measurable improvements in engagement metrics within 2-3 months of
+    //         consistent use. Cultural change is an ongoing process, but our platform helps you understand the tradeoffs
+    //         you are currently making with your culture,
+    //         and identify quick wins through direct employee feedback.
+    //     </div>,
+    // },
+    {
         question: "Are survey responses anonymous?",
         answer: <div className="space-y-2 leading-relaxed">
-            Yes, all survey responses are fully anonymized. Admin accounts can
+            Yes, all survey responses are fully anonymised. Admin accounts can
             see how many responses each question has received, and (if configured) a team-level breakdown of results.
-            However, none of the responses are tied to an individual.
+            However, none of the responses are tied to an individual, ensuring employees can provide honest feedback.
         </div>,
     },
     {
         question: "How do you store data?",
-        answer: (<p>
-                Each organisation&rsquo;s data is encrypted and kept siloed in its own separate environment. Account
-                admins are the only users able to access or decrypt your information.
-            </p>
-        ),
+        answer: <div className="space-y-2 leading-relaxed">
+            Each organization&rsquo;s data is encrypted and stored in a secure environment. Account
+            admins are the only users able to access or decrypt your information. We follow industry best practices
+            for data security and comply with relevant data protection regulations.
+        </div>,
     },
     {
         question: "I have another question",
         answer: (
             <div className="space-y-2 leading-relaxed">
-                Please reach out via email. You can find our contact information below.
+                Please reach out via email at {config.contact.supportEmail}.io. Our team is happy to answer any questions
+                you might have about our platform and how we can help your organization.
             </div>
         ),
     },
@@ -100,6 +128,10 @@ const FAQ = () => {
                     <p className="inline-block font-semibold text-primary mb-4">FAQ</p>
                     <p className="sm:text-4xl text-3xl font-extrabold text-base-content">
                         Frequently Asked Questions
+                    </p>
+                    <p className="mt-4 text-base-content/70">
+                        Have more questions? Contact us at <a href={`mailto:${config.contact.supportEmail}`}
+                                                              className="text-primary hover:underline">{config.contact.supportEmail}</a>
                     </p>
                 </div>
 
