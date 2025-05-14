@@ -39,7 +39,7 @@ progress::-webkit-progress-value {
     }
 
     p {
-        @apply text-lg xl:text-xl text-base-content/90 leading-relaxed xl:leading-[1.75]
+        @apply text-base-content/90 leading-relaxed xl:leading-[1.75]
     }
 
     .form-field {

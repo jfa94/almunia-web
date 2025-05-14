@@ -15,12 +15,12 @@ export default function SpectrumCard({id, value, valueBand = [1, 5], increasePos
     const [min, max] = valueBand
 
     return <div className="space-y-3">
-        <div className="font-mono text-sm text-slate-500 flex flex-row justify-between">
+        <div className="text-slate-500 flex flex-row justify-between">
             <p className="text-left">{left}</p>
             <p className="text-right">{right}</p>
         </div>
         <div className="flex justify-center">
-            <Card className="max-w-sm">
+            <Card className="">
                 <DeltaBar value={Math.round((value - min) / (max - min) * 200) - 100}
                           isIncreasePositive={increasePositive}
                 />

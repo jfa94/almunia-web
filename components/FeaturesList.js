@@ -43,17 +43,17 @@ const features = [
         title: "Track progress over time",
         comingSoon: true,
         description: "Measure the impact of your changes with our analytics dashboard, which helps you track survey responses and organisational health over time.",
-        image: <Image
-            src="/landing/reporting-mockup.png"
+        image: <div className="w-full h-full flex justify-center items-center"><Image
+            src="/landing/tracking.png"
             alt="Analytics dashboard showing cultural metrics over time"
             height={450}
-            width={600}
-            className="m-auto rounded-2xl xl:rounded-xl"
-        />,
+            width={700}
+            className="m-auto p-2"
+        /></div>,
         bulletPoints: [
             "Understand how your culture is evolving over time",
-            "Spot trends in organisational health",
-            "Track key metrics such as Engagement"
+            "Compare your ideal culture with your employees' perception",
+            "Track key health metrics such as Engagement"
         ]
     },
     // {
@@ -124,7 +124,7 @@ const FeaturesList = () => {
                     {features.map((feature, index) => (
                         <div
                             key={feature.title}
-                            className={`flex flex-col ${
+                            className={`flex flex-col-reverse ${
                                 index % 2 === 0 ? "lg:flex-row-reverse" : "lg:flex-row"
                             } gap-8 lg:gap-12 items-center`}
                         >
@@ -165,9 +165,9 @@ const FeaturesList = () => {
                             </div>
 
                             {/* Image/visual */}
-                            <div className="relative h-full lg:w-1/2">
+                            <div className="relative h-full w-full lg:w-1/2">
                                 <div
-                                    className={`h-[300px] xl:h-[400px] p-2 xl:p-6 rounded-2xl overflow-hidden shadow-xl border border-base-300 ${
+                                    className={`h-[300px] xl:h-[400px] w-full p-2 xl:p-6 rounded-2xl overflow-hidden shadow-xl border border-base-300 ${
                                         index % 2 === 0 ? "bg-base-200/50 " : "bg-base-content"
                                     }`}
                                 >

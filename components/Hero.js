@@ -28,7 +28,7 @@ const Hero = () => {
                     <h1 className="md:-mb-4">
                         Effortlessly build a <span className="text-amber-600">world-class culture</span>
                     </h1>
-                    <p className="max-w-6xl">
+                    <p className="max-w-6xl text-lg">
                         Our research-driven approach helps you define your ideal culture, gather employee feedback, and
                         make changes to ensure your company is always a great place to work.
                     </p>
