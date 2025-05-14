@@ -10,26 +10,6 @@ import {SignupForm} from "@/app/calibration/components/SignupForm";
 
 const pageContent = [
     {
-        id: "means-oriented-goal-oriented",
-        title: "Means-Oriented vs. Goal-Oriented Culture",
-        subtitle: <p className="text-neutral-600">
-            The extent to which an organisation focuses on either <span className="italic">how</span> work is done
-            or <span className="italic">what</span> gets accomplished.
-        </p>,
-        body: <>
-            <p>In a <strong>means-oriented culture</strong>, employees follow established processes and routines,
-                favoring risk-averse approaches and ensuring consistency. These environments tend to be stable,
-                reliable, and highly structured, making them ideal for industries that require precision and
-                control. However, they can also limit innovation due to the high effort required to implement
-                new ideas.</p>
-            <p>On the other end of the spectrum, <strong>goal-oriented cultures</strong> are driven by results.
-                Employees focus on achieving targets, often taking risks and embracing change to reach ambitious
-                objectives. While this can drive rapid growth and innovation, it also comes with potential
-                downsides—such as gaming metrics, burnout, or ethical compromises if goals become the sole priority.
-            </p>
-        </>
-    },
-    {
         id: "internally-driven-externally-driven",
         title: "Internally Driven vs. Externally Driven Culture",
         subtitle: <p className="text-neutral-600">
@@ -45,43 +25,6 @@ const pageContent = [
                 market trends. They
                 adapt quickly, emphasizing practicality and responsiveness. While this can be a , it may also result
                 in of long-term strategic vision if are too reactive.</p>
-        </>
-    },
-    {
-        id: "easygoing-strict-work-ethic",
-        title: "Easygoing vs. Strict Work Ethic",
-        subtitle: <p className="text-neutral-600">
-            How the work ethic of an organisation determines whether the work feels structured or flexible to its
-            employees.
-        </p>,
-        body: <>
-            <p>In <strong>easygoing cultures</strong>, there is an emphasis on adaptability, improvisation, and
-                creativity. Employees enjoy a relaxed atmosphere where schedules are fluid and decision-making is
-                less rigid. While this can foster innovation, it can also create challenges in terms of consistency,
-                accountability, and meeting deadlines.</p>
-            <p><strong>Strict cultures</strong>, on the other hand, are characterized by discipline, punctuality,
-                and cost-consciousness. Employees follow clear schedules, and efficiency is a top priority. While
-                this ensures predictability and reliability, it can sometimes feel rigid, leaving little room for
-                creative problem-solving or individual flexibility.</p>
-        </>
-    },
-    {
-        id: "local-professional-identity",
-        title: "Local vs. Professional Identity",
-        subtitle: <p className="text-neutral-600">
-            Explores the degree to which employees identify with their organization or their broader industry.
-        </p>,
-        body: <>
-            <p>A <strong>local identity</strong> means that employees primarily associate with their immediate team
-                and direct supervisor. There is a strong sense of loyalty to colleagues, and relationships often
-                shape workplace dynamics. While this can create a cohesive and close-knit work environment, it may
-                also be prone to politics and lead to siloed thinking&mdash;where teams focus more on internal
-                harmony than broader company or industry trends.</p>
-            <p>In contrast, employees in a <strong>professional identity</strong> culture align themselves with
-                their field or industry rather than their specific workplace. Their primary focus is on career
-                growth and industry standards rather than fitting into a particular company culture. This approach
-                encourages best practices and knowledge-sharing but may result in weaker team bonds or higher
-                employee turnover as workers prioritize personal career advancement.</p>
         </>
     },
     {
@@ -106,6 +49,25 @@ const pageContent = [
             </>
     },
     {
+        id: "local-professional-identity",
+        title: "Local vs. Professional Identity",
+        subtitle: <p className="text-neutral-600">
+            Explores the degree to which employees identify with their organization or their broader industry.
+        </p>,
+        body: <>
+            <p>A <strong>local identity</strong> means that employees primarily associate with their immediate team
+                and direct supervisor. There is a strong sense of loyalty to colleagues, and relationships often
+                shape workplace dynamics. While this can create a cohesive and close-knit work environment, it may
+                also be prone to politics and lead to siloed thinking&mdash;where teams focus more on internal
+                harmony than broader company or industry trends.</p>
+            <p>In contrast, employees in a <strong>professional identity</strong> culture align themselves with
+                their field or industry rather than their specific workplace. Their primary focus is on career
+                growth and industry standards rather than fitting into a particular company culture. This approach
+                encourages best practices and knowledge-sharing but may result in weaker team bonds or higher
+                employee turnover as workers prioritize personal career advancement.</p>
+        </>
+    },
+    {
         id: "people-task-oriented",
         title: "People-Oriented vs. Task-Oriented Culture",
         subtitle: <p className="text-neutral-600">
@@ -122,7 +84,45 @@ const pageContent = [
                 results, and efficiency, which can drive strong performance in high-pressure environments. However,
                 if taken to an extreme, this culture can lead to burnout, stress, and high employee turnover.</p>
         </>
-    }
+    },
+    {
+        id: "easygoing-strict-work-ethic",
+        title: "Easygoing vs. Strict Work Ethic",
+        subtitle: <p className="text-neutral-600">
+            How the work ethic of an organisation determines whether the work feels structured or flexible to its
+            employees.
+        </p>,
+        body: <>
+            <p>In <strong>easygoing cultures</strong>, there is an emphasis on adaptability, improvisation, and
+                creativity. Employees enjoy a relaxed atmosphere where schedules are fluid and decision-making is
+                less rigid. While this can foster innovation, it can also create challenges in terms of consistency,
+                accountability, and meeting deadlines.</p>
+            <p><strong>Strict cultures</strong>, on the other hand, are characterized by discipline, punctuality,
+                and cost-consciousness. Employees follow clear schedules, and efficiency is a top priority. While
+                this ensures predictability and reliability, it can sometimes feel rigid, leaving little room for
+                creative problem-solving or individual flexibility.</p>
+        </>
+    },
+    {
+        id: "means-oriented-goal-oriented",
+        title: "Means-Oriented vs. Goal-Oriented Culture",
+        subtitle: <p className="text-neutral-600">
+            The extent to which an organisation focuses on either <span className="italic">how</span> work is done
+            or <span className="italic">what</span> gets accomplished.
+        </p>,
+        body: <>
+            <p>In a <strong>means-oriented culture</strong>, employees follow established processes and routines,
+                favoring risk-averse approaches and ensuring consistency. These environments tend to be stable,
+                reliable, and highly structured, making them ideal for industries that require precision and
+                control. However, they can also limit innovation due to the high effort required to implement
+                new ideas.</p>
+            <p>On the other end of the spectrum, <strong>goal-oriented cultures</strong> are driven by results.
+                Employees focus on achieving targets, often taking risks and embracing change to reach ambitious
+                objectives. While this can drive rapid growth and innovation, it also comes with potential
+                downsides—such as gaming metrics, burnout, or ethical compromises if goals become the sole priority.
+            </p>
+        </>
+    },
 ]
 
 export default function Page() {
@@ -141,36 +141,28 @@ export default function Page() {
 
     return <div className="flex flex-col gap-6">
 
-        <section className="container mx-auto my-4">
-            <h1 className="text-3xl font-bold">Results</h1>
+        <main id="results" className="container mx-auto my-4 px-4">
+            <h1 className="text-3xl font-bold mb-8">Results</h1>
 
-            <div className="container mx-auto grid md:grid-cols-3 grid-cols-1">
-                <div className="col-span-2 h-full flex justify-center items-center">
-                    {calibrationData && <RadarGraph inputData={[calibrationData]}/>
-                    }
-                </div>
-
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-16">
                 <div className="flex flex-col gap-6">
                     {calibrationData && Object.entries(calibrationData).map(([key, value]) => {
                         const increasePositive = value > 3
                         return <SpectrumCard key={key} id={key} value={value} increasePositive={increasePositive}/>
                     })}
                 </div>
-            </div>
-        </section>
 
-        <section className="container mx-auto flex flex-col gap-4">
-            <h1 className="text-2xl font-bold">Interpreting Results</h1>
-
-            <div>
-                {pageContent.map(({id, title, subtitle, body}) => {
-                    return <InfoDropdown key={id} title={title} subtitle={subtitle} body={body}/>
-                })}
+                <div className="lg:col-span-2 min-h-full flex flex-col justify-between gap-4">
+                    {pageContent.map(({id, title, subtitle, body}) => {
+                        return <InfoDropdown key={id} title={title} subtitle={subtitle} body={body}/>
+                    })}
+                </div>
             </div>
-        </section>
+        </main>
+
 
         <section id="signup" className="md:pt-8 pt-4 pb-12 bg-neutral-100">
-            <SignupForm />
+            <SignupForm/>
         </section>
     </div>
 }

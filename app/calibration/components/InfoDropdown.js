@@ -7,7 +7,7 @@ export const InfoDropdown = ({title, subtitle, body}) => {
     return (
         <div>
             <div
-                className="relative flex gap-2 items-center w-full py-5 text-left border-t border-base-content/10"
+                className="relative flex gap-2 items-center w-full pt-5 text-left border-t border-base-content/10"
                 onClick={(e) => {
                     e.preventDefault();
                     setIsOpen(!isOpen);
@@ -53,7 +53,7 @@ export const InfoDropdown = ({title, subtitle, body}) => {
                         : {maxHeight: 0, opacity: 0}
                 }
             >
-                <div className="flex flex-col gap-2 pb-5 leading-relaxed">{body}</div>
+                <div className="flex flex-col gap-2 py-5 leading-relaxed">{body}</div>
             </div>
         </div>
     );
