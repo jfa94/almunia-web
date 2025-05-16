@@ -1,6 +1,7 @@
 const About = () => {
     return (
         <section
+            id="about"
             className="container px-4 mx-auto bg-base-100 flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 py-16 lg:py-24">
             <div
                 className="flex flex-col md:flex-row gap-10 lg:gap-14 items-start justify-center text-center lg:text-left">
