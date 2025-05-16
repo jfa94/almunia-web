@@ -17,8 +17,7 @@ export default async function Page() {
 
     return <main className="container m-auto pb-6 md:pb-8 min-h-[75svh]">
         <Toaster/>
-        <section className="flex flex-col gap-6 md:gap-10">
-            <h1 className="heading pb-0">Account</h1>
+        <section id="account" className="mt-4 lg:mt-8 flex flex-col gap-6 md:gap-10 px-4">
             <UserInformation/>
             <CompanyInformation/>
             <ValuesInformation companyId={company.company_id}/>

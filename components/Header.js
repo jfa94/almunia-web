@@ -11,13 +11,21 @@ import {useSession} from "@/lib/session";
 import ButtonAccount from "@/components/ButtonAccount";
 
 const links = [
+    // {
+    //     href: "/#about",
+    //     label: "About"
+    // },
+    // {
+    //     href: "/#pricing",
+    //     label: "Pricing",
+    // },
     {
-        href: "/#about",
-        label: "About"
+        href: "/#features",
+        label: "Features",
     },
     {
-        href: "/#pricing",
-        label: "Pricing",
+        href: "/#waitlist",
+        label: "Waitlist",
     },
     {
         href: "/#faq",
@@ -31,7 +39,7 @@ const Header = ({bgClass = "bg-white"}) => {
     const {status} = useSession()
 
     const cta = status === 'authenticated' ? <ButtonAccount/> : <ButtonSignin extraStyle="btn-primary"/>
-   
+
     // setIsOpen(false) when the route changes (i.e: when the user clicks on a link on mobile)
     useEffect(() => {
         setIsOpen(false);
@@ -109,7 +117,7 @@ const Header = ({bgClass = "bg-white"}) => {
             {/* Mobile menu, show/hide based on menu state. */}
             <div className={`relative z-50 ${isOpen ? "" : "hidden"}`}>
                 <div
-                    className={`fixed inset-y-0 right-0 z-10 w-full px-8 py-4 overflow-y-auto bg-base-200 sm:max-w-sm sm:ring-1 sm:ring-neutral/10 transform origin-right transition ease-in-out duration-300`}
+                    className={`fixed inset-y-0 right-0 z-10 w-full py-8 px-4 overflow-y-auto bg-slate-50 sm:max-w-sm sm:ring-1 sm:ring-neutral/10 transform origin-right transition ease-in-out duration-300`}
                 >
                     {/* Your logo/name on small screens */}
                     <div className="flex items-center justify-between">
@@ -125,7 +133,7 @@ const Header = ({bgClass = "bg-white"}) => {
                                 placeholder="blur"
                                 priority={true}
                                 width='auto'
-                                height={42}
+                                height={45}
                             />
                         </Link>
                         <button

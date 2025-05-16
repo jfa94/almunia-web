@@ -33,7 +33,7 @@ const Hero = () => {
                         make changes to ensure your company is always a great place to work.
                     </p>
 
-                    <Link href="/#pricing">
+                    <Link href="/#waitlist">
                         <button className="btn btn-primary btn-wide">
                             Get early access
                         </button>

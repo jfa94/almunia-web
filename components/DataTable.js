@@ -45,7 +45,7 @@ export function DataTable({
 
     return (<div className="flex flex-col gap-2">
         <div className="flex sm:flex-row flex-col gap-2 md:items-center items-start justify-between w-full">
-            <h1 className="subheading p-0">{title || "Table"}</h1>
+            <h2 className="text-xl p-0">{title || "Table"}</h2>
             {(filterColumn || NewRowModal) && <div className="flex flex-row gap-2 justify-end md:w-1/3 sm:w-1/2 w-full py-0">
                 {filterColumn && <Input
                     placeholder={`Filter ${filterColumn}s...`}

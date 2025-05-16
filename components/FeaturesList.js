@@ -24,7 +24,7 @@ const features = [
         buttonText: 'Start questionnaire'
     },
     {
-        title: "Get anonymous feedback",
+        title: "Easy anonymous feedback",
         description: "Automated daily surveys help you understand how your team is feeling, with insights that lead to meaningful action.",
         image: <Image
             src="/landing/survey-email.png"
