@@ -2,7 +2,7 @@
 
 import {useFormStatus} from "react-dom";
 import {useSearchParams} from "next/navigation"
-import { sendGTMEvent } from '@next/third-parties/google'
+import {sendGAEvent} from '@next/third-parties/google'
 import posthog from "posthog-js"
 
 export default function ButtonWaitlist(props) {
@@ -10,10 +10,9 @@ export default function ButtonWaitlist(props) {
     const searchParams = useSearchParams()
 
     const handleClick = () => {
-        sendGTMEvent({
-            event: 'conversion',
+        sendGAEvent('event', 'conversion', {
             send_to: 'AW-17081447837/WxmzCK3Py8oaEJ3riNE_',
-            transaction_id: Date.now().toString(),
+            transaction_id: Date.now().toString()
         })
 
         posthog.capture("waitlist_signup_click")
