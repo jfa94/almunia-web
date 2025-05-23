@@ -12,7 +12,8 @@ export default function ButtonWaitlist(props) {
     const handleClick = () => {
         sendGTMEvent({
             event: 'conversion',
-            value: {send_to: 'AW-17081447837/WxmzCK3Py8oaEJ3riNE_'}
+            send_to: 'AW-17081447837/WxmzCK3Py8oaEJ3riNE_',
+            transaction_id: Date.now().toString(),
         })
 
         posthog.capture("waitlist_signup_click")
