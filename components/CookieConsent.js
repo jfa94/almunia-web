@@ -5,10 +5,10 @@ import {Button} from "@/components/ui/button";
 
 export const COOKIE_CONSENT_KEY = 'almunia-cookie-consent';
 
-// Default cookie preferences
+// Default cookie preferences - analytics and marketing are now true by default
 export const defaultConsent = {
-    analytics: false,
-    marketing: false,
+    analytics: true,
+    marketing: true,
     necessary: true, // Always required
     preferences: true, // Now also treated as necessary
 };
@@ -72,14 +72,8 @@ export default function CookieConsent({onConsentChange}) {
     };
 
     const handleRejectAll = () => {
-        const newPreferences = {
-            ...defaultConsent,
-        };
-        setPreferences(newPreferences);
-        saveCookieConsent(newPreferences);
-        onConsentChange(newPreferences);
-        setShowBanner(false);
-        setShowSettings(false);
+        // Instead of rejecting all, now show settings menu
+        setShowSettings(true);
     };
 
     const toggleSettings = () => {
@@ -123,25 +117,19 @@ export default function CookieConsent({onConsentChange}) {
                     {!showSettings ? (
                         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                             <div className="text-sm md:text-base flex-1">
-                                <p className="font-semibold mb-1 md:mb-2 md:text-lg">We value your privacy</p>
+                                <p className="font-semibold mb-1 md:mb-2 md:text-lg">Privacy</p>
                                 <p className="text-gray-600">
                                     We use cookies to enhance your browsing experience. We will never sell your
-                                    data or show you ads.
-                                    <button
-                                        onClick={toggleSettings}
-                                        className="text-blue-600 hover:underline ml-1 font-medium"
-                                    >
-                                        Customize settings
-                                    </button>
+                                    data nor show you ads.
                                 </p>
                             </div>
-                            <div className="flex gap-2 shrink-0">
+                            <div className="flex gap-2 shrink-0 justify-center md:justify-end w-full md:w-auto">
                                 <Button
                                     variant="outline"
                                     size="sm"
                                     onClick={handleRejectAll}
                                 >
-                                    Reject All
+                                    Customise
                                 </Button>
                                 <Button
                                     size="sm"
@@ -187,8 +175,8 @@ export default function CookieConsent({onConsentChange}) {
                                             Analytics Cookies
                                         </label>
                                         <p className="text-xs text-gray-500">
-                                            Help us understand how visitors interact with our website. We use this data
-                                            to improve our user experience.
+                                            Help us understand how visitors interact with our website. We use PostHog to
+                                            capture this data to improve our user experience.
                                         </p>
                                     </div>
                                 </div>
@@ -206,13 +194,13 @@ export default function CookieConsent({onConsentChange}) {
                                             Marketing Cookies
                                         </label>
                                         <p className="text-xs text-gray-500">
-                                            Used to track the performance of our marketing campaigns.
+                                            We use Google Analytics to track the performance of our marketing campaigns.
                                         </p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex justify-end gap-2">
+                            <div className="flex justify-center md:justify-end gap-2">
                                 <Button
                                     variant="outline"
                                     size="sm"
