@@ -112,7 +112,12 @@ export default function CookieConsent({onConsentChange}) {
     return (
         <div className="fixed bottom-0 left-0 right-0 z-50">
             {/* Main cookie banner */}
-            <div className="bg-white border-t shadow-xl p-4 md:p-6">
+            <div
+                className="bg-white border-t shadow-2xl p-4 md:p-6"
+                style={{
+                    boxShadow: '0 -10px 25px -5px rgba(0, 0, 0, 0.15), 0 -8px 10px -6px rgba(0, 0, 0, 0.15)'
+                }}
+            >
                 <div className="container mx-auto">
                     {!showSettings ? (
                         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -128,13 +133,14 @@ export default function CookieConsent({onConsentChange}) {
                                     variant="outline"
                                     size="sm"
                                     onClick={handleRejectAll}
+                                    className="text-sm md:text-base px-3 py-2 md:px-4 md:py-2.5"
                                 >
                                     Customise
                                 </Button>
                                 <Button
                                     size="sm"
                                     onClick={handleAcceptAll}
-                                    className="text-white"
+                                    className="text-white text-sm md:text-base px-3 py-2 md:px-4 md:py-2.5"
                                 >
                                     Accept All
                                 </Button>
@@ -205,13 +211,14 @@ export default function CookieConsent({onConsentChange}) {
                                     variant="outline"
                                     size="sm"
                                     onClick={toggleSettings}
+                                    className="text-sm md:text-base px-3 py-2 md:px-4 md:py-2.5"
                                 >
                                     Cancel
                                 </Button>
                                 <Button
                                     size="sm"
                                     onClick={handleSavePreferences}
-                                    className="text-white"
+                                    className="text-white text-sm md:text-base px-3 py-2 md:px-4 md:py-2.5"
                                 >
                                     Save Preferences
                                 </Button>
