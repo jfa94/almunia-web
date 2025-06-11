@@ -6,6 +6,7 @@ import {PostHogProvider} from "./providers"
 import PostHogPageView from "./PostHogPageView"
 import config from "@/config"
 import "./globals.css"
+import CookieConsentWrapper from "./CookieConsentWrapper"
 
 const font = Inter({subsets: ["latin"]});
 
@@ -29,6 +30,7 @@ export default async function RootLayout({children}) {
         <SessionProvider initialData={{user: userData}}>
             <PostHogPageView/>
             {children}
+            <CookieConsentWrapper />
         </SessionProvider>
     </PostHogProvider>
     </body>
