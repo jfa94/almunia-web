@@ -85,8 +85,8 @@ const features = [
                    height={200}
                    width={500}
             />
-            <Image src="/landing/logos/personio-logo.png"
-                   alt="Personio Logo"
+            <Image src="/landing/logos/oracle-logo.png"
+                   alt="Oracle Logo"
                    priority={true}
                    height={200}
                    width={600}
