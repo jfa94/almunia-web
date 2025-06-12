@@ -1,9 +1,14 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
+import {useFeatureFlagEnabled} from "posthog-js/react";
 // import TestimonialRating from "./TestimonialRating";
 // import heroImage from "/public/landing/hero-image.jpg"
 
 const Hero = () => {
+    const newMessaging = useFeatureFlagEnabled('landing-messaging-changes')
+
     return (
         <section className="bg-amber-50">
             <div
@@ -29,13 +34,17 @@ const Hero = () => {
                         Effortlessly build a <span className="text-amber-600">world-class culture</span>
                     </h1>
                     <p className="max-w-6xl text-lg">
-                        Our research-driven approach helps you define your ideal culture, gather employee feedback, and
-                        make changes to ensure your company is always a great place to work.
+                        {newMessaging
+                            ? 'Stop using pulse check surveys that lead nowhere. Our research-backed' +
+                            ' software helps ensure your company is always a great place to work.'
+                            : 'Our research-driven software helps you define your ideal culture, gather employee' +
+                            ' feedback, and make changes to ensure your company is always a great place to work.'
+                        }
                     </p>
 
-                    <Link href="/#waitlist">
+                    <Link href="/#features">
                         <button className="btn btn-primary btn-wide">
-                            Get early access
+                            Learn more
                         </button>
                     </Link>
                     {/*<TestimonialRating userCount="Over 1000"/>*/}
