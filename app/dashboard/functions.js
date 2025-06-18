@@ -1,5 +1,6 @@
 'use client';
 
+import config from '@/config'
 
 export const calculateMean = (arr) => {
     if (arr.length <= 0) return null
@@ -33,6 +34,10 @@ export const getISODateRange = (timeframe, periodEnd) => {
             startDate.setDate(endDate.getDate() - 90)
             startDate.setDate(1)
             break;
+        case 'semester':
+            startDate.setDate(endDate.getDate() - 180)
+            startDate.setDate(1)
+            break;
         case 'year':
             startDate.setDate(endDate.getDate() - 365)
             startDate.setDate(1)
@@ -59,9 +64,13 @@ export const summariseSurveyData = (
     const previousPeriod = getISODateRange(timeframe, previousEnd.toISOString())
 
     for (let response of surveyResponses) {
-        if (!response.question && !response.value_name) continue
+        if (!response.question || !response.value_name) continue
 
-        const key = response[groupBy]
+        // Determine the key to summarise by, group all custom values into a single metric
+        const key = (
+            groupBy === 'value_id' && !config.constants.orgHealthIds.includes(response.value_id)
+        ) ? 'values' : response[groupBy]
+
         if (!summarised[key]) {
             summarised[key] = {
                 name: groupBy === 'question_id'
@@ -92,7 +101,7 @@ export const summariseSurveyData = (
 
 
 export const formatDataForCards = (keys, object) => {
-    if (!keys || keys.length === 0) return {}
+    if (!keys || keys.length === 0) return []
     return keys.map(key => {
         return {
             id: key,
@@ -109,7 +118,10 @@ export const summariseDataForCharts = (keys, groupBy, data) => {
     if (!keys || !data || keys.length === 0) return {}
 
     const dataGroupedByKey = Object.groupBy(data, item => {
-        return item[groupBy === 'question_id' ? 'question_id' : 'value_id']
+        if (groupBy === 'value_id' && !config.constants.orgHealthIds.includes(item.value_id)) {
+            return 'values'
+        }
+        return item[groupBy]
     })
 
     return keys.map(key => {
