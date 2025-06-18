@@ -28,7 +28,9 @@ export default function QuestionContainer({valueId, valueName}) {
 
 
     return <>
-        <div className="subheading">{valueName}</div>
+        <div className="mt-4">
+            <p className="text-lg font-bold">{valueName}</p>
+        </div>
 
         {inputArray}
 
