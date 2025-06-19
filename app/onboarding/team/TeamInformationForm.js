@@ -39,12 +39,11 @@ const TeamInformationForm = ({formState, hidden}) => {
 
     return (
         <div className={`${hidden && 'hidden'}`}>
-            <div className="subheading pb-0">Team Information</div>
-            <p className="mb-6 text-sm italic">
-                To upload information in bulk, please add your email below and send a CSV file with
-                your team&rsquo;s details to&#58; <a href="mailto:team-upload@almunia.io" className="text-blue-500">
-                team-upload@almunia.io
-            </a>
+            <h2>Team Information</h2>
+            <p className="mb-4">
+                Add your team&apos;s contact details. To upload information in bulk, please add your email below and
+                send a CSV file with your team&rsquo;s details to&#58;&nbsp;
+                <a href="mailto:team-upload@almunia.io" className="text-blue-500">team-upload@almunia.io</a>
             </p>
 
             <form action={handleSubmitForm}>

@@ -93,6 +93,7 @@ export async function submitQuestionsForm(formArgs, formData) {
     let itemList = []
 
     for (const [name, value] of formData.entries()) {
+        if (value.trim() === '') continue
         itemList.push({
             company_id: formArgs.companyId,
             question_id: name.replace("_q", ""),

@@ -5,6 +5,17 @@ import QuestionContainer from "@/app/onboarding/questions/QuestionContainer";
 function QuestionsForm({formState, incrementPage, hidden}) {
     // console.log('formState:', formState)
     const handleSubmitForm = async (formData) => {
+        console.log(`Submitted ${formState.page} with data: `, Array.from(formData.keys()))
+
+        let emptyValues = 0
+        for (const value of formData.values()) {
+            if (value.trim() === '') emptyValues++
+        }
+        if (Array.from(formData.keys()).length === emptyValues) {
+            incrementPage()
+            return
+        }
+
         const result = await submitQuestionsForm({companyId: formState.companyId, page: 'questions'}, formData)
         if (result.find(batch => batch['$metadata']?.httpStatusCode !== 200)) {
             console.log('Result:', result)
@@ -16,14 +27,16 @@ function QuestionsForm({formState, incrementPage, hidden}) {
 
     return <div hidden={hidden}>
         <form action={handleSubmitForm}>
-            <div className="subheading">Questions</div>
+            <h2>Questions</h2>
             <p className="mb-4">
-                Our standard question bank covers areas such as job satisfaction, culture, and career
-                development.<br/>
-                Write any value&ndash;specific questions below that you would like your team to answer anonymously.
+                Our standard question bank includes everything you need to use Almunia, and covers areas such as job
+                satisfaction, culture, and career development. You can add questions specific to your values below.
+            </p>
+            <p>
+                Write any value&ndash;specific questions that you would like your team to answer anonymously.
                 Please keep in mind that possible answers will be on a scale from 5 (Strongly Agree)
-                to 1 (Strongly Disagree). Questions should be written in a way that accommodates these responses (
-                e.g., &rsquo;I am satisfied with my job&lsquo;).
+                to 1 (Strongly Disagree). Questions should be written in a way that accommodates these responses
+                (e.g., &lsquo;I am satisfied with my job&rsquo;). This step is optional.
             </p>
 
             {formState.values.map(({value_id, name}) => {

@@ -52,7 +52,7 @@ const Onboarding = () => {
                                 onClick={() => dispatch({field: 'activePage', value: 3})}>Team information</li>}
                     </ul>
                 </div>
-                <h1 className="heading">Setup</h1>
+                {/*<h3 className="mb-4">Setup</h3>*/}
 
                 <Welcome formState={formState}
                          dispatch={dispatch}

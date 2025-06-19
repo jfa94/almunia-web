@@ -7,7 +7,7 @@ export const InfoDropdown = ({title, subtitle, body}) => {
     return (
         <div>
             <div
-                className="relative flex gap-2 items-center w-full pt-5 text-left border-t border-base-content/10"
+                className="relative flex gap-2 items-center w-full pt-4 mt-1 text-left border-t border-base-content/10 hover:cursor-pointer"
                 onClick={(e) => {
                     e.preventDefault();
                     setIsOpen(!isOpen);

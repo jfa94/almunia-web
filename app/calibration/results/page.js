@@ -5,7 +5,7 @@ import SpectrumCard from "@/app/calibration/components/SpectrumCard";
 import {useLocalStorage} from "@/lib/utils";
 import {redirect} from "next/navigation";
 import {useEffect, useState} from "react";
-import {InfoDropdown} from "@/app/calibration/components/InfoDropdown";
+import {InfoDropdown} from "@/components/InfoDropdown";
 import {SignupForm} from "@/app/calibration/components/SignupForm";
 
 const pageContent = [
