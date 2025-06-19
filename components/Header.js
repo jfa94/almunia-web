@@ -9,29 +9,18 @@ import config from "@/config";
 import ButtonSignin from "@/components/ButtonSignin";
 import {useSession} from "@/lib/session";
 import ButtonAccount from "@/components/ButtonAccount";
+import {RiAccountCircleLine, RiBarChart2Line} from "@remixicon/react";
 
 const links = [
-    // {
-    //     href: "/#about",
-    //     label: "About"
-    // },
-    // {
-    //     href: "/#pricing",
-    //     label: "Pricing",
-    // },
-    {
-        href: "/#features",
-        label: "Features",
-    },
-    {
-        href: "/#waitlist",
-        label: "Waitlist",
-    },
-    {
-        href: "/#faq",
-        label: "FAQ",
-    },
+    {href: "/#features", label: "Features"},
+    {href: "/#waitlist", label: "Waitlist"},
+    {href: "/#faq", label: "FAQ"},
 ];
+
+const authLinks = [
+    {label: 'Dashboard', icon: <RiBarChart2Line size={20}/>, href: '/dashboard'},
+    {label: 'Account', icon: <RiAccountCircleLine size={20}/>, href: '/account'},
+]
 
 const Header = ({bgClass = "bg-white"}) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -97,13 +86,14 @@ const Header = ({bgClass = "bg-white"}) => {
 
                     {/* Your links on large screens */}
                     <div className="hidden lg:flex lg:justify-center lg:gap-12 lg:mr-12 lg:items-center">
-                        {links.map((link) => (
+                        {(status === "authenticated" ? authLinks : links).map((link) => (
                             <Link
                                 href={link.href}
                                 key={link.href}
-                                className="link link-hover"
+                                className="link link-hover flex items-center"
                                 title={link.label}
                             >
+                                {link.icon && <span className="inline-block mr-2">{link.icon}</span>}
                                 {link.label}
                             </Link>
                         ))}
@@ -115,9 +105,11 @@ const Header = ({bgClass = "bg-white"}) => {
             </nav>
 
             {/* Mobile menu, show/hide based on menu state. */}
-            <div className={`relative z-50 ${isOpen ? "" : "hidden"}`}>
+            <div className={`relative z-50 ${isOpen ? "" : "pointer-events-none"}`}>
                 <div
-                    className={`fixed inset-y-0 right-0 z-10 w-full py-8 px-4 overflow-y-auto bg-slate-50 sm:max-w-sm sm:ring-1 sm:ring-neutral/10 transform origin-right transition ease-in-out duration-300`}
+                    className={`fixed inset-y-0 right-0 z-10 w-full py-8 px-4 overflow-y-auto bg-slate-50 sm:max-w-sm sm:ring-1 sm:ring-neutral/10 transform transition-transform duration-300 ease-in-out ${
+                        isOpen ? "translate-x-0" : "translate-x-full"
+                    }`}
                 >
                     {/* Your logo/name on small screens */}
                     <div className="flex items-center justify-between">
@@ -162,14 +154,15 @@ const Header = ({bgClass = "bg-white"}) => {
                     {/* Your links on small screens */}
                     <div className="flow-root mt-6 sm:mt-0">
                         <div className="py-4">
-                            <div className="flex flex-col gap-y-4 items-start">
-                                {links.map((link) => (
+                            <div className="flex flex-col gap-y-4 items-center">
+                                {(status === "authenticated" ? authLinks : links).map((link) => (
                                     <Link
                                         href={link.href}
                                         key={link.href}
-                                        className="link link-hover"
+                                        className="link link-hover flex items-center text-lg"
                                         title={link.label}
                                     >
+                                        {link.icon && <span className="inline-block mr-2">{link.icon}</span>}
                                         {link.label}
                                     </Link>
                                 ))}

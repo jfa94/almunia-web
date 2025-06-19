@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import Link from "next/link";
-import {usePathname} from "next/navigation";
+// import Link from "next/link";
+// import {usePathname} from "next/navigation";
+// import {RiBarChart2Line, RiAccountCircleLine} from "@remixicon/react";
 import {useSession} from "@/lib/session";
 import {logOut} from "@/lib/auth";
 import {useLocalStorage} from "@/lib/utils";
@@ -11,20 +12,19 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import {RiBarChart2Line, RiAccountCircleLine} from "@remixicon/react";
 import {useState} from "react";
 
 
-const dropdownItems = [
-    {label: 'Dashboard', icon: <RiBarChart2Line size={20}/>, link: '/dashboard'},
-    {label: 'Account', icon: <RiAccountCircleLine size={20}/>, link: '/account'},
-]
+// const dropdownItems = [
+//     {label: 'Dashboard', icon: <RiBarChart2Line size={20}/>, link: '/dashboard'},
+//     {label: 'Account', icon: <RiAccountCircleLine size={20}/>, link: '/account'},
+// ]
 
 
 const ButtonAccount = () => {
     const {data: session, status} = useSession()
     const {clearStorage} = useLocalStorage()
-    const currentPath = usePathname()
+    // const currentPath = usePathname()
     const [isOpen, setIsOpen] = useState(false)
 
     const handleSignOut = () => {
@@ -77,15 +77,15 @@ const ButtonAccount = () => {
             </PopoverTrigger>
 
             <PopoverContent className="bg-base-100 max-w-[16rem] p-2 flex flex-col gap-1" align="end">
-                    {dropdownItems.map(({label, icon, link}) => {
-                        return <Link key={label} href={link}>
-                            <button
-                                className={`${currentPath === link ? 'font-bold bg-gray-100' : 'font-medium'} flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded`}
-                            >
-                                {icon}{label}
-                            </button>
-                        </Link>
-                    })}
+                    {/*{dropdownItems.map(({label, icon, link}) => {*/}
+                    {/*    return <Link key={label} href={link}>*/}
+                    {/*        <button*/}
+                    {/*            className={`${currentPath === link ? 'font-bold bg-gray-100' : 'font-medium'} flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded`}*/}
+                    {/*        >*/}
+                    {/*            {icon}{label}*/}
+                    {/*        </button>*/}
+                    {/*    </Link>*/}
+                    {/*})}*/}
 
                     <button
                         className="flex items-center gap-2 hover:bg-error/20 hover:text-error duration-200 py-1.5 px-4 w-full rounded-lg font-medium"
