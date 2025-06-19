@@ -82,6 +82,9 @@ const config = {
         // REQUIRED — the path you want to redirect users after successfull login (i.e. /dashboard, /private). This is normally a private page for users to manage their accounts. It's used in apiClient (/lib/api.js) upon 401 errors from our API & in ButtonSignin.js
         callbackUrl: "/dashboard",
     },
+    constants: {
+        orgHealthIds: ['mission', 'vision', 'jsat', 'msat', 'develop', 'incl', 'leadership']
+    }
 };
 
 export default config;

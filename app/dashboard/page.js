@@ -16,6 +16,7 @@ import {Card} from "@tremor/react";
 import {RiInformationLine} from "@remixicon/react";
 import {useLocalStorage} from "@/lib/utils";
 import {CustomSelect} from "@/app/dashboard/components/CustomSelect";
+import {DownloadDataButton} from "@/app/dashboard/components/DownloadDataButton";
 
 
 const tooltipText = "Data aggregated monthly. Percentage value in summary card represents change vs previous month."
@@ -58,18 +59,19 @@ export default function Dashboard() {
                     }
                     return Object.assign(response, context)
                 })
+                setItem('survey-response-data', contextualizedResponses)
 
                 const valueResults = summariseSurveyData(contextualizedResponses, 'value_id', 'month')
                 const questionResults = summariseSurveyData(contextualizedResponses, 'question_id', 'month')
 
-                const sortKeys = (keys, object) => {
-                    return keys.sort((a, b) => {
+                const sortKeys = (object) => {
+                    return Object.keys(object).sort((a, b) => {
                         return object[a].currentPeriodMean - object[b].currentPeriodMean
                     })
                 }
 
-                const sortedValues = sortKeys(Object.keys(valueResults), valueResults)
-                const sortedQuestions = sortKeys(Object.keys(questionResults), questionResults)
+                const sortedValues = sortKeys(valueResults)
+                const sortedQuestions = sortKeys(questionResults)
 
                 setItem('cards-data', formatDataForCards(sortedValues.slice(0, Math.min(8, sortedValues.length)), valueResults))
                 setItem('chart-data-value', summariseDataForCharts(sortedValues, 'value_id', responseData))
@@ -82,14 +84,31 @@ export default function Dashboard() {
     })
 
     return (
-        <main className="container min-h-screen mx-auto pb-24">
-            <section>
-                <h1 className="text-6xl md:text-4xl font-extrabold md:pt-6 pt-4">
-                    Dashboard
-                    <span className="tooltip tooltip-right pl-2 pt-1 align-top" data-tip={tooltipText}>
+        <main className="container p-4 min-h-screen mx-auto pb-12">
+            <section className="flex flex-row justify-between items-end">
+                <div>
+                    <h1 className="text-3xl md:text-4xl font-bold md:pt-6 pt-4">
+                        Dashboard
+                        <span className="tooltip tooltip-right pl-2 pt-1 align-top"
+                              data-tip={tooltipText}
+                              style={{
+                                  fontSize: '0.8em',
+                                  fontWeight: 'normal',
+                                  textAlign: 'left',
+                                  letterSpacing: '0.02em'
+                              }}
+                        >
                         <RiInformationLine size={20}/>
                     </span>
-                </h1>
+                    </h1>
+                </div>
+
+                <div>
+                    <DownloadDataButton />
+                </div>
+            </section>
+
+            <section>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
                     {loading
                         ? [1, 2, 3, 4].map(i => <Card key={i} className="min-h-24"/>)
@@ -114,7 +133,7 @@ export default function Dashboard() {
                                 ? questionData.current.find(q => q.question_id === item.id)
                                 : valueData.current.find(val => val.value_id === item.id)
                             return (<Card key={item.id} className="mx-auto md:p-6 p-5">
-                                <h3 className="text-2xl font-extrabold md:pl-8 pb-6">{
+                                <h3 className="text-2xl font-bold md:pl-8 pb-6">{
                                     item.grouping === "question_id"
                                         ? itemName?.question ?? "Missing Theme Name"
                                         : itemName?.name ?? "Missing Theme Name"
