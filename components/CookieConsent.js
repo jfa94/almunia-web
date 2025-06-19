@@ -94,23 +94,22 @@ export default function CookieConsent({onConsentChange}) {
         setShowBanner(false);
     };
 
-    if (!showBanner) {
-        return (
-            <div className="fixed bottom-4 left-4 z-50">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowBanner(true)}
-                    className="text-xs md:text-sm bg-white shadow-md"
-                >
-                    Cookie Settings
-                </Button>
-            </div>
-        );
-    }
-
-    return (
-        <div className="fixed bottom-0 left-0 right-0 z-50">
+    // if (!showBanner) {
+    //     return (
+    //         <div className="fixed bottom-4 left-4 z-50">
+    //             <Button
+    //                 variant="outline"
+    //                 size="sm"
+    //                 onClick={() => setShowBanner(true)}
+    //                 className="text-xs md:text-sm bg-white shadow-md"
+    //             >
+    //                 Cookie Settings
+    //             </Button>
+    //         </div>
+    //     );
+    // }
+    //
+    return (showBanner && <div className="fixed bottom-0 left-0 right-0 z-50">
             {/* Main cookie banner */}
             <div
                 className="bg-white border-t shadow-2xl p-4 md:p-6"
