@@ -1,22 +1,24 @@
+'use client';
+
 import {useState} from "react";
 import {InputTeamInformation} from "@/app/onboarding/team/InputTeamInformation";
 import {SubmitButton} from "@/app/onboarding/team/SubmitButton";
 import {submitTeamForm} from "@/app/onboarding/actions";
-import {redirect} from "next/navigation";
 
 const TeamInformationForm = ({formState, hidden}) => {
     let [inputArray, setInputArray] = useState([
         <InputTeamInformation key="0" id="0"/>
     ])
+    let [isLoading, setIsLoading] = useState(false)
 
     const handleSubmitForm = async (formData) => {
+        setIsLoading(true)
         const result = await submitTeamForm({'companyId': formState.companyId, page: 'team'}, formData)
         if (result.find(batch => batch['$metadata']?.httpStatusCode !== 200)) {
             console.log('Result:', result)
             alert('An error has occurred. Please try again later.')
-        } else {
-            redirect('/dashboard')
         }
+        setIsLoading(false)
     }
 
     let addInputToArray = (e) => {
@@ -66,7 +68,7 @@ const TeamInformationForm = ({formState, hidden}) => {
                                 d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11H7V13H11V17H13V13H17V11H13V7H11V11Z"></path>
                         </svg>
                     </button>
-                    <SubmitButton/>
+                    <SubmitButton isLoading={isLoading}/>
                 </div>
             </form>
         </div>

@@ -7,6 +7,8 @@ import {redirect} from "next/navigation";
 import {useEffect, useState} from "react";
 import {InfoDropdown} from "@/app/calibration/components/InfoDropdown";
 import {SignupForm} from "@/app/calibration/components/SignupForm";
+import {getCompanyData, getCompanyInformation} from "@/lib/actions";
+import {useSession} from "@/lib/session";
 
 const pageContent = [
     {
@@ -126,27 +128,46 @@ const pageContent = [
 ]
 
 export default function Page() {
-    const {getItem} = useLocalStorage()
     const [calibrationData, setCalibrationData] = useState()
+    const {status} = useSession()
+    const {getItem, setItem} = useLocalStorage()
 
     useEffect(() => {
-        const calibrationData = getItem("calibration-results")
-        setCalibrationData(calibrationData)
+        (async () => {
+            let calibrationResultsLocal = getItem("calibration-results")
+            let calibrationResultsServer
 
-        if (!calibrationData) {
-            console.log("Issue fetching calibration data:", calibrationData)
-            redirect("/calibration")
-        }
+            if (!calibrationResultsLocal) {
+                const {company_id: companyId} = await getCompanyInformation()
+                calibrationResultsServer = await getCompanyData(companyId, "cultureProfile")
+                console.log('Calibration results from server:', calibrationResultsServer)
+
+                if (calibrationResultsServer?.result === 'error') {
+                    console.log("Issue fetching calibration data")
+                    redirect("/calibration")
+                }
+
+                const formattedResults = {}
+                for (const item of calibrationResultsServer) {
+                    formattedResults[item.dimension_id] = item.calibrated_value
+                }
+
+                setItem("calibration-results", formattedResults)
+            }
+
+            setCalibrationData(calibrationResultsLocal ? calibrationResultsLocal : calibrationResultsServer)
+        })()
     }, [])
 
     return <div className="flex flex-col gap-6">
 
-        <main id="results" className="container mx-auto my-4 px-4">
-            <h1 className="text-3xl font-bold mb-8">Results</h1>
+        <main id="results" className="container mx-auto my-4 md:my-8 px-4 min-h-[75vh]">
+            <h1 className="text-3xl font-bold mb-4">Results</h1>
 
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-16">
                 <div className="flex flex-col gap-6">
                     {calibrationData && Object.entries(calibrationData).map(([key, value]) => {
+                        console.log(`Rendering SpectrumCard for ${key} with value ${value}`)
                         const increasePositive = value > 3
                         return <SpectrumCard key={key} id={key} value={value} increasePositive={increasePositive}/>
                     })}
@@ -161,8 +182,9 @@ export default function Page() {
         </main>
 
 
-        <section id="signup" className="md:pt-8 pt-4 pb-12 bg-neutral-100">
+        {status !== 'authenticated' && <section id="signup" className="md:pt-8 pt-4 pb-12 bg-neutral-100">
             <SignupForm/>
-        </section>
+        </section>}
+
     </div>
 }
