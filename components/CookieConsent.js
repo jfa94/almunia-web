@@ -3,14 +3,14 @@
 import {useState, useEffect} from 'react';
 import {Button} from "@/components/ui/button";
 
-export const COOKIE_CONSENT_KEY = 'almunia-cookie-consent';
+export const COOKIE_CONSENT_KEY = 'almunia-cookie-consent'
 
 // Default cookie preferences - analytics and marketing are now true by default
 export const defaultConsent = {
     analytics: true,
     marketing: true,
     necessary: true, // Always required
-    preferences: true, // Now also treated as necessary
+    preferences: true, // Always required
 };
 
 export function getCookieConsent() {
@@ -53,7 +53,6 @@ export default function CookieConsent({onConsentChange}) {
         } else {
             // If consent exists, use those settings
             setPreferences(savedConsent);
-            onConsentChange(savedConsent);
         }
     }, [onConsentChange]);
 

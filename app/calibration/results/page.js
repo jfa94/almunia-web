@@ -137,7 +137,9 @@ export default function Page() {
             let calibrationResultsLocal = getItem("calibration-results")
             let calibrationResultsServer
 
-            if (!calibrationResultsLocal) {
+            if (calibrationResultsLocal) {
+                setCalibrationData(calibrationResultsLocal)
+            } else {
                 const {company_id: companyId} = await getCompanyInformation()
                 calibrationResultsServer = await getCompanyData(companyId, "cultureProfile")
                 console.log('Calibration results from server:', calibrationResultsServer)
@@ -153,9 +155,8 @@ export default function Page() {
                 }
 
                 setItem("calibration-results", formattedResults)
+                setCalibrationData(formattedResults)
             }
-
-            setCalibrationData(calibrationResultsLocal ? calibrationResultsLocal : calibrationResultsServer)
         })()
     }, [])
 
@@ -167,7 +168,6 @@ export default function Page() {
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-16">
                 <div className="flex flex-col gap-6">
                     {calibrationData && Object.entries(calibrationData).map(([key, value]) => {
-                        console.log(`Rendering SpectrumCard for ${key} with value ${value}`)
                         const increasePositive = value > 3
                         return <SpectrumCard key={key} id={key} value={value} increasePositive={increasePositive}/>
                     })}
