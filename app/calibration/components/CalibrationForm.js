@@ -78,12 +78,13 @@ export default function CalibrationForm({questions, questionsPerPage = 5}) {
             meanResponses[dimensionKey] = meanResponses[dimensionKey].reduce((a, b) => a + b) / meanResponses[dimensionKey].length
         }
 
-        if (status ==='authenticated') {
+        if (status === 'authenticated') {
             const result = await submitCalibrationData(meanResponses)
             console.log('result:', result)
-        } else {
-            console.log('Not authenticated')
+            setItem('calibration-results', meanResponses)
+            redirect("/dashboard?tab=profile")
         }
+        console.log('Not authenticated')
         setItem('calibration-results', meanResponses)
         redirect("/calibration/results")
     }
