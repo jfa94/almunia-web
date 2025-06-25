@@ -50,7 +50,7 @@ export function DownloadDataButton() {
         }
     }
 
-    return <button className="btn btn-sm btn-neutral" onClick={handleClick}>
+    return <button className="btn btn-sm bg-neutral-400 text-white font-semibold" onClick={handleClick}>
         <span className="hidden sm:block">Download Data</span>
         <CircleArrowDown height={18}/>
     </button>

@@ -1,13 +1,16 @@
-"use client";
+'use client';
 
-import SpectrumCard from "@/components/SpectrumCard";
+import {Card} from '@tremor/react';
+import Link from 'next/link';
+import {useEffect, useRef, useState} from "react";
 import {useLocalStorage} from "@/lib/utils";
-import {redirect} from "next/navigation";
-import {useEffect, useState} from "react";
+import SpectrumCard from "@/components/SpectrumCard";
+import {getCalibrationResults} from "@/app/dashboard/actions";
+import ProfileRadarGraph from "@/app/dashboard/profile/components/ProfileRadarGraph";
+import {RiInformationLine} from "@remixicon/react";
 import {InfoDropdown} from "@/components/InfoDropdown";
-import {SignupForm} from "@/app/calibration/components/SignupForm";
-import {getCompanyData, getCompanyInformation} from "@/lib/actions";
-import {useSession} from "@/lib/session";
+
+const tooltipText = "Employee profile is based on the past 90 days of survey data."
 
 const pageContent = [
     {
@@ -126,71 +129,97 @@ const pageContent = [
     },
 ]
 
-export default function Page() {
-    const [calibrationData, setCalibrationData] = useState()
-    const {status, data: session} = useSession()
+
+export default function ProfileTab({session}) {
     const {getItem, setItem} = useLocalStorage()
+    const [loading, setLoading] = useState(true)
+    const companyId = session.user['custom:company-id']
+    const calibrationData = useRef()
 
     useEffect(() => {
         (async () => {
-            let calibrationResultsLocal = getItem("calibration-results")
-            let calibrationResultsServer
+            const calibrationResultsLocal = getItem("calibration-results")
 
-            if (calibrationResultsLocal) {
-                setCalibrationData(calibrationResultsLocal)
+            if (!calibrationResultsLocal) {
+                try {
+                    const calibrationResultsServer = await getCalibrationResults(companyId)
+
+                    if (calibrationResultsServer) {
+                        const formattedResults = {}
+                        for (const item of calibrationResultsServer) {
+                            formattedResults[item.dimension_id] = item.calibrated_value
+                        }
+
+                        calibrationData.current = formattedResults
+                        setItem("calibration-results", formattedResults)
+                    }
+                } catch (error) {
+                    console.error("Error fetching calibration results:", error)
+                }
             } else {
-                let companyId
-                if (status === 'authenticated') {
-                    console.log('Authenticated')
-                    companyId = session.user['custom:company-id']
-                } else {
-                    const {company_id} = await getCompanyInformation()
-                    companyId = company_id
-                }
-                calibrationResultsServer = await getCompanyData(companyId, "cultureProfile")
-                console.log('Calibration results from server:', calibrationResultsServer)
-
-                if (calibrationResultsServer?.result === 'error') {
-                    console.log("Issue fetching calibration data")
-                    redirect("/calibration")
-                }
-
-                const formattedResults = {}
-                for (const item of calibrationResultsServer) {
-                    formattedResults[item.dimension_id] = item.calibrated_value
-                }
-
-                setItem("calibration-results", formattedResults)
-                setCalibrationData(formattedResults)
+                calibrationData.current = calibrationResultsLocal
             }
+
+            setLoading(false)
         })()
-    }, [])
+    })
 
-    return <div className="flex flex-col gap-6">
+    return <>
+        <section className="flex flex-row justify-between items-end">
+            <div>
+                <h1 className="md:pt-6 pt-4">
+                    Culture Profile
+                    <span className="tooltip tooltip-right pl-2 pt-1 align-top"
+                          data-tip={tooltipText}
+                          style={{
+                              fontSize: '0.8em',
+                              fontWeight: 'normal',
+                              textAlign: 'left',
+                              letterSpacing: '0.02em'
+                          }}
+                    >
+                        <RiInformationLine size={20}/>
+                    </span>
+                </h1>
+            </div>
+        </section>
 
-        <main id="results" className="container mx-auto my-4 md:my-8 px-4 min-h-[75vh]">
-            <h1 className="text-3xl font-bold mb-4">Results</h1>
+        <section className="flex flex-col lg:flex-row gap-6 mt-4">
+            <Card className="flex-1 p-6">
+                <p className="mb-6">
+                    This radar graph shows your company&apos;s culture profile across several key dimensions based on
+                    your calibration responses.
+                </p>
+                <div className="max-w-2xl mx-auto">
+                    {!loading && <ProfileRadarGraph calibrationData={calibrationData.current}/>}
+                </div>
+            </Card>
 
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-16">
-                <div className="flex flex-col gap-6">
-                    {calibrationData && Object.entries(calibrationData).map(([key, value]) => {
+            <Card className="lg:basis-2/5 xl:basis-1/3 p-6">
+                <div className="flex flex-col gap-4">
+                    {calibrationData.current && Object.entries(calibrationData.current).map(([key, value]) => {
                         const increasePositive = value > 3
                         return <SpectrumCard key={key} id={key} value={value} increasePositive={increasePositive}/>
                     })}
                 </div>
+            </Card>
+        </section>
 
+        <section className="mt-6">
+            <Card className="mx-auto p-6">
+                <h2 className="pb-2">More Information</h2>
                 <div className="lg:col-span-2 min-h-full flex flex-col justify-between gap-4">
                     {pageContent.map(({id, title, subtitle, body}) => {
                         return <InfoDropdown key={id} title={title} subtitle={subtitle} body={body}/>
                     })}
                 </div>
+            </Card>
+
+            <div className="flex justify-end mt-6">
+                <Link href="/calibration?form=true" className="btn btn-neutral">
+                    Retake Calibration Assessment
+                </Link>
             </div>
-        </main>
-
-
-        {status !== 'authenticated' && <section id="signup" className="md:pt-8 pt-4 pb-12 bg-neutral-100">
-            <SignupForm/>
-        </section>}
-
-    </div>
+        </section>
+    </>
 }

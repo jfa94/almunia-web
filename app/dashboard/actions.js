@@ -38,3 +38,32 @@ export async function getSurveyResponses(companyId, startDate, endDate) {
         return error
     }
 }
+
+export async function getCalibrationResults(companyId) {
+    console.log('Getting calibration data for company:', companyId)
+    const cookieStore = await cookies()
+    if (!cookieStore.has('idToken')) {
+        return {error: 'Not authenticated'}
+    }
+    const identityToken = cookieStore.get('idToken').value
+
+    const dbClient = await getDynamoDBClient(identityToken)
+
+    const params = {
+        TableName: process.env.CALIBRATION_DYNAMODB_TABLE,
+        KeyConditionExpression: 'company_id = :company_id',
+        ExpressionAttributeValues: {
+            ':company_id': companyId,
+        }
+    }
+
+    try {
+        const queryCommand = new QueryCommand(params)
+        const queryResponse = await dbClient.send(queryCommand)
+        console.log('Calibration data query response:', queryResponse.Items)
+        return queryResponse.Items
+    } catch (error) {
+        console.error('Error fetching calibration data:', error)
+        return []
+    }
+}
