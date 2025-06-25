@@ -10,9 +10,9 @@ function classNames(...classes) {
 export default function ToplineCard({item}) {
     return (
         <Card key={item.name}>
-            <div className="flex items-center justify-between">
-                <dt className="text-tremor-default font-medium text-tremor-content">
-                    {item.name}
+            <div className="flex items-center justify-between gap-1">
+                <dt className="flex-1 min-w-0 text-tremor-default font-medium text-tremor-content overflow-hidden">
+                    <span className="block w-full whitespace-nowrap overflow-hidden text-ellipsis">{item.name}</span>
                 </dt>
                 <span
                     className={classNames(
