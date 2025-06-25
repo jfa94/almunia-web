@@ -15,7 +15,7 @@ export const InfoDropdown = ({title, subtitle, body}) => {
                 aria-expanded={isOpen}
             >
                 <div className="flex flex-col">
-                    <p className={`flex-1 md:text-xl text-lg font-bold text-base-content ${isOpen ? "text-primary" : ""}`}>{title}</p>
+                    <h4 className={`${isOpen ? "text-primary" : ""}`}>{title}</h4>
                     {subtitle}
                 </div>
                 <svg
