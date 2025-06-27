@@ -191,7 +191,11 @@ export default function ProfileTab({session}) {
                     your calibration responses.
                 </p>
                 <div className="max-w-2xl mx-auto">
-                    {!loading && <ProfileRadarGraph calibrationData={calibrationData.current}/>}
+                    {!loading &&
+                        <ProfileRadarGraph calibrationData={calibrationData.current}
+                                           employeeProfileData={{}}
+                        />
+                    }
                 </div>
             </Card>
 

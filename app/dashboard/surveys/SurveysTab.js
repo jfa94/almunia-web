@@ -106,7 +106,7 @@ export default function SurveysTab({session}) {
         <section>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
                 {loading
-                    ? Array.from({length: 8}, (v, i) => <Card key={i} className="min-h-24"/>)
+                    ? Array.from({length: 8}, (v, i) => <Card key={i} className="min-h-[108px]"/>)
                     : getItem('cards-data')?.map((item) => {
                         return <ToplineCard key={item.id} item={item}/>
                     })}

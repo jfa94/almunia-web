@@ -171,15 +171,15 @@ export default function Page() {
         <main id="results" className="container mx-auto my-4 md:my-8 px-4 min-h-[75vh]">
             <h1 className="text-3xl font-bold mb-4">Results</h1>
 
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-16">
-                <div className="flex flex-col gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-3 gap-16">
+                <div className="lg:col-span-2 xl:col-span-1 flex flex-col gap-6">
                     {calibrationData && Object.entries(calibrationData).map(([key, value]) => {
                         const increasePositive = value > 3
                         return <SpectrumCard key={key} id={key} value={value} increasePositive={increasePositive}/>
                     })}
                 </div>
 
-                <div className="lg:col-span-2 min-h-full flex flex-col justify-between gap-4">
+                <div className="lg:col-span-3 xl:col-span-2 min-h-full flex flex-col justify-between gap-4">
                     {pageContent.map(({id, title, subtitle, body}) => {
                         return <InfoDropdown key={id} title={title} subtitle={subtitle} body={body}/>
                     })}

@@ -19,8 +19,8 @@ function Fallback() {
     </Card>
 }
 
-export default function ProfileRadarGraph({calibrationData}) {
+export default function ProfileRadarGraph({calibrationData, employeeProfileData}) {
      return <>
-         {calibrationData ? <RadarGraph inputData={[calibrationData]}/> : <Fallback/>}
+         {calibrationData ? <RadarGraph inputData={[calibrationData, employeeProfileData]}/> : <Fallback/>}
      </>
 }
