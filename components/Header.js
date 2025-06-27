@@ -51,6 +51,7 @@ const Header = ({bgClass = "bg-white"}) => {
                             src={logo}
                             alt={`${config.appName} logo`}
                             // placeholder="blur"
+                            className={`transition-opacity ease-in-out duration-900 ${isOpen ? "opacity-0" : "opacity-100"}`}
                             priority={true}
                             width='auto'
                             height={45}
@@ -107,7 +108,7 @@ const Header = ({bgClass = "bg-white"}) => {
             {/* Mobile menu, show/hide based on menu state. */}
             <div className={`relative z-50 ${isOpen ? "" : "pointer-events-none"}`}>
                 <div
-                    className={`fixed inset-y-0 right-0 z-10 w-full py-8 px-4 overflow-y-auto bg-slate-50 sm:max-w-sm sm:ring-1 sm:ring-neutral/10 transform transition-transform duration-300 ease-in-out ${
+                    className={`fixed inset-y-0 right-0 z-10 w-full py-8 px-4 overflow-y-auto bg-white shadow sm:max-w-sm transform transition-transform duration-300 ease-in-out ${
                         isOpen ? "translate-x-0" : "translate-x-full"
                     }`}
                 >

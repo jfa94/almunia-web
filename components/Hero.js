@@ -30,7 +30,7 @@ const Hero = () => {
                     {/*  </svg>*/}
                     {/*</a>*/}
 
-                    <h1 className="text-5xl font-extrabold md:-mb-4">
+                    <h1 className="text-5xl font-extrabold -mb-4">
                         Effortlessly build a <span className="text-amber-600">world-class culture</span>
                     </h1>
                     <p className="max-w-6xl text-lg">

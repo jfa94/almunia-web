@@ -56,7 +56,7 @@ export function DataTable({
             </div>}
         </div>
 
-        <div className="rounded-md border">
+        <div className="bg-white rounded-md border shadow-sm">
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (<TableRow key={headerGroup.id}>
@@ -86,7 +86,7 @@ export function DataTable({
 
         {data.length > pageSize && <div className="w-full flex items-center justify-end gap-2 py-0">
             <Button
-                className="w-full md:max-w-28"
+                className="bg-white shadow w-full md:max-w-28"
                 variant="outline"
                 size="sm"
                 onClick={() => table.previousPage()}
@@ -95,7 +95,7 @@ export function DataTable({
                 Previous
             </Button>
             <Button
-                className="w-full md:max-w-28"
+                className="bg-white shadow w-full md:max-w-28"
                 variant="outline"
                 size="sm"
                 onClick={() => table.nextPage()}
