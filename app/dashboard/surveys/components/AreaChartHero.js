@@ -18,7 +18,7 @@ import {AreaChart} from "@tremor/react";
 export const AreaChartHero = ({chartData}) => (
     <div className="md:ml-0 -ml-6">
         <AreaChart
-            className="md:h-80 h-60"
+            className="h-40 lg:h-60 xl:h-72"
             data={chartData}
             index="date"
             categories={["Average Response"]}

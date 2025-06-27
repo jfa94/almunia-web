@@ -26,7 +26,7 @@ export default function ToplineCard({item}) {
               </span>
             </div>
             <dd className="text-tremor-metric font-semibold text-tremor-content-strong">
-                {item.stat}
+                {item.stat === 0 ? '-' : item.stat}
                 <span className="font-bold text-base opacity-40 tracking-widest pl-1">/5</span>
             </dd>
         </Card>

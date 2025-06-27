@@ -28,6 +28,8 @@ export default function SurveysTab({session}) {
     const {setItem, getItem} = useLocalStorage()
     let [loading, setLoading] = useState(true)
     let [chartDataType, setChartDataType] = useState('chart-data-value')
+    const valueData = useRef([])
+    const questionData = useRef([])
 
     useEffect(() => {
         (async () => {
@@ -38,39 +40,35 @@ export default function SurveysTab({session}) {
 
             const dateRange = getItem('survey-data-date-range')
             let responseData = []
+            valueData.current = await getCompanyData(companyId, 'values')
+            questionData.current = await getCompanyData(companyId, 'questions')
 
             if (!dateRange || dateRange.start > startDate || dateRange.end < endDate) {
                 setItem('survey-data-date-range', {start: startDate, end: endDate})
 
-                const valueData= await getCompanyData(companyId, 'values')
-                const questionData = await getCompanyData(companyId, 'questions')
                 responseData = await getSurveyResponses(companyId, startDate, endDate)
-
                 const contextualizedResponses = responseData.map(response => {
-                    const relevantValue = valueData.find(val => val.value_id === response.value_id)
-                    const relevantQuestion = questionData.find(q => q.question_id === response.question_id)
+                    const relevantValue = valueData.current.find(val => val.value_id === response.value_id)
+                    const relevantQuestion = questionData.current.find(q => q.question_id === response.question_id)
                     const context = {
                         value_name: relevantValue?.name ?? "",
                         question: relevantQuestion?.question ?? ""
                     }
                     return Object.assign(response, context)
                 })
-                setItem('survey-response-data', contextualizedResponses)
 
                 const valueResults = summariseSurveyData(contextualizedResponses, 'value_id', 'month')
                 const questionResults = summariseSurveyData(contextualizedResponses, 'question_id', 'month')
 
-                const sortKeys = (object) => {
-                    return Object.keys(object).sort((a, b) => {
+                const sortKeys = (keys, object) => {
+                    return keys.sort((a, b) => {
                         return object[a].currentPeriodMean - object[b].currentPeriodMean
                     })
                 }
 
-                const sortedValues = sortKeys(valueResults)
-                const sortedQuestions = sortKeys(questionResults)
+                const sortedValues = sortKeys(Object.keys(valueResults), valueResults)
+                const sortedQuestions = sortKeys(Object.keys(questionResults), questionResults)
 
-                setItem('value-data', valueData)
-                setItem('question-data', questionData)
                 setItem('cards-data', formatDataForCards(sortedValues.slice(0, Math.min(8, sortedValues.length)), valueResults))
                 setItem('chart-data-value', summariseDataForCharts(sortedValues, 'value_id', responseData))
                 setItem('chart-data-question', summariseDataForCharts(sortedQuestions, 'question_id', responseData))
@@ -108,7 +106,7 @@ export default function SurveysTab({session}) {
         <section>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
                 {loading
-                    ? [1, 2, 3, 4].map(i => <Card key={i} className="min-h-24"/>)
+                    ? Array.from({length: 8}, (v, i) => <Card key={i} className="min-h-24"/>)
                     : getItem('cards-data')?.map((item) => {
                         return <ToplineCard key={item.id} item={item}/>
                     })}
@@ -127,8 +125,8 @@ export default function SurveysTab({session}) {
                     ? <Card><p>Loading ...</p></Card>
                     : getItem(chartDataType)?.map(item => {
                         const itemName = item.grouping === 'question_id'
-                            ? getItem('question-data').find(q => q.question_id === item.id)
-                            : getItem('value-data').find(val => val.value_id === item.id)
+                            ? questionData.current.find(q => q.question_id === item.id)
+                            : valueData.current.find(val => val.value_id === item.id)
                         return (<Card key={item.id} className="mx-auto md:p-6 p-5">
                             <h2 className="md:pl-8 pb-6">{
                                 item.grouping === "question_id"

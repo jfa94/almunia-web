@@ -2,7 +2,7 @@
 
 export default function TabNavigation({ tabs, activeTab, setActiveTab }) {
   return (
-    <div className="tabs tabs-boxed bg-base-200 font-semibold">
+    <div className="tabs tabs-boxed p-0 sm:p-1 font-semibold bg-white shadow-inner border">
       {tabs.map((tab) => (
         <a
           key={tab.id}
