@@ -12,7 +12,7 @@ const Hero = () => {
     return (
         <section className="bg-amber-50">
             <div
-                className="container mx-auto flex flex-col-reverse lg:flex-row items-center justify-center gap-16 lg:gap-18 px-4 py-8 lg:py-28 xl:py-32">
+                className="container mx-auto flex flex-col-reverse lg:flex-row items-center justify-center gap-10 md:gap-16 lg:gap-18 px-4 py-8 lg:py-28 xl:py-32">
                 <div
                     className="max-w-[650px] flex flex-col gap-10 xl:gap-14 items-center justify-center text-left lg:items-start">
                     {/*<a*/}
