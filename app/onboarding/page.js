@@ -1,4 +1,5 @@
 'use client';
+
 import {useReducer} from "react"
 import Welcome from "@/app/onboarding/welcome/Welcome"
 import ValuesForm from "@/app/onboarding/values/ValuesForm"
@@ -52,7 +53,7 @@ const Onboarding = () => {
                                 onClick={() => dispatch({field: 'activePage', value: 3})}>Team information</li>}
                     </ul>
                 </div>
-                <h1 className="heading">Setup</h1>
+                {/*<h3 className="mb-4">Setup</h3>*/}
 
                 <Welcome formState={formState}
                          dispatch={dispatch}

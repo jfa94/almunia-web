@@ -6,10 +6,10 @@ import {redirect} from "next/navigation";
 
 
 export async function submitCalibrationData(data) {
-    const {id, item} = await getCompanyInformation()
+    const {company_id: companyId} = await getCompanyInformation()
 
-    if (!item) {
-        console.error('Issue with getCompanyInformation. Returned:', {id, item})
+    if (!companyId) {
+        console.error('Issue with getCompanyInformation. Returned company_id:', companyId)
         return {error: 'Not authenticated'}
     }
 
@@ -17,7 +17,7 @@ export async function submitCalibrationData(data) {
 
     for (const [key, value] of Object.entries(data)) {
         dimensionList.push({
-            company_id: item.company_id,
+            company_id: companyId,
             dimension_id: key,
             calibrated_value: value,
             latest_update: new Date().toISOString()

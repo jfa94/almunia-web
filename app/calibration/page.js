@@ -25,8 +25,8 @@ const getRandomSubset = (arr, sizePerDimension) => {
 
 export default async function Page({searchParams}) {
     const {form: showForm} = await searchParams
-    const {item} = await getCompanyInformation()
-    const questionSubset = getRandomSubset(questions, item ? 12 : 3)
+    const {company_id: companyId} = await getCompanyInformation()
+    const questionSubset = getRandomSubset(questions, companyId ? 12 : 3)
 
     return <div className="my-8 min-h-[60vh]">
         <section className="container mx-auto px-4 md:mb-6 mb-4">
@@ -39,7 +39,7 @@ export default async function Page({searchParams}) {
                         frame your company&#39;s desired culture through a series of statements rated on a scale from 1
                         (strongly disagree) to 5 (strongly agree). Your responses will be used to map your company
                         across several dimensions, providing valuable insights into your organization&#39;s preferred
-                        culture. The form will take around {item ? '15' : '5'} minutes to complete.
+                        culture. The form will take around {companyId ? '15' : '5'} minutes to complete.
                     </p>
 
                     <p>
@@ -49,7 +49,7 @@ export default async function Page({searchParams}) {
                         how you believe your company should ideally operate, not necessarily how it currently functions.
                     </p>
 
-                    {!item && <p>
+                    {!companyId && <p>
                         Please note that this is an abbreviated version of our comprehensive assessment; for a more
                         detailed cultural evaluation and additional insights, we invite you to sign up for our full
                         service.

@@ -7,7 +7,7 @@ export const InfoDropdown = ({title, subtitle, body}) => {
     return (
         <div>
             <div
-                className="relative flex gap-2 items-center w-full pt-5 text-left border-t border-base-content/10"
+                className="relative flex gap-2 items-center w-full pt-4 mt-1 text-left border-t border-base-content/10 hover:cursor-pointer"
                 onClick={(e) => {
                     e.preventDefault();
                     setIsOpen(!isOpen);
@@ -15,7 +15,7 @@ export const InfoDropdown = ({title, subtitle, body}) => {
                 aria-expanded={isOpen}
             >
                 <div className="flex flex-col">
-                    <p className={`flex-1 md:text-xl text-lg font-bold text-base-content ${isOpen ? "text-primary" : ""}`}>{title}</p>
+                    <h4 className={`${isOpen ? "text-primary" : ""}`}>{title}</h4>
                     {subtitle}
                 </div>
                 <svg

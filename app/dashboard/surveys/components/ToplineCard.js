@@ -10,9 +10,9 @@ function classNames(...classes) {
 export default function ToplineCard({item}) {
     return (
         <Card key={item.name}>
-            <div className="flex items-center justify-between">
-                <dt className="text-tremor-default font-medium text-tremor-content">
-                    {item.name}
+            <div className="flex items-center justify-between gap-1">
+                <dt className="flex-1 min-w-0 text-tremor-default font-medium text-tremor-content overflow-hidden">
+                    <span className="block w-full whitespace-nowrap overflow-hidden text-ellipsis">{item.name}</span>
                 </dt>
                 <span
                     className={classNames(
@@ -26,7 +26,7 @@ export default function ToplineCard({item}) {
               </span>
             </div>
             <dd className="text-tremor-metric font-semibold text-tremor-content-strong">
-                {item.stat}
+                {item.stat === 0 ? '-' : item.stat}
                 <span className="font-bold text-base opacity-40 tracking-widest pl-1">/5</span>
             </dd>
         </Card>

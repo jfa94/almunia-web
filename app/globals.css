@@ -5,6 +5,7 @@
 html,
 body {
     scroll-behavior: smooth !important;
+    overflow-x: hidden;
 }
 
 /* It makes the HTML progress bar filling smooth when value change. */
@@ -22,23 +23,23 @@ progress::-webkit-progress-value {
     }
 
     h1 {
-        @apply font-extrabold text-4xl lg:text-5xl xl:text-6xl tracking-[-0.02rem] xl:tracking-tight text-base-content
+        @apply font-bold text-4xl tracking-[-0.02rem] xl:tracking-tight text-base-content
     }
 
     h2 {
-        @apply font-bold text-3xl lg:text-4xl xl:text-5xl tracking-tight text-base-content
+        @apply font-bold text-2xl tracking-tight text-base-content
         /*lg:text-4xl text-3xl text-base-content font-bold tracking-tight*/
     }
 
     h3 {
-        @apply font-semibold text-2xl lg:text-3xl xl:text-4xl tracking-[-0.01rem] text-base-content/80
+        @apply font-semibold text-xl tracking-[-0.01rem] text-base-content
     }
 
     h4 {
-        @apply font-medium text-xl lg:text-2xl xl:text-3xl tracking-[-0.01rem] text-base-content/80
+        @apply font-semibold text-lg tracking-[-0.01rem] text-base-content/90
     }
 
-    p {
+    p, label {
         @apply text-base-content/90 leading-relaxed xl:leading-[1.75]
     }
 

@@ -28,13 +28,13 @@ const Statistics = () => {
                 className="container mx-auto px-4 flex flex-col gap-6 lg:gap-8 text-base-content/70 text-left lg:text-center text-lg">
 
                 <div className="text-center">
-                    <h2>
+                    <h2 className="text-3xl">
                         The numbers speak for themselves
                     </h2>
 
-                    <h4 className="text-2xl mt-2">
+                    <h3 className="text-xl text-base-content/70 mt-2">
                         Culture drives business performance
-                    </h4>
+                    </h3>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
@@ -45,10 +45,10 @@ const Statistics = () => {
                                 <div className="hidden lg:flex justify-center items-center mb-2">
                                     {stat.icon}
                                 </div>
-                                <h3 className="text-amber-600">
+                                <h3 className="text-3xl text-amber-600">
                                     {stat.percentage}
                                 </h3>
-                                <h4 className="font-semibold text-amber-600 lg:mb-2 white">{stat.metric}</h4>
+                                <h4 className="text-2xl text-amber-600 lg:mb-2 white">{stat.metric}</h4>
                             </div>
                             <div className="col-span-3">
                                 <p className="leading-snug lg:text-center text-base-content/70 white">{stat.description}</p>
@@ -58,10 +58,10 @@ const Statistics = () => {
                 </div>
 
                 <div className="text-center">
-                    <h4 className="text-2xl max-w-2xl xl:max-w-4xl mx-auto">
+                    <h3 className="text-xl text-base-content/70 max-w-2xl xl:max-w-4xl mx-auto">
                         Despite this, less than a quarter of companies have a strategy to influence their culture.
                         Almunia helps you be part of the successful minority.
-                    </h4>
+                    </h3>
                 </div>
             </div>
         </section>

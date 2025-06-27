@@ -1,13 +1,19 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
+// import {useFeatureFlagEnabled} from "posthog-js/react";
 // import TestimonialRating from "./TestimonialRating";
 // import heroImage from "/public/landing/hero-image.jpg"
 
 const Hero = () => {
+    // const newMessaging = useFeatureFlagEnabled('landing-messaging-changes')
+    const newMessaging = true
+
     return (
         <section className="bg-amber-50">
             <div
-                className="container mx-auto flex flex-col-reverse lg:flex-row items-center justify-center gap-16 lg:gap-18 px-4 py-8 lg:py-28 xl:py-32">
+                className="container mx-auto flex flex-col-reverse lg:flex-row items-center justify-center gap-10 md:gap-16 lg:gap-18 px-4 py-8 lg:py-28 xl:py-32">
                 <div
                     className="max-w-[650px] flex flex-col gap-10 xl:gap-14 items-center justify-center text-left lg:items-start">
                     {/*<a*/}
@@ -25,17 +31,21 @@ const Hero = () => {
                     {/*  </svg>*/}
                     {/*</a>*/}
 
-                    <h1 className="md:-mb-4">
+                    <h1 className="text-5xl font-extrabold -mb-4">
                         Effortlessly build a <span className="text-amber-600">world-class culture</span>
                     </h1>
                     <p className="max-w-6xl text-lg">
-                        Our research-driven approach helps you define your ideal culture, gather employee feedback, and
-                        make changes to ensure your company is always a great place to work.
+                        {newMessaging
+                            ? 'Stop using pulse check surveys that lead nowhere. Our research-backed' +
+                            ' software helps ensure your company is always a great place to work.'
+                            : 'Our research-driven software helps you define your ideal culture, gather employee' +
+                            ' feedback, and make changes to ensure your company is always a great place to work.'
+                        }
                     </p>
 
-                    <Link href="/#waitlist">
+                    <Link href="/#features">
                         <button className="btn btn-primary btn-wide">
-                            Get early access
+                            Learn more
                         </button>
                     </Link>
                     {/*<TestimonialRating userCount="Over 1000"/>*/}
@@ -53,7 +63,7 @@ const Hero = () => {
                 </div>
             </div>
         </section>
-    );
-};
+    )
+}
 
-export default Hero;
+export default Hero

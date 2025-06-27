@@ -8,10 +8,10 @@ import {Toaster} from "react-hot-toast";
 import {getCompanyInformation} from "@/lib/actions";
 
 export default async function Page() {
-    const {item: company} = await getCompanyInformation()
+    const {company_id: companyId} = await getCompanyInformation()
 
-    if (!company?.company_id) {
-        console.error('Issue with getCompanyInformation. Returned:', company)
+    if (!companyId) {
+        console.error('Issue with getCompanyInformation. Returned:', companyId)
         redirect('/?error=cid')
     }
 
@@ -20,9 +20,9 @@ export default async function Page() {
         <section id="account" className="mt-4 lg:mt-8 flex flex-col gap-6 md:gap-10 px-4">
             <UserInformation/>
             <CompanyInformation/>
-            <ValuesInformation companyId={company.company_id}/>
-            <QuestionInformation companyId={company.company_id}/>
-            <TeamInformation companyId={company.company_id}/>
+            <ValuesInformation companyId={companyId}/>
+            <QuestionInformation companyId={companyId}/>
+            <TeamInformation companyId={companyId}/>
         </section>
     </main>
 

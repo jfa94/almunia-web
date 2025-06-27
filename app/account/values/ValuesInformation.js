@@ -30,6 +30,10 @@ export default async function ValuesInformation({companyId}) {
         redirect('/?error=account')
     }
 
+    const displayData = request.filter(item => {
+        return !['jsat', 'develop', 'incl', 'leadership', 'mission', 'msat', 'vision'].includes(item.value_id)
+    })
+
     const formColumns = [
         {accessorKey: "name", headerText: "Name", required: true},
         {accessorKey: "description", headerText: "Description"}
@@ -50,7 +54,7 @@ export default async function ValuesInformation({companyId}) {
         <DataTable
             title="Values"
             columns={columns}
-            data={request}
+            data={displayData}
             pageSize={5}
             NewRowModal={AddRowModal}
             newRowColumns={formColumns}

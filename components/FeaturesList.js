@@ -8,13 +8,15 @@ const features = [
         title: "Define your ideal culture",
         description: "Our Culture Calibration Tool helps you easily understand your ideal culture and break it down across several dimensions.",
         // description: "Identify core values that resonate with your mission and translate them into concrete behaviors and practices that guide daily work.",
-        image: <div className="w-full h-full flex justify-center items-center"><Image
-            src="/landing/calibration-form.png"
-            alt="Calibration questionnaire and the resulting breakdown of a company's culture"
-            height={450}
-            width={600}
-            className="m-auto"
-        /></div>,
+        image: <div className="w-full h-full flex justify-center items-center">
+            <Image
+                src="/landing/calibration-form.png"
+                alt="Calibration questionnaire and the resulting breakdown of a company's culture"
+                height={450}
+                width={600}
+                className="m-auto"
+            />
+        </div>,
         bulletPoints: [
             "Simple questionnaire to define your ideal culture",
             "Adopt a research-led approach",
@@ -26,13 +28,15 @@ const features = [
     {
         title: "Easy anonymous feedback",
         description: "Automated daily surveys help you understand how your team is feeling, with insights that lead to meaningful action.",
-        image: <Image
-            src="/landing/survey-email.png"
-            alt="Analytics dashboard showing cultural metrics over time"
-            height={450}
-            width={600}
-            className="m-auto p-2"
-        />,
+        image: <div className="w-full h-full flex justify-center items-center">
+            <Image
+                src="/landing/survey-email.png"
+                alt="Analytics dashboard showing cultural metrics over time"
+                height={450}
+                width={600}
+                className="m-auto p-2"
+            />
+        </div>,
         bulletPoints: [
             "Surveys your team can answer with a single click",
             "Regular feedback ensures insights are always up to date",
@@ -85,8 +89,8 @@ const features = [
                    height={200}
                    width={500}
             />
-            <Image src="/landing/logos/personio-logo.png"
-                   alt="Personio Logo"
+            <Image src="/landing/logos/oracle-logo.png"
+                   alt="Oracle Logo"
                    priority={true}
                    height={200}
                    width={600}
@@ -109,7 +113,7 @@ const features = [
 const FeaturesList = () => {
     return (
         <section id="features" className="w-full bg-base-200/30 text-base-content py-14 lg:py-20">
-            <div className="container mx-auto px-4 flex flex-col gap-24">
+            <div className="container mx-auto px-4 flex flex-col gap-16 md:gap-24">
 
                 <div className="text-left max-w-2xl">
                     <h2 className="font-black text-4xl md:text-5xl tracking-[-0.01em]">

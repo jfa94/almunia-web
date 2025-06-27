@@ -143,7 +143,7 @@ export function EditModal({title, data, columns}) {
                         })}
                     </section>
 
-                    <DialogFooter className="mt-4">
+                    <DialogFooter className="flex gap-2 md:gap-0 mt-4">
                         <Button type="button"
                                 onClick={handleDelete}
                                 disabled={submitted !== ""}

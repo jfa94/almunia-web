@@ -22,6 +22,43 @@ const labelMapping = {
     "internal-external-driven": {left: "Internally-Driven", right: "Externally-Driven"}
 }
 
+const CustomTick = ({x, y, payload, cx, cy}) => {
+    const words = payload.value.split(' ')
+    const isMobile = window.innerWidth < 640
+
+    const angle = Math.atan2(y - cy, x - cx)
+    // Adjust offset based on screen size
+    const offsetX = Math.cos(angle) * (isMobile ? 8 : 15)
+    const offsetY = Math.sin(angle) * (isMobile ? 10 : 15)
+
+    // For short labels, just return as is
+    if (words.length === 1) {
+        return (
+            <g transform={`translate(${x + offsetX},${y + offsetY})`}>
+                <text x={0} y={0} textAnchor="middle" fill="#666" className={isMobile ? "font-sm" : ""}>
+                    {payload.value}
+                </text>
+            </g>
+        );
+    }
+
+    // For longer labels, split into multiple lines
+    const midpoint = Math.ceil(words.length / 2)
+    const firstLine = words.slice(0, midpoint).join(' ')
+    const secondLine = words.slice(midpoint).join(' ')
+
+    return (
+        <g transform={`translate(${x + offsetX},${y + offsetY})`}>
+            <text x={0} y={-8} textAnchor="middle" fill="#666" className={isMobile ? "font-sm" : ""}>
+                {firstLine}
+            </text>
+            <text x={0} y={8} textAnchor="middle" fill="#666" className={isMobile ? "font-sm" : ""}>
+                {secondLine}
+            </text>
+        </g>
+    )
+}
+
 const chartColours = ["#2563eb", "#c2410c"]
 const names = ["Target Profile", "Employee Feedback Profile"]
 
@@ -67,11 +104,11 @@ export default function RadarGraph({inputData = [], inputRange = [1, 5]}) {
 
     return (
         <div className="w-full">
-            <div className="h-[500px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart outerRadius="80%" data={chartData} className="-mt-6">
+            <div className="h-[450px] sm:h-[500px] w-full">
+                <ResponsiveContainer width="100%" height="100%" className="-mt-8 sm:mt-0 pb-8">
+                    <RadarChart outerRadius="80%" data={chartData}>
                         <PolarGrid/>
-                        <PolarAngleAxis dataKey="subject" className="font-mono"/>
+                        <PolarAngleAxis dataKey="subject" tick={CustomTick}/>
                         <PolarRadiusAxis tick={false} angle={30} domain={[0, 100]} tickCount={5}/>
                         {inputData.map((_, i) => {
                             return <Radar
@@ -88,9 +125,14 @@ export default function RadarGraph({inputData = [], inputRange = [1, 5]}) {
                         }}/>
                         <Legend
                             layout="vertical"
-                            wrapperStyle={{paddingTop: "30px"}}
-                        />
-                    </RadarChart>
+                            verticalAlign="bottom"
+                            height={36}
+                            wrapperStyle={{
+                                bottom: 0,
+                                marginTop: "10px",
+                                paddingTop: "10px"
+                            }}
+                        /> </RadarChart>
                 </ResponsiveContainer>
             </div>
         </div>

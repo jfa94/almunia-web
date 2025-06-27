@@ -13,11 +13,10 @@ import {columns} from "./columns.js"
 //
 
 export default async function CompanyInformation() {
-    const {id, item} = await getCompanyInformation()
-    // const {id, item} = {id: "eu-west-1:3128101b-2c78-c194-7555-0d86a4c27901", item: demoData}
+    const item = await getCompanyInformation()
 
     if (!item) {
-        console.error('Issue with getCompanyInformation. Returned:', {id, item})
+        console.error('Issue with getCompanyInformation. Returned:', item)
         redirect('/?error=account')
     }
 
