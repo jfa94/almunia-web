@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {useFeatureFlagEnabled} from "posthog-js/react";
+// import {useFeatureFlagEnabled} from "posthog-js/react";
 // import TestimonialRating from "./TestimonialRating";
 // import heroImage from "/public/landing/hero-image.jpg"
 
 const Hero = () => {
-    const newMessaging = useFeatureFlagEnabled('landing-messaging-changes')
+    // const newMessaging = useFeatureFlagEnabled('landing-messaging-changes')
+    const newMessaging = true
 
     return (
         <section className="bg-amber-50">
@@ -62,7 +63,7 @@ const Hero = () => {
                 </div>
             </div>
         </section>
-    );
-};
+    )
+}
 
-export default Hero;
+export default Hero
