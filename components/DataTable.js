@@ -48,6 +48,7 @@ export function DataTable({
             <h2 className="text-xl p-0">{title || "Table"}</h2>
             {(filterColumn || NewRowModal) && <div className="flex flex-row gap-2 justify-end md:w-1/3 sm:w-1/2 w-full py-0">
                 {filterColumn && <Input
+                    className="bg-white"
                     placeholder={`Filter ${filterColumn}s...`}
                     value={(table.getColumn(filterColumn)?.getFilterValue()) ?? ""}
                     onChange={(event) => table.getColumn(filterColumn)?.setFilterValue(event.target.value)}
