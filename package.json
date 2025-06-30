@@ -52,7 +52,7 @@
     "react-tooltip": "^5.26.3",
     "recharts": "^2.15.1",
     "shadcn": "^2.3.0",
-    "sharp": "^0.33.4",
+    "sharp": "^0.34.2",
     "stripe": "^13.11.0",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
